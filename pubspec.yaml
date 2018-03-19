@@ -1,5 +1,5 @@
 name: player
-description: A new Flutter project.
+description: Conreality Player app for Android and iOS.
 
 dependencies:
   flutter:
