@@ -4,6 +4,9 @@
 # Editor backup files
 *~
 
+# Makefile artifacts
+.built
+
 # Flutter
 .atom/
 .idea
