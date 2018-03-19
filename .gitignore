@@ -1,4 +1,10 @@
+# macOS
 .DS_Store
+
+# Editor backup files
+*~
+
+# Flutter
 .atom/
 .idea
 .vscode/
