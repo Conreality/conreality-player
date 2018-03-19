@@ -1,3 +1,5 @@
+/* This is free and unencumbered software released into the public domain. */
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
@@ -7,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Conreality Player',
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'Conreality Player'),
     );
   }
 }
@@ -103,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
