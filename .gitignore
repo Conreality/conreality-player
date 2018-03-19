@@ -1,5 +1,10 @@
-# macOS
 .DS_Store
-
-# Editor backup files
-*~
+.atom/
+.idea
+.vscode/
+.packages
+.pub/
+build/
+ios/.generated/
+packages
+.flutter-plugins
