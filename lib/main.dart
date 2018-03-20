@@ -1,15 +1,27 @@
 /* This is free and unencumbered software released into the public domain. */
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new PlayerApp());
 
-class MyApp extends StatelessWidget {
+class PlayerDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> allDrawerItems = <Widget>[
+      const Divider(),
+    ];
+    return new Drawer(child: new ListView(primary: false, children: allDrawerItems));
+  }
+}
+
+class PlayerApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Conreality Player',
+      color: Colors.grey,
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -21,13 +33,13 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Conreality Player'),
+      home: new PlayerHomePage(title: 'Conreality Player'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class PlayerHomePage extends StatefulWidget {
+  PlayerHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -41,10 +53,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _PlayerHomePageState createState() => new _PlayerHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _PlayerHomePageState extends State<PlayerHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -68,10 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return new Scaffold(
       appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
+        // Here we take the value from the PlayerHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: new Text(widget.title),
       ),
+      drawer: new PlayerDrawer(),
       body: new Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
