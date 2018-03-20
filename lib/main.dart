@@ -10,6 +10,13 @@ class PlayerDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[
       const Divider(),
+      new AboutListTile(
+        icon: const FlutterLogo(),
+        applicationVersion: 'March 2018',
+        applicationIcon: const FlutterLogo(),
+        applicationLegalese: 'This is free and unencumbered software released into the public domain.',
+        aboutBoxChildren: <Widget>[],
+      ),
     ];
     return new Drawer(child: new ListView(primary: false, children: allDrawerItems));
   }
