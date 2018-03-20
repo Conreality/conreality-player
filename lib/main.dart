@@ -3,6 +3,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 void main() => runApp(new PlayerApp());
 
 class PlayerDrawer extends StatelessWidget {
@@ -10,6 +12,15 @@ class PlayerDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[
       const Divider(),
+
+      new ListTile(
+        leading: const Icon(Icons.report),
+        title: const Text('Send feedback'),
+        onTap: () {
+          launch('https://github.com/conreality/conreality-player/issues/new');
+        },
+      ),
+
       new AboutListTile(
         icon: const FlutterLogo(),
         applicationVersion: 'March 2018',
