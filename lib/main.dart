@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-void main() => runApp(new PlayerApp());
+void main() => runApp(PlayerApp());
 
 class PlayerDrawer extends StatelessWidget {
   @override
@@ -13,7 +13,7 @@ class PlayerDrawer extends StatelessWidget {
     final List<Widget> allDrawerItems = <Widget>[
       const Divider(),
 
-      new ListTile(
+      ListTile(
         leading: const Icon(Icons.report),
         title: const Text('Send feedback'),
         onTap: () {
@@ -21,7 +21,7 @@ class PlayerDrawer extends StatelessWidget {
         },
       ),
 
-      new AboutListTile(
+      AboutListTile(
         icon: const FlutterLogo(),
         applicationVersion: 'March 2018',
         applicationIcon: const FlutterLogo(),
@@ -29,7 +29,7 @@ class PlayerDrawer extends StatelessWidget {
         aboutBoxChildren: <Widget>[],
       ),
     ];
-    return new Drawer(child: new ListView(primary: false, children: allDrawerItems));
+    return Drawer(child: ListView(primary: false, children: allDrawerItems));
   }
 }
 
@@ -37,10 +37,10 @@ class PlayerApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Conreality Player',
       color: Colors.grey,
-      theme: new ThemeData(
+      theme: ThemeData(
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -51,7 +51,7 @@ class PlayerApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new PlayerHomePage(title: 'Conreality Player'),
+      home: PlayerHomePage(title: 'Conreality Player'),
     );
   }
 }
@@ -71,7 +71,7 @@ class PlayerHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _PlayerHomePageState createState() => new _PlayerHomePageState();
+  _PlayerHomePageState createState() => _PlayerHomePageState();
 }
 
 class _PlayerHomePageState extends State<PlayerHomePage> {
@@ -96,17 +96,17 @@ class _PlayerHomePageState extends State<PlayerHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         // Here we take the value from the PlayerHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
+        title: Text(widget.title),
       ),
-      drawer: new PlayerDrawer(),
-      body: new Center(
+      drawer: PlayerDrawer(),
+      body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: new Column(
+        child: Column(
           // Column is also layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -122,20 +122,20 @@ class _PlayerHomePageState extends State<PlayerHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text(
+            Text(
               'You have pushed the button this many times:',
             ),
-            new Text(
+            Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: new Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }
