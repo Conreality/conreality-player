@@ -8,12 +8,8 @@
 .built
 
 # Flutter
-.atom/
-.idea
-.vscode/
+.dart_tool/
 .packages
 .pub/
-build/
-ios/.generated/
-packages
 .flutter-plugins
+build/
