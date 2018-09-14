@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'chat.dart';
@@ -26,12 +27,6 @@ class StartScreen extends StatefulWidget {
 class StartState extends State<StartScreen> {
   static const platform = MethodChannel('app.conreality.org/start');
 
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() { _counter++; });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,23 +35,10 @@ class StartState extends State<StartScreen> {
       ),
       drawer: StartDrawer(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: SpinKitRipple(
+          color: Colors.grey,
+          size: 300.0, // TODO: determine from screen size
+        )
       ),
     );
   }
