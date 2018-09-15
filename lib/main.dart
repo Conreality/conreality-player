@@ -1,7 +1,5 @@
 /* This is free and unencumbered software released into the public domain. */
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'start.dart';

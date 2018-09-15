@@ -1,8 +1,10 @@
 /* This is free and unencumbered software released into the public domain. */
 
+import 'dart:async';
+import 'package:grpc/grpc.dart' as gRPC;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +12,9 @@ import 'chat.dart';
 import 'compass.dart';
 import 'game.dart';
 import 'map.dart';
+
+import 'generated/helloworld.pb.dart';
+import 'generated/helloworld.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -28,19 +33,54 @@ class StartState extends State<StartScreen> {
   static const platform = MethodChannel('app.conreality.org/start');
 
   @override
+  initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       drawer: StartDrawer(),
-      body: Center(
-        child: SpinKitRipple(
-          color: Colors.grey,
-          size: 300.0, // TODO: determine from screen size
-        )
+      body: FutureBuilder<String>(
+        future: _connect(),
+        builder: (final BuildContext context, final AsyncSnapshot<String> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(
+                child: SpinKitRipple(
+                  color: Colors.grey,
+                  size: 300.0,
+                )
+              );
+            case ConnectionState.done:
+              return snapshot.hasError ?
+                Text('Error: ${snapshot.error}') :
+                Text('Result: ${snapshot.data}');
+          }
+          return null; // unreachable
+        },
       ),
     );
+  }
+
+  Future<String> _connect() async {
+    final creds = gRPC.ChannelCredentials.insecure();
+    final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
+      options: gRPC.ChannelOptions(credentials: creds));
+    final stub = GreeterClient(channel);
+    final name = 'Flutter';
+    try {
+      final response = await stub.sayHello(HelloRequest()..name = name);
+      return response.message;
+    }
+    finally {
+      channel.shutdown();
+    }
   }
 }
 
@@ -58,7 +98,7 @@ class StartDrawer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) {
+              builder: (final BuildContext context) {
                 return ChatScreen(title: 'Demo Chat'); // TODO
               }
             )
@@ -72,7 +112,7 @@ class StartDrawer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) {
+              builder: (final BuildContext context) {
                 return CompassScreen(title: 'Demo Compass'); // TODO
               }
             )
@@ -86,7 +126,7 @@ class StartDrawer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) {
+              builder: (final BuildContext context) {
                 return GameScreen(title: 'Demo Game'); // TODO
               }
             )
@@ -100,7 +140,7 @@ class StartDrawer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) {
+              builder: (final BuildContext context) {
                 return MapScreen(title: 'Demo Map'); // TODO
               }
             )
