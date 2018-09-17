@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'config.dart';
 import 'game.dart';
 import 'start.dart';
 
@@ -60,13 +61,15 @@ class AppState extends State<App> {
   }
 
   void _load() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final Config config = await Config.load();
+    await config.clear(); // DEBUG
     setState(() {
-      _game = Future.value(false ? null :
+      final bool hasGame = config.hasKey("game.url");
+      _game = Future.value(!hasGame ? null :
         Game(
-          url:   prefs.getString("game.url"),
-          uuid:  prefs.getString("game.uuid"),
-          title: prefs.getString("game.title"),
+          url:   Uri.tryParse(config.getString("game.url")),
+          uuid:  config.getString("game.uuid"),
+          title: config.getString("game.title"),
         )
       );
     });

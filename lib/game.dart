@@ -1,14 +1,20 @@
 /* This is free and unencumbered software released into the public domain. */
 
+import 'dart:async';
+import 'package:grpc/grpc.dart' as gRPC;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'api.dart' as API;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class Game {
   Game({this.url, this.uuid, this.title});
 
-  final String url;
+  final Uri url;
 
   final String uuid;
 
@@ -41,11 +47,46 @@ class GameState extends State<GameScreen> {
           IconButton(icon: Icon(Icons.more_vert), onPressed: _ignore),
         ],
       ),
-      body: Center(
-        child: Text('Game Screen'), // TODO
+      body: FutureBuilder<API.HelloResponse>(
+        future: _connect(),
+        builder: (final BuildContext context, final AsyncSnapshot<API.HelloResponse> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(
+                child: SpinKitRipple(
+                  color: Colors.grey,
+                  size: 300.0,
+                )
+              );
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              final API.HelloResponse response = snapshot.data; // TODO: response.list
+              return Text('${response.name}');
+          }
+          assert(false, "unreachable");
+          return null; // unreachable
+        },
       ),
     );
   }
 
   void _ignore() {}
+
+  Future<API.HelloResponse> _connect() async {
+    final creds = gRPC.ChannelCredentials.insecure();
+    final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
+      options: gRPC.ChannelOptions(credentials: creds));
+    final stub = API.MasterClient(channel);
+    final name = 'Flutter';
+    try {
+      return await stub.hello(API.HelloRequest()..name = name);
+    }
+    finally {
+      channel.shutdown();
+    }
+  }
 }

@@ -1,20 +1,23 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async';
-import 'package:grpc/grpc.dart' as gRPC;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+//import 'api.dart' as API;
 import 'chat.dart';
+import 'config.dart';
 import 'compass.dart';
+import 'connect.dart';
 import 'game.dart';
 import 'map.dart';
 
-import 'generated/conreality.pb.dart';
-import 'generated/conreality.pbgrpc.dart';
+////////////////////////////////////////////////////////////////////////////////
+
+enum StartChoice { connect }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -31,18 +34,34 @@ class StartScreen extends StatefulWidget {
 
 class StartState extends State<StartScreen> {
   static const platform = MethodChannel('app.conreality.org/start');
-  final _items = List<String>.generate(5, (i) => "Item $i");
+  //final _items = List<String>.generate(5, (i) => "Item $i");
 
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          PopupMenuButton<StartChoice>(
+            onSelected: _onMenuAction,
+            itemBuilder: (final BuildContext context) => <PopupMenuEntry<StartChoice>>[
+              PopupMenuItem<StartChoice>(
+                value: StartChoice.connect,
+                child: Text('Connect to a game...'),
+              ),
+            ],
+          ),
+        ],
       ),
       drawer: StartDrawer(),
-      body: FutureBuilder<HelloResponse>(
-        future: _connect(),
-        builder: (final BuildContext context, final AsyncSnapshot<HelloResponse> snapshot) {
+      body: SpinKitRipple(
+        color: Colors.grey,
+        size: 300.0,
+      ),
+/*
+      body: FutureBuilder<API.HelloResponse>(
+        future: _discover(),
+        builder: (final BuildContext context, final AsyncSnapshot<API.HelloResponse> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.active:
@@ -72,20 +91,33 @@ class StartState extends State<StartScreen> {
           return null; // unreachable
         },
       ),
+*/
     );
   }
 
-  Future<HelloResponse> _connect() async {
-    final creds = gRPC.ChannelCredentials.insecure();
-    final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
-      options: gRPC.ChannelOptions(credentials: creds));
-    final stub = MasterClient(channel);
-    final name = 'Flutter';
-    try {
-      return await stub.hello(HelloRequest()..name = name);
-    }
-    finally {
-      channel.shutdown();
+  void _onMenuAction(final StartChoice choice) {
+    switch (choice) {
+      case StartChoice.connect:
+        Config.load().then((final Config config) {
+          showConnectDialog(context, config.getCurrentGameURL())
+            .then((final Uri gameURL) {
+              if (gameURL == null) throw ConnectCanceled();
+              return config.setCurrentGame(Game(url: gameURL, title: 'Connecting...'));
+            })
+            .then((final Game game) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute<void>(
+                  builder: (final BuildContext context) {
+                    return GameScreen(game: game);
+                  }
+                )
+              );
+            })
+            .catchError((e) {
+              // the connect dialog was cancelled
+            }, test: (e) => e is ConnectCanceled);
+        });
+        break;
     }
   }
 }
