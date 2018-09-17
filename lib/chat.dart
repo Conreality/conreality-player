@@ -23,7 +23,7 @@ class ChatState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -96,7 +96,7 @@ class ChatMessage extends StatelessWidget {
   ChatMessage({this.text});
   final String text;
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(

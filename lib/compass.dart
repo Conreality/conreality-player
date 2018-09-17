@@ -20,7 +20,7 @@ class CompassState extends State<CompassScreen> {
   static const platform = MethodChannel('app.conreality.org/compass');
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -29,7 +29,7 @@ class CompassState extends State<CompassScreen> {
         ],
       ),
       body: Center(
-        child: Text('To be implemented.'), // TODO
+        child: Text('Compass Screen'), // TODO
       ),
     );
   }

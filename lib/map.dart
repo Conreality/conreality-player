@@ -20,7 +20,7 @@ class MapState extends State<MapScreen> {
   static const platform = MethodChannel('app.conreality.org/map');
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -29,7 +29,7 @@ class MapState extends State<MapScreen> {
         ],
       ),
       body: Center(
-        child: Text('To be implemented.'), // TODO
+        child: Text('Map Screen'), // TODO
       ),
     );
   }

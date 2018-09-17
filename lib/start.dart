@@ -34,12 +34,7 @@ class StartState extends State<StartScreen> {
   final _items = List<String>.generate(5, (i) => "Item $i");
 
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -62,8 +57,7 @@ class StartState extends State<StartScreen> {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               }
-              final HelloResponse response = snapshot.data;
-              // TODO: response.list
+              //final HelloResponse response = snapshot.data; // TODO: response.list
               return ListView.builder(
                 padding: EdgeInsets.all(8.0),
                 itemCount: _items.length,
@@ -74,6 +68,7 @@ class StartState extends State<StartScreen> {
                 },
               );
           }
+          assert(false, "unreachable");
           return null; // unreachable
         },
       ),
@@ -99,7 +94,7 @@ class StartState extends State<StartScreen> {
 
 class StartDrawer extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[
       Divider(),
 
@@ -138,7 +133,7 @@ class StartDrawer extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return GameScreen(title: 'Demo Game'); // TODO
+                return GameScreen(game: Game(title: 'Demo Game')); // TODO
               }
             )
           );
