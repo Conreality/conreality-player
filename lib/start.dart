@@ -13,8 +13,8 @@ import 'compass.dart';
 import 'game.dart';
 import 'map.dart';
 
-import 'generated/helloworld.pb.dart';
-import 'generated/helloworld.pbgrpc.dart';
+import 'generated/conreality.pb.dart';
+import 'generated/conreality.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +31,7 @@ class StartScreen extends StatefulWidget {
 
 class StartState extends State<StartScreen> {
   static const platform = MethodChannel('app.conreality.org/start');
+  final _items = List<String>.generate(5, (i) => "Item $i");
 
   @override
   initState() {
@@ -44,9 +45,9 @@ class StartState extends State<StartScreen> {
         title: Text(widget.title),
       ),
       drawer: StartDrawer(),
-      body: FutureBuilder<String>(
+      body: FutureBuilder<HelloResponse>(
         future: _connect(),
-        builder: (final BuildContext context, final AsyncSnapshot<String> snapshot) {
+        builder: (final BuildContext context, final AsyncSnapshot<HelloResponse> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.active:
@@ -58,9 +59,20 @@ class StartState extends State<StartScreen> {
                 )
               );
             case ConnectionState.done:
-              return snapshot.hasError ?
-                Text('Error: ${snapshot.error}') :
-                Text('Result: ${snapshot.data}');
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              final HelloResponse response = snapshot.data;
+              // TODO: response.list
+              return ListView.builder(
+                padding: EdgeInsets.all(8.0),
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('${_items[index]}'),
+                  );
+                },
+              );
           }
           return null; // unreachable
         },
@@ -68,15 +80,14 @@ class StartState extends State<StartScreen> {
     );
   }
 
-  Future<String> _connect() async {
+  Future<HelloResponse> _connect() async {
     final creds = gRPC.ChannelCredentials.insecure();
     final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
       options: gRPC.ChannelOptions(credentials: creds));
-    final stub = GreeterClient(channel);
+    final stub = MasterClient(channel);
     final name = 'Flutter';
     try {
-      final response = await stub.sayHello(HelloRequest()..name = name);
-      return response.message;
+      return await stub.hello(HelloRequest()..name = name);
     }
     finally {
       channel.shutdown();
