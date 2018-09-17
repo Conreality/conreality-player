@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'strings.dart';
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatScreen extends StatefulWidget {
@@ -65,7 +67,7 @@ class ChatState extends State<ChatScreen> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration: InputDecoration.collapsed(
-                  hintText: "Send a message",
+                  hintText: Strings.sendMessage,
                 ),
               ),
             ),
@@ -104,12 +106,12 @@ class ChatMessage extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(child: Text('I')),
+            child: CircleAvatar(child: Text("I")),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Me', style: Theme.of(context).textTheme.subhead),
+              Text("Me", style: Theme.of(context).textTheme.subhead),
               Container(
                 margin: EdgeInsets.only(top: 5.0),
                 child: Text(text),

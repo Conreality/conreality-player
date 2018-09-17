@@ -4,11 +4,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config.dart';
 import 'game.dart';
 import 'start.dart';
+import 'strings.dart';
 
 void main() => runApp(App());
 
@@ -33,7 +33,7 @@ class AppState extends State<App> {
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(
-      title: 'Conreality Player',
+      title: Strings.appTitle,
       color: Colors.grey,
       theme: ThemeData(
         primaryColor: Colors.black,
@@ -49,7 +49,7 @@ class AppState extends State<App> {
             case ConnectionState.done:
               final Game game = snapshot.data;
               if (snapshot.hasError || game == null) {
-                return StartScreen(title: 'Conreality Player');
+                return StartScreen(title: Strings.appTitle);
               }
               return GameScreen(game: game);
           }
@@ -64,12 +64,12 @@ class AppState extends State<App> {
     final Config config = await Config.load();
     await config.clear(); // DEBUG
     setState(() {
-      final bool hasGame = config.hasKey("game.url");
+      final bool hasGame = config.hasKey('game.url');
       _game = Future.value(!hasGame ? null :
         Game(
-          url:   Uri.tryParse(config.getString("game.url")),
-          uuid:  config.getString("game.uuid"),
-          title: config.getString("game.title"),
+          url:   Uri.tryParse(config.getString('game.url')),
+          uuid:  config.getString('game.uuid'),
+          title: config.getString('game.title'),
         )
       );
     });

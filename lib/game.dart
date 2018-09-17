@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'api.dart' as API;
+//import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -62,10 +63,10 @@ class GameState extends State<GameScreen> {
               );
             case ConnectionState.done:
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text("Error: ${snapshot.error}");
               }
               final API.HelloResponse response = snapshot.data; // TODO: response.list
-              return Text('${response.name}');
+              return Text(response.name);
           }
           assert(false, "unreachable");
           return null; // unreachable
@@ -81,7 +82,7 @@ class GameState extends State<GameScreen> {
     final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
       options: gRPC.ChannelOptions(credentials: creds));
     final stub = API.MasterClient(channel);
-    final name = 'Flutter';
+    final name = "Flutter";
     try {
       return await stub.hello(API.HelloRequest()..name = name);
     }

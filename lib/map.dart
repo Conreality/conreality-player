@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//import 'strings.dart';
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class MapScreen extends StatefulWidget {
@@ -29,7 +31,7 @@ class MapState extends State<MapScreen> {
         ],
       ),
       body: Center(
-        child: Text('Map Screen'), // TODO
+        child: Text("Map Screen"), // TODO
       ),
     );
   }

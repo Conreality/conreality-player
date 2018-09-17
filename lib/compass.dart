@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//import 'strings.dart';
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class CompassScreen extends StatefulWidget {
@@ -29,7 +31,7 @@ class CompassState extends State<CompassScreen> {
         ],
       ),
       body: Center(
-        child: Text('Compass Screen'), // TODO
+        child: Text("Compass Screen"), // TODO
       ),
     );
   }

@@ -22,7 +22,7 @@ class Config {
 
   String getString(final String key) => prefs.getString(key);
 
-  String getCurrentGameURL() => prefs.getString("game.url") ?? null;
+  String getCurrentGameURL() => prefs.getString('game.url') ?? null;
 
   Future<bool> clear() => prefs.clear();
 

@@ -1,7 +1,5 @@
 /* This is free and unencumbered software released into the public domain. */
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,6 +12,7 @@ import 'compass.dart';
 import 'connect.dart';
 import 'game.dart';
 import 'map.dart';
+import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +46,7 @@ class StartState extends State<StartScreen> {
             itemBuilder: (final BuildContext context) => <PopupMenuEntry<StartChoice>>[
               PopupMenuItem<StartChoice>(
                 value: StartChoice.connect,
-                child: Text('Connect to a game...'),
+                child: Text(Strings.connectToGame),
               ),
             ],
           ),
@@ -74,7 +73,7 @@ class StartState extends State<StartScreen> {
               );
             case ConnectionState.done:
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text("Error: ${snapshot.error}");
               }
               //final HelloResponse response = snapshot.data; // TODO: response.list
               return ListView.builder(
@@ -82,7 +81,7 @@ class StartState extends State<StartScreen> {
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text('${_items[index]}'),
+                    title: Text("${_items[index]}"),
                   );
                 },
               );
@@ -102,7 +101,7 @@ class StartState extends State<StartScreen> {
           showConnectDialog(context, config.getCurrentGameURL())
             .then((final Uri gameURL) {
               if (gameURL == null) throw ConnectCanceled();
-              return config.setCurrentGame(Game(url: gameURL, title: 'Connecting...'));
+              return config.setCurrentGame(Game(url: gameURL, title: Strings.connecting));
             })
             .then((final Game game) {
               Navigator.of(context).pushReplacement(
@@ -132,12 +131,12 @@ class StartDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.chat),
-        title: Text('Chat'),
+        title: Text("Chat"),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return ChatScreen(title: 'Demo Chat'); // TODO
+                return ChatScreen(title: "Demo Chat"); // TODO
               }
             )
           );
@@ -146,12 +145,12 @@ class StartDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.navigation),
-        title: Text('Compass'),
+        title: Text("Compass"),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return CompassScreen(title: 'Demo Compass'); // TODO
+                return CompassScreen(title: "Demo Compass"); // TODO
               }
             )
           );
@@ -160,12 +159,12 @@ class StartDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.gamepad),
-        title: Text('Game'),
+        title: Text("Game"),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return GameScreen(game: Game(title: 'Demo Game')); // TODO
+                return GameScreen(game: Game(title: "Demo Game")); // TODO
               }
             )
           );
@@ -174,12 +173,12 @@ class StartDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.map),
-        title: Text('Map'),
+        title: Text("Map"),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return MapScreen(title: 'Demo Map'); // TODO
+                return MapScreen(title: "Demo Map"); // TODO
               }
             )
           );
@@ -188,7 +187,7 @@ class StartDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.report),
-        title: Text('Send feedback'),
+        title: Text(Strings.sendFeedback),
         onTap: () {
           launch('https://github.com/conreality/conreality-player/issues/new');
         },
@@ -196,9 +195,9 @@ class StartDrawer extends StatelessWidget {
 
       AboutListTile(
         icon: FlutterLogo(), // TODO
-        applicationVersion: 'September 2018',
+        applicationVersion: Strings.appVersion,
         applicationIcon: FlutterLogo(), // TODO
-        applicationLegalese: 'This is free and unencumbered software released into the public domain.',
+        applicationLegalese: Strings.legalese,
         aboutBoxChildren: <Widget>[],
       ),
     ];

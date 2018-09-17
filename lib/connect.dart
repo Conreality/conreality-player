@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'strings.dart';
+
 ////////////////////////////////////////////////////////////////////////////////
 
 Future<Uri> showConnectDialog(final BuildContext context, final String defaultURL) async {
@@ -32,7 +34,7 @@ class ConnectDialog extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ConnectState extends State<ConnectDialog> {
-  Uri _url = null;
+  Uri _url;
 
   void _setURL(final Uri value) {
     setState(() {
@@ -43,10 +45,10 @@ class ConnectState extends State<ConnectDialog> {
   @override
   Widget build(final BuildContext context) {
     return AlertDialog(
-      title: Text('Connect to a game'),
+      title: Text(Strings.connectToGame),
       content: TextField(
         decoration: InputDecoration(
-          labelText: 'Enter the game URL:'
+          labelText: Strings.enterGameURL,
         ),
         maxLength: 128,
         keyboardType: TextInputType.url,
@@ -59,11 +61,11 @@ class ConnectState extends State<ConnectDialog> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('CANCEL'),
+          child: Text(Strings.cancel.toUpperCase()),
           onPressed: () => Navigator.of(context).pop(null),
         ),
         new FlatButton(
-          child: Text('CONNECT'),
+          child: Text(Strings.connect.toUpperCase()),
           onPressed: (_url == null) ? null : () => Navigator.of(context).pop(_url),
         ),
       ],
