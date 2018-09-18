@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'api.dart' as API;
+import 'config.dart';
 //import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,6 +21,10 @@ class Game {
   final String uuid;
 
   final String title;
+
+  String host() => url.host;
+
+  int port() => url.hasPort ? url.port : Config.DEFAULT_PORT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +45,7 @@ class GameState extends State<GameScreen> {
 
   @override
   Widget build(final BuildContext context) {
-    final Game game = widget.game;
+    final game = widget.game;
     return Scaffold(
       appBar: AppBar(
         title: Text(game.title ?? "?"),
@@ -78,9 +83,12 @@ class GameState extends State<GameScreen> {
   void _ignore() {}
 
   Future<API.HelloResponse> _connect() async {
+    final game = widget.game;
     final creds = gRPC.ChannelCredentials.insecure();
-    final channel = gRPC.ClientChannel('10.0.2.2', port: 50051, // FIXME
-      options: gRPC.ChannelOptions(credentials: creds));
+    final channel = gRPC.ClientChannel(game.host(),
+      port: game.port(),
+      options: gRPC.ChannelOptions(credentials: creds),
+    );
     final stub = API.MasterClient(channel);
     final name = "Flutter";
     try {

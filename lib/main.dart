@@ -62,7 +62,7 @@ class AppState extends State<App> {
 
   void _load() async {
     final Config config = await Config.load();
-    await config.clear(); // DEBUG
+    //await config.clear(); // DEBUG
     setState(() {
       final bool hasGame = config.hasKey('game.url');
       _game = Future.value(!hasGame ? null :
