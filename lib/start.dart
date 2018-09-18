@@ -6,12 +6,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //import 'api.dart' as API;
-import 'chat.dart';
 import 'config.dart';
-import 'compass.dart';
 import 'connect.dart';
 import 'game.dart';
-import 'map.dart';
 import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,13 +130,7 @@ class StartDrawer extends StatelessWidget {
         leading: Icon(Icons.chat),
         title: Text("Chat"),
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (final BuildContext context) {
-                return ChatScreen(title: "Demo Chat"); // TODO
-              }
-            )
-          );
+          Navigator.of(context).pushNamed('/chat');
         },
       ),
 
@@ -147,27 +138,7 @@ class StartDrawer extends StatelessWidget {
         leading: Icon(Icons.navigation),
         title: Text("Compass"),
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (final BuildContext context) {
-                return CompassScreen(title: "Demo Compass"); // TODO
-              }
-            )
-          );
-        },
-      ),
-
-      ListTile(
-        leading: Icon(Icons.gamepad),
-        title: Text("Game"),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (final BuildContext context) {
-                return GameScreen(game: Game(title: "Demo Game")); // TODO
-              }
-            )
-          );
+          Navigator.of(context).pushNamed('/compass');
         },
       ),
 
@@ -175,15 +146,11 @@ class StartDrawer extends StatelessWidget {
         leading: Icon(Icons.map),
         title: Text("Map"),
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (final BuildContext context) {
-                return MapScreen(title: "Demo Map"); // TODO
-              }
-            )
-          );
+          Navigator.of(context).pushNamed('/map');
         },
       ),
+
+      Divider(),
 
       ListTile(
         leading: Icon(Icons.report),

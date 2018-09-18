@@ -5,10 +5,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'api.dart' as API;
 import 'config.dart';
-import 'start.dart';
 import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -100,13 +100,7 @@ abstract class AbstractGameScreen extends StatelessWidget {
   void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
     switch (choice) {
       case GameMenuChoice.exit:
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute<void>(
-            builder: (final BuildContext context) {
-              return StartScreen(title: Strings.appTitle);
-            }
-          )
-        );
+        Navigator.of(context).pushReplacementNamed('/scan');
         break;
     }
   }
@@ -157,7 +151,7 @@ class GameOverviewScreen extends AbstractGameScreen {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(info.name),
+        title: Text(info.name ?? ""),
         actions: <Widget>[
           PopupMenuButton<GameMenuChoice>(
             onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
@@ -170,6 +164,7 @@ class GameOverviewScreen extends AbstractGameScreen {
           ),
         ],
       ),
+      drawer: GameDrawer(),
       body: Center(
         child: SpinKitWave(
           color: Colors.grey,
@@ -177,5 +172,67 @@ class GameOverviewScreen extends AbstractGameScreen {
         )
       ),
     );
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class GameDrawer extends StatelessWidget {
+  @override
+  Widget build(final BuildContext context) {
+    final List<Widget> allDrawerItems = <Widget>[
+      Divider(),
+
+      ListTile(
+        leading: Icon(Icons.contacts),
+        title: Text("Team"),
+        onTap: () {
+          Navigator.of(context).pushNamed('/team');
+        },
+      ),
+
+      ListTile(
+        leading: Icon(Icons.chat),
+        title: Text("Chat"),
+        onTap: () {
+          Navigator.of(context).pushNamed('/chat');
+        },
+      ),
+
+      ListTile(
+        leading: Icon(Icons.navigation),
+        title: Text("Compass"),
+        onTap: () {
+          Navigator.of(context).pushNamed('/compass');
+        },
+      ),
+
+      ListTile(
+        leading: Icon(Icons.map),
+        title: Text("Map"),
+        onTap: () {
+          Navigator.of(context).pushNamed('/map');
+        },
+      ),
+
+      Divider(),
+
+      ListTile(
+        leading: Icon(Icons.report),
+        title: Text(Strings.sendFeedback),
+        onTap: () {
+          launch('https://github.com/conreality/conreality-player/issues/new');
+        },
+      ),
+
+      AboutListTile(
+        icon: FlutterLogo(), // TODO
+        applicationVersion: Strings.appVersion,
+        applicationIcon: FlutterLogo(), // TODO
+        applicationLegalese: Strings.legalese,
+        aboutBoxChildren: <Widget>[],
+      ),
+    ];
+    return Drawer(child: ListView(primary: false, children: allDrawerItems));
   }
 }

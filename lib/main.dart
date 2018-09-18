@@ -5,8 +5,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'chat.dart';
 import 'config.dart';
+import 'compass.dart';
 import 'game.dart';
+import 'map.dart';
 import 'start.dart';
 import 'strings.dart';
 
@@ -57,6 +60,14 @@ class AppState extends State<App> {
           return null; // unreachable
         },
       ),
+      routes: {
+        '/chat': (context) => ChatScreen(title: "Demo Chat"),
+        '/compass': (context) => CompassScreen(title: "Demo Compass"),
+        //'/game': (context) => GameScreen(game: game), // TODO
+        '/map': (context) => MapScreen(title: "Demo Map"),
+        '/scan': (context) => StartScreen(title: Strings.appTitle),
+        //'/team': (context) => TeamScreen(), // tODO
+      },
     );
   }
 
