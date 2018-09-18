@@ -40,6 +40,7 @@ class AppState extends State<App> {
       color: Colors.grey,
       theme: ThemeData(
         primaryColor: Colors.black,
+        brightness: Brightness.dark,
       ),
       home: FutureBuilder<Game>(
         future: _game,

@@ -13,6 +13,14 @@ import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void exitGame(final BuildContext context) async {
+  Config.load()
+    .then((final Config config) => config.setCurrentGame(null))
+    .then((_) => Navigator.of(context).pushReplacementNamed('/'));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 class Game {
   Game({this.url, this.uuid, this.title});
 
@@ -90,25 +98,13 @@ class GameState extends State<GameScreen> {
   }
 
   Future<API.HelloResponse> _hello() async {
-    return _client.hello("0.0.0");
+    return _client.hello("0.0.0"); // TODO
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-abstract class AbstractGameScreen extends StatelessWidget {
-  void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
-    switch (choice) {
-      case GameMenuChoice.exit:
-        Navigator.of(context).pushReplacementNamed('/scan');
-        break;
-    }
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class GameLoadingScreen extends AbstractGameScreen {
+class GameLoadingScreen extends StatelessWidget {
   GameLoadingScreen({this.game});
 
   final Game game;
@@ -138,20 +134,33 @@ class GameLoadingScreen extends AbstractGameScreen {
       ),
     );
   }
+
+  void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
+    switch (choice) {
+      case GameMenuChoice.exit:
+        exitGame(context);
+        break;
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class GameOverviewScreen extends AbstractGameScreen {
+class GameOverviewScreen extends StatefulWidget {
   GameOverviewScreen({this.info});
 
   final API.GameInformation info;
 
   @override
+  GameOverviewState createState() => GameOverviewState();
+}
+
+class GameOverviewState extends State<GameOverviewScreen> {
+  @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(info.name ?? ""),
+        title: Text(widget.info.name ?? ""),
         actions: <Widget>[
           PopupMenuButton<GameMenuChoice>(
             onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
@@ -171,7 +180,40 @@ class GameOverviewScreen extends AbstractGameScreen {
           size: 100.0,
         )
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Stats"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contacts),
+            title: Text(Strings.team),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            title: Text(Strings.chat),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.navigation),
+            title: Text(Strings.compass),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text(Strings.map),
+          ),
+        ],
+      ),
     );
+  }
+
+  void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
+    switch (choice) {
+      case GameMenuChoice.exit:
+        exitGame(context);
+        break;
+    }
   }
 }
 
@@ -185,7 +227,7 @@ class GameDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.contacts),
-        title: Text("Team"),
+        title: Text(Strings.team),
         onTap: () {
           Navigator.of(context).pushNamed('/team');
         },
@@ -193,7 +235,7 @@ class GameDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.chat),
-        title: Text("Chat"),
+        title: Text(Strings.chat),
         onTap: () {
           Navigator.of(context).pushNamed('/chat');
         },
@@ -201,7 +243,7 @@ class GameDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.navigation),
-        title: Text("Compass"),
+        title: Text(Strings.compass),
         onTap: () {
           Navigator.of(context).pushNamed('/compass');
         },
@@ -209,7 +251,7 @@ class GameDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.map),
-        title: Text("Map"),
+        title: Text(Strings.map),
         onTap: () {
           Navigator.of(context).pushNamed('/map');
         },
@@ -221,7 +263,7 @@ class GameDrawer extends StatelessWidget {
         leading: Icon(Icons.report),
         title: Text(Strings.sendFeedback),
         onTap: () {
-          launch('https://github.com/conreality/conreality-player/issues/new');
+          launch(Strings.feedbackURL);
         },
       ),
 

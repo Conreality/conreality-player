@@ -30,11 +30,20 @@ class Config {
   Future<bool> clear() => prefs.clear();
 
   Future<Game> setCurrentGame(final Game game) async {
-    await Future.wait([
-      prefs.setString('game.url', game.url.toString()),
-      prefs.setString('game.uuid', game.uuid),
-      prefs.setString('game.title', game.title),
-    ]);
+    if (game == null) {
+      await Future.wait([
+        prefs.remove('game.url'),
+        prefs.remove('game.uuid'),
+        prefs.remove('game.title'),
+      ]);
+    }
+    else {
+      await Future.wait([
+        prefs.setString('game.url', game.url.toString()),
+        prefs.setString('game.uuid', game.uuid),
+        prefs.setString('game.title', game.title),
+      ]);
+    }
     return game;
   }
 }

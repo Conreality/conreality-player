@@ -38,6 +38,7 @@ class ScanState extends State<ScanScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
+          IconButton(icon: Icon(Icons.camera_alt), onPressed: _scan),
           PopupMenuButton<ScanMenuChoice>(
             onSelected: _onMenuAction,
             itemBuilder: (final BuildContext context) => <PopupMenuEntry<ScanMenuChoice>>[
@@ -91,6 +92,10 @@ class ScanState extends State<ScanScreen> {
     );
   }
 
+  void _scan() {
+    // TODO: scan QR code.
+  }
+
   void _onMenuAction(final ScanMenuChoice choice) {
     switch (choice) {
       case ScanMenuChoice.connect:
@@ -128,7 +133,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.chat),
-        title: Text("Chat"),
+        title: Text(Strings.chat),
         onTap: () {
           Navigator.of(context).pushNamed('/chat');
         },
@@ -136,7 +141,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.navigation),
-        title: Text("Compass"),
+        title: Text(Strings.compass),
         onTap: () {
           Navigator.of(context).pushNamed('/compass');
         },
@@ -144,7 +149,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.map),
-        title: Text("Map"),
+        title: Text(Strings.map),
         onTap: () {
           Navigator.of(context).pushNamed('/map');
         },
@@ -156,7 +161,7 @@ class ScanDrawer extends StatelessWidget {
         leading: Icon(Icons.report),
         title: Text(Strings.sendFeedback),
         onTap: () {
-          launch('https://github.com/conreality/conreality-player/issues/new');
+          launch(Strings.feedbackURL);
         },
       ),
 
