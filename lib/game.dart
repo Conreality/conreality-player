@@ -1,7 +1,6 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async';
-import 'package:grpc/grpc.dart' as gRPC;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +47,20 @@ enum GameMenuChoice { exit }
 class GameState extends State<GameScreen> {
   static const platform = MethodChannel('app.conreality.org/game');
 
+  API.Client _client;
+
+  @override
+  void initState() {
+    super.initState();
+    _client = API.Client(widget.game);
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await _disconnect();
+  }
+
   @override
   Widget build(final BuildContext context) {
     final game = widget.game;
@@ -67,14 +80,14 @@ class GameState extends State<GameScreen> {
         ],
       ),
       body: FutureBuilder<API.HelloResponse>(
-        future: _connect(),
+        future: _hello(),
         builder: (final BuildContext context, final AsyncSnapshot<API.HelloResponse> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
               return Center(
-                child: SpinKitRipple(
+                child: SpinKitFadingCircle(
                   color: Colors.grey,
                   size: 300.0,
                 )
@@ -107,20 +120,11 @@ class GameState extends State<GameScreen> {
     }
   }
 
-  Future<API.HelloResponse> _connect() async {
-    final game = widget.game;
-    final creds = gRPC.ChannelCredentials.insecure();
-    final channel = gRPC.ClientChannel(game.host(),
-      port: game.port(),
-      options: gRPC.ChannelOptions(credentials: creds),
-    );
-    final stub = API.MasterClient(channel);
-    final name = "Flutter";
-    try {
-      return await stub.hello(API.HelloRequest()..name = name);
-    }
-    finally {
-      channel.shutdown();
-    }
+  Future<Null> _disconnect() async {
+    return _client.disconnect();
+  }
+
+  Future<API.HelloResponse> _hello() async {
+    return _client.hello("0.0.0");
   }
 }
