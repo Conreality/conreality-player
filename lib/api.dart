@@ -32,6 +32,6 @@ class Client {
 
   Future<HelloResponse> hello(final String version) async {
     final stub = MasterClient(_channel);
-    return await stub.hello(HelloRequest()..name = version); // FIXME
+    return await stub.hello(HelloRequest()..version = version);
   }
 }
