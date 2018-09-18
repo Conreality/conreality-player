@@ -13,22 +13,22 @@ import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-enum StartMenuChoice { connect }
+enum ScanMenuChoice { connect }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class StartScreen extends StatefulWidget {
-  StartScreen({Key key, this.title}) : super(key: key);
+class ScanScreen extends StatefulWidget {
+  ScanScreen({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  StartState createState() => StartState();
+  ScanState createState() => ScanState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class StartState extends State<StartScreen> {
+class ScanState extends State<ScanScreen> {
   static const platform = MethodChannel('app.conreality.org/start');
   //final _items = List<String>.generate(5, (i) => "Item $i");
 
@@ -38,18 +38,18 @@ class StartState extends State<StartScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
-          PopupMenuButton<StartMenuChoice>(
+          PopupMenuButton<ScanMenuChoice>(
             onSelected: _onMenuAction,
-            itemBuilder: (final BuildContext context) => <PopupMenuEntry<StartMenuChoice>>[
-              PopupMenuItem<StartMenuChoice>(
-                value: StartMenuChoice.connect,
+            itemBuilder: (final BuildContext context) => <PopupMenuEntry<ScanMenuChoice>>[
+              PopupMenuItem<ScanMenuChoice>(
+                value: ScanMenuChoice.connect,
                 child: Text(Strings.connectToGame),
               ),
             ],
           ),
         ],
       ),
-      drawer: StartDrawer(),
+      drawer: ScanDrawer(),
       body: SpinKitRipple(
         color: Colors.grey,
         size: 300.0,
@@ -91,9 +91,9 @@ class StartState extends State<StartScreen> {
     );
   }
 
-  void _onMenuAction(final StartMenuChoice choice) {
+  void _onMenuAction(final ScanMenuChoice choice) {
     switch (choice) {
-      case StartMenuChoice.connect:
+      case ScanMenuChoice.connect:
         Config.load().then((final Config config) {
           showConnectDialog(context, config.getCurrentGameURL() ?? Config.DEFAULT_URL)
             .then((final Uri gameURL) {
@@ -120,7 +120,7 @@ class StartState extends State<StartScreen> {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class StartDrawer extends StatelessWidget {
+class ScanDrawer extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[

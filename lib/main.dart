@@ -10,7 +10,7 @@ import 'config.dart';
 import 'compass.dart';
 import 'game.dart';
 import 'map.dart';
-import 'start.dart';
+import 'scan.dart';
 import 'strings.dart';
 
 void main() => runApp(App());
@@ -52,7 +52,7 @@ class AppState extends State<App> {
             case ConnectionState.done:
               final Game game = snapshot.data;
               if (snapshot.hasError || game == null) {
-                return StartScreen(title: Strings.appTitle);
+                return ScanScreen(title: Strings.appTitle);
               }
               return GameScreen(game: game);
           }
@@ -65,7 +65,7 @@ class AppState extends State<App> {
         '/compass': (context) => CompassScreen(title: "Demo Compass"),
         //'/game': (context) => GameScreen(game: game), // TODO
         '/map': (context) => MapScreen(title: "Demo Map"),
-        '/scan': (context) => StartScreen(title: Strings.appTitle),
+        '/scan': (context) => ScanScreen(title: Strings.appTitle),
         //'/team': (context) => TeamScreen(), // tODO
       },
     );
