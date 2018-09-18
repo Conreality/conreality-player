@@ -9,7 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'api.dart' as API;
 import 'config.dart';
-//import 'strings.dart';
+import 'start.dart';
+import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -40,6 +41,10 @@ class GameScreen extends StatefulWidget {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+enum GameMenuChoice { exit }
+
+////////////////////////////////////////////////////////////////////////////////
+
 class GameState extends State<GameScreen> {
   static const platform = MethodChannel('app.conreality.org/game');
 
@@ -50,7 +55,15 @@ class GameState extends State<GameScreen> {
       appBar: AppBar(
         title: Text(game.title ?? "?"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.more_vert), onPressed: _ignore),
+          PopupMenuButton<GameMenuChoice>(
+            onSelected: _onMenuAction,
+            itemBuilder: (final BuildContext context) => <PopupMenuEntry<GameMenuChoice>>[
+              PopupMenuItem<GameMenuChoice>(
+                value: GameMenuChoice.exit,
+                child: Text(Strings.exitGame),
+              ),
+            ],
+          ),
         ],
       ),
       body: FutureBuilder<API.HelloResponse>(
@@ -80,7 +93,19 @@ class GameState extends State<GameScreen> {
     );
   }
 
-  void _ignore() {}
+  void _onMenuAction(final GameMenuChoice choice) {
+    switch (choice) {
+      case GameMenuChoice.exit:
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(
+            builder: (final BuildContext context) {
+              return StartScreen(title: Strings.appTitle);
+            }
+          )
+        );
+        break;
+    }
+  }
 
   Future<API.HelloResponse> _connect() async {
     final game = widget.game;

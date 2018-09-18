@@ -16,7 +16,7 @@ import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-enum StartChoice { connect }
+enum StartMenuChoice { connect }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -41,11 +41,11 @@ class StartState extends State<StartScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
-          PopupMenuButton<StartChoice>(
+          PopupMenuButton<StartMenuChoice>(
             onSelected: _onMenuAction,
-            itemBuilder: (final BuildContext context) => <PopupMenuEntry<StartChoice>>[
-              PopupMenuItem<StartChoice>(
-                value: StartChoice.connect,
+            itemBuilder: (final BuildContext context) => <PopupMenuEntry<StartMenuChoice>>[
+              PopupMenuItem<StartMenuChoice>(
+                value: StartMenuChoice.connect,
                 child: Text(Strings.connectToGame),
               ),
             ],
@@ -94,9 +94,9 @@ class StartState extends State<StartScreen> {
     );
   }
 
-  void _onMenuAction(final StartChoice choice) {
+  void _onMenuAction(final StartMenuChoice choice) {
     switch (choice) {
-      case StartChoice.connect:
+      case StartMenuChoice.connect:
         Config.load().then((final Config config) {
           showConnectDialog(context, config.getCurrentGameURL() ?? Config.DEFAULT_URL)
             .then((final Uri gameURL) {
