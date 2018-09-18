@@ -10,11 +10,10 @@ import 'strings.dart';
 ////////////////////////////////////////////////////////////////////////////////
 
 Future<Uri> showConnectDialog(final BuildContext context, final String defaultURL) async {
-  // TODO: defaultURL
   return showDialog<Uri>(
     context: context,
     barrierDismissible: true,
-    builder: (final BuildContext context) => ConnectDialog()
+    builder: (final BuildContext context) => ConnectDialog(defaultURL: defaultURL)
   );
 }
 
@@ -25,7 +24,9 @@ class ConnectCanceled implements Exception {}
 ////////////////////////////////////////////////////////////////////////////////
 
 class ConnectDialog extends StatefulWidget {
-  ConnectDialog({Key key}) : super(key: key);
+  ConnectDialog({Key key, this.defaultURL}) : super(key: key);
+
+  final String defaultURL;
 
   @override
   ConnectState createState() => ConnectState();
@@ -35,10 +36,27 @@ class ConnectDialog extends StatefulWidget {
 
 class ConnectState extends State<ConnectDialog> {
   Uri _url;
+  final TextEditingController _controller = TextEditingController();
 
-  void _setURL(final Uri value) {
+  @override
+  void initState() {
+    super.initState();
+    _url = Uri.tryParse(widget.defaultURL);
+    _controller.text = widget.defaultURL;
+    _controller.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onChanged() {
+    final String value = _controller.text;
     setState(() {
-      _url = value;
+      _url = (value != null && value.trim().length > 0) ? Uri.tryParse(value) : null;
     });
   }
 
@@ -50,14 +68,12 @@ class ConnectState extends State<ConnectDialog> {
         decoration: InputDecoration(
           labelText: Strings.enterGameURL,
         ),
+        controller: _controller,
         maxLength: 128,
         keyboardType: TextInputType.url,
         textInputAction: TextInputAction.go,
         autofocus: true,
         autocorrect: false,
-        onChanged: (String value) {
-          _setURL((value != null && value.trim().length > 0) ? Uri.tryParse(value) : null);
-        },
       ),
       actions: <Widget>[
         FlatButton(

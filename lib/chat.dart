@@ -25,6 +25,12 @@ class ChatState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
 
   @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +91,7 @@ class ChatState extends State<ChatScreen> {
 
   void _ignore() {}
 
-  void _handleSubmitted(String text) {
+  void _handleSubmitted(final String text) {
     _textController.clear();
     ChatMessage message = ChatMessage(text: text);
     setState(() { _messages.insert(0, message); });

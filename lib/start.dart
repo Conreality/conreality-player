@@ -98,7 +98,7 @@ class StartState extends State<StartScreen> {
     switch (choice) {
       case StartChoice.connect:
         Config.load().then((final Config config) {
-          showConnectDialog(context, config.getCurrentGameURL())
+          showConnectDialog(context, config.getCurrentGameURL() ?? Config.DEFAULT_URL)
             .then((final Uri gameURL) {
               if (gameURL == null) throw ConnectCanceled();
               return config.setCurrentGame(Game(url: gameURL, title: Strings.connecting));

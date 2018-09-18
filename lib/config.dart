@@ -9,6 +9,8 @@ import 'game.dart';
 ////////////////////////////////////////////////////////////////////////////////
 
 class Config {
+  static const DEFAULT_URL = 'grpc://10.0.2.2:50051'; // 127.0.0.1:50051 on the emulator host
+
   Config({this.prefs});
 
   final SharedPreferences prefs;
