@@ -11,27 +11,38 @@ import 'generated/conreality.pbgrpc.dart';
 export 'generated/conreality.pb.dart';
 export 'generated/conreality.pbgrpc.dart';
 
-class Client {
-  final gRPC.ChannelCredentials _creds = gRPC.ChannelCredentials.insecure();
-  gRPC.ClientChannel _channel;
+////////////////////////////////////////////////////////////////////////////////
 
-  Client(final Game game) {
-    _channel = gRPC.ClientChannel(game.host(),
-      port: game.port(),
-      options: gRPC.ChannelOptions(credentials: _creds),
-    );
-  }
+class Client extends MasterClient {
+  static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
+
+  Client(final Game game)
+    : super(ClientChannel(game.host(),
+        port: game.port(),
+        options: gRPC.ChannelOptions(credentials: creds),
+      ));
 
   void dispose() {}
 
   void connect() async {}
 
   Future<Null> disconnect() async {
-    return _channel.shutdown();
+    //return _channel.shutdown(); // FIXME: fix upstream bug first
+    return Future.value();
   }
 
-  Future<HelloResponse> hello(final String version) async {
-    final stub = MasterClient(_channel);
-    return await stub.hello(HelloRequest()..version = version);
+  Future<HelloResponse> helloSimple(final String version) async {
+    return hello(HelloRequest()..version = version);
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class ClientChannel extends gRPC.ClientChannel {
+  ClientChannel(
+    final String host, {
+      final int port = 443,
+      final gRPC.ChannelOptions options = const gRPC.ChannelOptions(),
+    })
+    : super(host, port: port, options: options);
 }

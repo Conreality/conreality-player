@@ -30,7 +30,7 @@ class GameLoaderState extends State<GameLoader> {
   void initState() {
     super.initState();
     var client = API.Client(widget.game);
-    _response = Future.sync(() => client.hello("0.0.0")) // TODO: version
+    _response = Future.sync(() => client.helloSimple("0.0.0")) // TODO: version
       .whenComplete(client.disconnect);
   }
 
