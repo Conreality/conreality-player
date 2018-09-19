@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 //import 'api.dart' as API;
 import 'config.dart';
-import 'connect.dart';
+import 'connect_dialog.dart';
 import 'game.dart';
 import 'game_loader.dart';
 import 'strings.dart';

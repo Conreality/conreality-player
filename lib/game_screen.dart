@@ -5,9 +5,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'api.dart' as API;
+import 'chat_tab.dart';
+import 'compass_tab.dart';
 import 'game.dart';
 import 'game_drawer.dart';
+import 'home_tab.dart';
+import 'map_tab.dart';
 import 'strings.dart';
+import 'team_tab.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +32,11 @@ class GameState extends State<GameScreen> {
   API.Client _client;
   int _tabIndex = 0;
   final List<Widget> _tabs = [
-    Container(color: Colors.white),
-    Container(color: Colors.red),
-    Container(color: Colors.green),
-    Container(color: Colors.blue),
+    HomeTab(),
+    TeamTab(),
+    ChatTab(),
+    CompassTab(),
+    MapTab(),
   ];
 
   @override
@@ -65,12 +71,13 @@ class GameState extends State<GameScreen> {
       drawer: GameDrawer(),
       body: _tabs[_tabIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: _onTabTapped,
         currentIndex: _tabIndex,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text("Stats"),
+            title: Text(Strings.home),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),

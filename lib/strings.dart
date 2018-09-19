@@ -14,6 +14,7 @@ class Strings {
   static String enterGameURL = "Enter the game URL:";
   static String exitGame = "Exit this game";
   static String feedbackURL = 'https://github.com/conreality/conreality-player/issues/new';
+  static String home = "Home";
   static String map = "Map";
   static String sendFeedback = "Send feedback";
   static String sendMessage = "Send a message";

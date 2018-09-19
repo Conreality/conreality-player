@@ -5,13 +5,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'chat.dart';
+import 'chat_screen.dart';
 import 'config.dart';
-import 'compass.dart';
+import 'compass_screen.dart';
 import 'game.dart';
 import 'game_loader.dart';
-import 'map.dart';
-import 'scan.dart';
+import 'map_screen.dart';
+import 'scan_screen.dart';
 import 'strings.dart';
 
 void main() => runApp(App());

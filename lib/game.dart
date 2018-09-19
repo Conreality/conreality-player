@@ -9,7 +9,7 @@ import 'config.dart';
 void exitGame(final BuildContext context) async {
   Config.load()
     .then((final Config config) => config.setCurrentGame(null))
-    .then((_) => Navigator.of(context).pushReplacementNamed('/'));
+    .then((_) => Navigator.of(context).pushReplacementNamed('/scan'));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
