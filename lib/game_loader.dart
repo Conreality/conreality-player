@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'api.dart' as API;
 import 'game.dart';
@@ -25,25 +24,21 @@ class GameLoader extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameLoaderState extends State<GameLoader> {
-  API.Client _client;
+  Future<API.HelloResponse> _response;
 
   @override
   void initState() {
     super.initState();
-    _client = API.Client(widget.game);
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    await _disconnect();
+    var client = API.Client(widget.game);
+    _response = Future.sync(() => client.hello("0.0.0")) // TODO: version
+      .whenComplete(client.disconnect);
   }
 
   @override
   Widget build(final BuildContext context) {
     final game = widget.game;
     return FutureBuilder<API.HelloResponse>(
-      future: _hello(),
+      future: _response,
       builder: (final BuildContext context, final AsyncSnapshot<API.HelloResponse> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -59,13 +54,5 @@ class GameLoaderState extends State<GameLoader> {
         return null; // unreachable
       },
     );
-  }
-
-  Future<Null> _disconnect() async {
-    return _client.disconnect();
-  }
-
-  Future<API.HelloResponse> _hello() async {
-    return _client.hello("0.0.0"); // TODO
   }
 }

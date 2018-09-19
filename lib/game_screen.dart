@@ -1,5 +1,7 @@
 /* This is free and unencumbered software released into the public domain. */
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'api.dart' as API;
@@ -22,6 +24,7 @@ class GameScreen extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameState extends State<GameScreen> {
+  API.Client _client;
   int _tabIndex = 0;
   final List<Widget> _tabs = [
     Container(color: Colors.white),
@@ -29,6 +32,18 @@ class GameState extends State<GameScreen> {
     Container(color: Colors.green),
     Container(color: Colors.blue),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _client = API.Client(widget.game);
+  }
+
+  @override
+  Future<Null> dispose() async {
+    super.dispose();
+    return _client.disconnect();
+  }
 
   @override
   Widget build(final BuildContext context) {
