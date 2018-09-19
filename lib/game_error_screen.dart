@@ -31,12 +31,14 @@ class GameErrorScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.error, size: 192.0),
-          Text(error.toString()),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.error, size: 192.0),
+            Text(error.toString()),
+          ],
+        ),
       ),
     );
   }

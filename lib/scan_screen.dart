@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +11,8 @@ import 'config.dart';
 import 'connect_dialog.dart';
 import 'game.dart';
 import 'game_loader.dart';
+import 'scan_drawer.dart';
+import 'scan_error_body.dart';
 import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +55,16 @@ class ScanState extends State<ScanScreen> {
         ],
       ),
       drawer: ScanDrawer(),
-      body: SpinKitRipple(
-        color: Colors.grey,
-        size: 300.0,
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          final BuildContext context,
+          final ConnectivityResult connectivity,
+          final Widget child,
+        ) {
+          final bool isConnected = (connectivity == ConnectivityResult.wifi);
+          return isConnected ? child : ScanErrorBody(error: Strings.connectToWiFiToJoin);
+        },
+        child: SpinKitRipple(color: Colors.grey, size: 300.0), // TODO
       ),
 /*
       body: FutureBuilder<API.HelloResponse>(
@@ -121,59 +131,5 @@ class ScanState extends State<ScanScreen> {
         });
         break;
     }
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class ScanDrawer extends StatelessWidget {
-  @override
-  Widget build(final BuildContext context) {
-    final List<Widget> allDrawerItems = <Widget>[
-      Divider(),
-
-      ListTile(
-        leading: Icon(Icons.chat),
-        title: Text(Strings.chat),
-        onTap: () {
-          Navigator.of(context).pushNamed('/chat');
-        },
-      ),
-
-      ListTile(
-        leading: Icon(Icons.navigation),
-        title: Text(Strings.compass),
-        onTap: () {
-          Navigator.of(context).pushNamed('/compass');
-        },
-      ),
-
-      ListTile(
-        leading: Icon(Icons.map),
-        title: Text(Strings.map),
-        onTap: () {
-          Navigator.of(context).pushNamed('/map');
-        },
-      ),
-
-      Divider(),
-
-      ListTile(
-        leading: Icon(Icons.report),
-        title: Text(Strings.sendFeedback),
-        onTap: () {
-          launch(Strings.feedbackURL);
-        },
-      ),
-
-      AboutListTile(
-        icon: FlutterLogo(), // TODO
-        applicationVersion: Strings.appVersion,
-        applicationIcon: FlutterLogo(), // TODO
-        applicationLegalese: Strings.legalese,
-        aboutBoxChildren: <Widget>[],
-      ),
-    ];
-    return Drawer(child: ListView(primary: false, children: allDrawerItems));
   }
 }

@@ -10,6 +10,7 @@ class Strings {
   static String compass = "Compass";
   static String connect = "Connect";
   static String connectToGame = "Connect to a game...";
+  static String connectToWiFiToJoin = "Connect to a Wi-Fi network to join a game.";
   static String connecting = "Connecting...";
   static String enterGameURL = "Enter the game URL:";
   static String exit = "Exit";

@@ -29,6 +29,7 @@ dependencies:
   url_launcher: ^3.0.3
 
   # Third-party Flutter plugins:
+  flutter_offline: ^0.2.1
   flutter_spinkit: ^2.1.0
   grpc: ^0.6.4
   postgres: ^1.0.0
