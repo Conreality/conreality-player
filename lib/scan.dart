@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'config.dart';
 import 'connect.dart';
 import 'game.dart';
+import 'game_loader.dart';
 import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +110,7 @@ class ScanState extends State<ScanScreen> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute<void>(
                   builder: (final BuildContext context) {
-                    return GameScreen(game: game);
+                    return GameLoader(game: game);
                   }
                 )
               );

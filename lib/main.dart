@@ -9,6 +9,7 @@ import 'chat.dart';
 import 'config.dart';
 import 'compass.dart';
 import 'game.dart';
+import 'game_loader.dart';
 import 'map.dart';
 import 'scan.dart';
 import 'strings.dart';
@@ -55,7 +56,7 @@ class AppState extends State<App> {
               if (snapshot.hasError || game == null) {
                 return ScanScreen(title: Strings.appTitle);
               }
-              return GameScreen(game: game);
+              return GameLoader(game: game);
           }
           assert(false, "unreachable");
           return null; // unreachable
