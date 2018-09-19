@@ -1,7 +1,6 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'game.dart';
 import 'strings.dart';
@@ -18,33 +17,27 @@ class GameErrorScreen extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title ?? ""),
+        title: Text(game.title ?? Strings.connecting),
         actions: <Widget>[
-          PopupMenuButton<GameMenuChoice>(
-            onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
-            itemBuilder: (final BuildContext context) => <PopupMenuEntry<GameMenuChoice>>[
-              PopupMenuItem<GameMenuChoice>(
-                value: GameMenuChoice.exit,
-                child: Text(Strings.exitGame),
-              ),
-            ],
+          FlatButton(
+            child: Text(Strings.retry.toUpperCase()),
+            onPressed: () {
+              // TODO
+            },
+          ),
+          FlatButton(
+            child: Text(Strings.cancel.toUpperCase()),
+            onPressed: () => exitGame(context),
           ),
         ],
       ),
-      body: Center(
-        child: SpinKitFadingCircle(
-          color: Colors.grey,
-          size: 300.0,
-        )
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.error, size: 192.0),
+          Text(error.toString()),
+        ],
       ),
     );
-  }
-
-  void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
-    switch (choice) {
-      case GameMenuChoice.exit:
-        exitGame(context);
-        break;
-    }
   }
 }

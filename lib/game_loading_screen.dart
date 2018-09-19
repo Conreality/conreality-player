@@ -17,16 +17,11 @@ class GameLoadingScreen extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title ?? ""),
+        title: Text(game.title ?? Strings.loading),
         actions: <Widget>[
-          PopupMenuButton<GameMenuChoice>(
-            onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
-            itemBuilder: (final BuildContext context) => <PopupMenuEntry<GameMenuChoice>>[
-              PopupMenuItem<GameMenuChoice>(
-                value: GameMenuChoice.exit,
-                child: Text(Strings.exitGame),
-              ),
-            ],
+          FlatButton(
+            child: Text(Strings.cancel.toUpperCase()),
+            onPressed: () => exitGame(context),
           ),
         ],
       ),
@@ -37,13 +32,5 @@ class GameLoadingScreen extends StatelessWidget {
         )
       ),
     );
-  }
-
-  void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
-    switch (choice) {
-      case GameMenuChoice.exit:
-        exitGame(context);
-        break;
-    }
   }
 }

@@ -12,10 +12,13 @@ class Strings {
   static String connectToGame = "Connect to a game...";
   static String connecting = "Connecting...";
   static String enterGameURL = "Enter the game URL:";
+  static String exit = "Exit";
   static String exitGame = "Exit this game";
   static String feedbackURL = 'https://github.com/conreality/conreality-player/issues/new';
   static String home = "Home";
+  static String loading = "Loading...";
   static String map = "Map";
+  static String retry = "Retry";
   static String sendFeedback = "Send feedback";
   static String sendMessage = "Send a message";
   static String team = "Team";
