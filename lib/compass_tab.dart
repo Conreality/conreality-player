@@ -40,7 +40,7 @@ class CompassState extends State<CompassTab> {
   Widget build(final BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: Colors.blueGrey,
+      color: Colors.blueGrey[700],
       child: Transform.rotate(
         angle: ((_direction ?? 0) * (math.pi / 180) * -1),
         child: Image.asset('assets/compass.png'),

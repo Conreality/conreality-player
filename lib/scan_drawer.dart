@@ -14,14 +14,6 @@ class ScanDrawer extends StatelessWidget {
       Divider(),
 
       ListTile(
-        leading: Icon(Icons.chat),
-        title: Text(Strings.chat),
-        onTap: () {
-          Navigator.of(context).pushNamed('/chat');
-        },
-      ),
-
-      ListTile(
         leading: Icon(Icons.navigation),
         title: Text(Strings.compass),
         onTap: () {
@@ -34,6 +26,16 @@ class ScanDrawer extends StatelessWidget {
         title: Text(Strings.map),
         onTap: () {
           Navigator.of(context).pushNamed('/map');
+        },
+      ),
+
+      Divider(),
+
+      ListTile(
+        leading: Icon(Icons.settings),
+        title: Text(Strings.settings),
+        onTap: () {
+          Navigator.of(context).pushNamed('/config');
         },
       ),
 

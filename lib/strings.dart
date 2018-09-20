@@ -23,6 +23,7 @@ class Strings {
   static String scanThisWithAnotherDevice = "Scan this with another device to connect it to this game.";
   static String sendFeedback = "Send feedback";
   static String sendMessage = "Send a message";
+  static String settings = "Settings";
   static String share = "Share";
   static String team = "Team";
   static String legalese = "This is free and unencumbered software released into the public domain.";

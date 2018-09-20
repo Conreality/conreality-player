@@ -64,9 +64,9 @@ class AppState extends State<App> {
       ),
       routes: {
         '/chat': (context) => ChatScreen(title: "Demo Chat"),
-        '/compass': (context) => CompassScreen(title: "Demo Compass"),
+        '/compass': (context) => CompassScreen(title: "Compass"),
         //'/game': (context) => GameScreen(game: game), // TODO
-        '/map': (context) => MapScreen(title: "Demo Map"),
+        '/map': (context) => MapScreen(title: "Map"),
         '/scan': (context) => ScanScreen(title: Strings.appTitle),
         //'/team': (context) => TeamScreen(), // tODO
       },

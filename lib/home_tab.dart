@@ -7,6 +7,6 @@ import 'package:flutter/material.dart';
 class HomeTab extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
-    return Container(color: Colors.black);
+    return Container(color: Colors.grey[850]);
   }
 }
