@@ -11,6 +11,7 @@ class GameDrawer extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[
+/*
       Divider(),
 
       ListTile(
@@ -44,6 +45,7 @@ class GameDrawer extends StatelessWidget {
           Navigator.of(context).pushNamed('/map');
         },
       ),
+*/
 
       Divider(),
 

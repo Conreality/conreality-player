@@ -7,6 +7,6 @@ import 'package:flutter/material.dart';
 class MapTab extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
-    return Container(color: Colors.white);
+    return Container(color: Colors.green); // TODO
   }
 }
