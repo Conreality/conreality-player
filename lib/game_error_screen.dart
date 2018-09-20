@@ -36,7 +36,11 @@ class GameErrorScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(Icons.error, size: 192.0),
-            Text(error.toString()),
+            Text(
+              error.toString(),
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

@@ -11,6 +11,7 @@ import 'game.dart';
 import 'game_drawer.dart';
 import 'home_tab.dart';
 import 'map_tab.dart';
+import 'share_tab.dart';
 import 'strings.dart';
 import 'team_tab.dart';
 
@@ -23,27 +24,27 @@ class GameScreen extends StatefulWidget {
   final API.GameInformation info;
 
   @override
-  GameState createState() => GameState();
+  GameState createState() => GameState(game);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameState extends State<GameScreen> {
-  API.Client _client;
+  final API.Client _client;
+  final List<Widget> _tabs;
   int _tabIndex = 0;
-  final List<Widget> _tabs = [
-    HomeTab(),
-    TeamTab(),
-    ChatTab(),
-    CompassTab(),
-    MapTab(),
-  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _client = API.Client(widget.game);
-  }
+  GameState(final Game game)
+    : _client = API.Client(game),
+      _tabs = [
+        HomeTab(),
+        ShareTab(gameURL: game.url.toString()),
+        TeamTab(),
+        ChatTab(),
+        CompassTab(),
+        MapTab(),
+      ],
+      super();
 
   @override
   Future<Null> dispose() async {
@@ -78,6 +79,10 @@ class GameState extends State<GameScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text(Strings.home),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.share),
+            title: Text(Strings.share),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),

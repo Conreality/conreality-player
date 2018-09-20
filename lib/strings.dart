@@ -20,8 +20,10 @@ class Strings {
   static String loading = "Loading...";
   static String map = "Map";
   static String retry = "Retry";
+  static String scanThisWithAnotherDevice = "Scan this with another device to connect it to this game.";
   static String sendFeedback = "Send feedback";
   static String sendMessage = "Send a message";
+  static String share = "Share";
   static String team = "Team";
   static String legalese = "This is free and unencumbered software released into the public domain.";
 }
