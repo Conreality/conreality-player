@@ -24,7 +24,7 @@ class GameScreen extends StatefulWidget {
   final API.GameInformation info;
 
   @override
-  GameState createState() => GameState(game);
+  GameState createState() => GameState(game, API.Client(game));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,13 +34,13 @@ class GameState extends State<GameScreen> {
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  GameState(final Game game)
-    : _client = API.Client(game),
+  GameState(final Game game, final API.Client client)
+    : _client = client,
       _tabs = [
         HomeTab(),
         ShareTab(gameURL: game.url.toString()),
         TeamTab(),
-        ChatTab(),
+        ChatTab(client: client),
         CompassTab(),
         MapTab(),
       ],

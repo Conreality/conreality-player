@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'api.dart' as API;
 import 'strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatTab extends StatefulWidget {
-  ChatTab({Key key, this.title}) : super(key: key);
+  ChatTab({Key key, this.title, this.client}) : super(key: key);
 
+  final API.Client client;
   final String title;
 
   @override
@@ -85,6 +87,7 @@ class ChatState extends State<ChatTab> {
     _textController.clear();
     ChatMessage message = ChatMessage(text: text);
     setState(() { _messages.insert(0, message); });
+    widget.client.sendMessage(API.SendMessageRequest()..text = text);
   }
 }
 
