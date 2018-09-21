@@ -65,7 +65,7 @@ packages:
     source: hosted
     version: "1.14.11"
   connectivity:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: connectivity
       url: "https://pub.dartlang.org"
