@@ -47,7 +47,7 @@ class ScanState extends State<ScanScreen> {
             itemBuilder: (final BuildContext context) => <PopupMenuEntry<ScanMenuChoice>>[
               PopupMenuItem<ScanMenuChoice>(
                 value: ScanMenuChoice.connect,
-                child: Text(Strings.connectToGame),
+                child: Text(Strings.of(context).connectToGame),
               ),
             ],
           ),
@@ -61,7 +61,7 @@ class ScanState extends State<ScanScreen> {
           final Widget child,
         ) {
           final bool isConnected = (connectivity == ConnectivityResult.wifi);
-          return isConnected ? child : ScanErrorBody(error: Strings.connectToWiFiToJoin);
+          return isConnected ? child : ScanErrorBody(error: Strings.of(context).connectToWiFiToJoin);
         },
         child: SpinKitRipple(color: Colors.grey, size: 300.0), // TODO
       ),

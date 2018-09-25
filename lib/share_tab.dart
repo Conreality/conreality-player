@@ -23,7 +23,7 @@ class ShareTab extends StatelessWidget {
           children: <Widget>[
             QrImage(data: this.gameURL ?? "", size: 300.0),
             Text(
-              Strings.scanThisWithAnotherDevice,
+              Strings.of(context).scanThisWithAnotherDevice,
               style: TextStyle(color: Colors.black),
               textAlign: TextAlign.center,
             ),

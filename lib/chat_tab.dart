@@ -67,7 +67,7 @@ class ChatState extends State<ChatTab> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration: InputDecoration.collapsed(
-                  hintText: Strings.sendMessage,
+                  hintText: Strings.of(context).sendMessage,
                 ),
               ),
             ),

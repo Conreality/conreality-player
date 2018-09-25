@@ -63,7 +63,7 @@ class GameState extends State<GameScreen> {
             itemBuilder: (final BuildContext context) => <PopupMenuEntry<GameMenuChoice>>[
               PopupMenuItem<GameMenuChoice>(
                 value: GameMenuChoice.exit,
-                child: Text(Strings.exitGame),
+                child: Text(Strings.of(context).exitGame),
               ),
             ],
           ),
@@ -78,27 +78,27 @@ class GameState extends State<GameScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text(Strings.home),
+            title: Text(Strings.of(context).home),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.share),
-            title: Text(Strings.share),
+            title: Text(Strings.of(context).share),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
-            title: Text(Strings.team),
+            title: Text(Strings.of(context).team),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            title: Text(Strings.chat),
+            title: Text(Strings.of(context).chat),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.navigation),
-            title: Text(Strings.compass),
+            title: Text(Strings.of(context).compass),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            title: Text(Strings.map),
+            title: Text(Strings.of(context).map),
           ),
         ],
       ),

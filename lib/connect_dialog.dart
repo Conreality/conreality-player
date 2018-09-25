@@ -63,10 +63,10 @@ class ConnectState extends State<ConnectDialog> {
   @override
   Widget build(final BuildContext context) {
     return AlertDialog(
-      title: Text(Strings.connectToGame),
+      title: Text(Strings.of(context).connectToGame),
       content: TextField(
         decoration: InputDecoration(
-          labelText: Strings.enterGameURL,
+          labelText: Strings.of(context).enterGameURL,
         ),
         controller: _controller,
         maxLength: 128,
@@ -77,11 +77,11 @@ class ConnectState extends State<ConnectDialog> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text(Strings.cancel.toUpperCase()),
+          child: Text(Strings.of(context).cancel.toUpperCase()),
           onPressed: () => Navigator.of(context).pop(null),
         ),
         new FlatButton(
-          child: Text(Strings.connect.toUpperCase()),
+          child: Text(Strings.of(context).connect.toUpperCase()),
           onPressed: (_url == null) ? null : () => Navigator.of(context).pop(_url),
         ),
       ],

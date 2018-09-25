@@ -15,7 +15,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.navigation),
-        title: Text(Strings.compass),
+        title: Text(Strings.of(context).compass),
         onTap: () {
           Navigator.of(context).pushNamed('/compass');
         },
@@ -23,7 +23,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.map),
-        title: Text(Strings.map),
+        title: Text(Strings.of(context).map),
         onTap: () {
           Navigator.of(context).pushNamed('/map');
         },
@@ -33,7 +33,7 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.settings),
-        title: Text(Strings.settings),
+        title: Text(Strings.of(context).settings),
         onTap: () {
           Navigator.of(context).pushNamed('/config');
         },
@@ -43,17 +43,17 @@ class ScanDrawer extends StatelessWidget {
 
       ListTile(
         leading: Icon(Icons.report),
-        title: Text(Strings.sendFeedback),
+        title: Text(Strings.of(context).sendFeedback),
         onTap: () {
-          launch(Strings.feedbackURL);
+          launch(Strings.of(context).feedbackURL);
         },
       ),
 
       AboutListTile(
         icon: FlutterLogo(), // TODO
-        applicationVersion: Strings.appVersion,
+        applicationVersion: Strings.of(context).appVersion,
         applicationIcon: FlutterLogo(), // TODO
-        applicationLegalese: Strings.legalese,
+        applicationLegalese: Strings.of(context).legalese,
         aboutBoxChildren: <Widget>[],
       ),
     ];

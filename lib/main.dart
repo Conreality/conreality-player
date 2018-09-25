@@ -38,28 +38,13 @@ class AppState extends State<App> {
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(
-      title: Strings.appTitle,
+      onGenerateTitle: (final BuildContext context) => Strings.of(context).appTitle,
       localizationsDelegates: [
+        StringsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        // Default language:
-        Locale('en'), // English
-        // Other languages:
-        Locale('cs'), // Czech
-        Locale('de'), // German
-        Locale('es'), // Spanish
-        Locale('fi'), // Finnish
-        Locale('fr'), // French
-        Locale('pl'), // Polish
-        Locale('pt'), // Portuguese
-        Locale('ru'), // Russian
-        Locale('sk'), // Slovak
-        Locale('sv'), // Swedish
-        Locale('uk'), // Ukrainian
-        Locale('zh'), // Chinese
-      ],
+      supportedLocales: supportedLocales,
       color: Colors.grey,
       theme: ThemeData(
         primaryColor: Colors.black,
@@ -76,7 +61,7 @@ class AppState extends State<App> {
             case ConnectionState.done:
               final Game game = snapshot.data;
               if (snapshot.hasError || game == null) {
-                return ScanScreen(title: Strings.appTitle);
+                return ScanScreen(title: Strings.of(context).appTitle);
               }
               return GameLoader(game: game);
           }
@@ -85,12 +70,12 @@ class AppState extends State<App> {
         },
       ),
       routes: {
-        '/chat': (context) => ChatScreen(title: "Demo Chat"),
-        '/compass': (context) => CompassScreen(title: "Compass"),
+        '/chat': (context) => ChatScreen(title: Strings.of(context).chat),
+        '/compass': (context) => CompassScreen(title: Strings.of(context).compass),
         //'/game': (context) => GameScreen(game: game), // TODO
-        '/map': (context) => MapScreen(title: "Map"),
-        '/scan': (context) => ScanScreen(title: Strings.appTitle),
-        //'/team': (context) => TeamScreen(), // tODO
+        '/map': (context) => MapScreen(title: Strings.of(context).map),
+        '/scan': (context) => ScanScreen(title: Strings.of(context).appTitle),
+        //'/team': (context) => TeamScreen(title: Strings.of(context).team), // TODO
       },
     );
   }
