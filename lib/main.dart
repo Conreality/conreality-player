@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'chat_screen.dart';
@@ -38,6 +39,27 @@ class AppState extends State<App> {
   Widget build(final BuildContext context) {
     return MaterialApp(
       title: Strings.appTitle,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        // Default language:
+        Locale('en'), // English
+        // Other languages:
+        Locale('cs'), // Czech
+        Locale('de'), // German
+        Locale('es'), // Spanish
+        Locale('fi'), // Finnish
+        Locale('fr'), // French
+        Locale('pl'), // Polish
+        Locale('pt'), // Portuguese
+        Locale('ru'), // Russian
+        Locale('sk'), // Slovak
+        Locale('sv'), // Swedish
+        Locale('uk'), // Ukrainian
+        Locale('zh'), // Chinese
+      ],
       color: Colors.grey,
       theme: ThemeData(
         primaryColor: Colors.black,
