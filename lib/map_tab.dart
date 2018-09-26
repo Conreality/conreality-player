@@ -28,7 +28,7 @@ class MapState extends State<MapTab> {
               "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
           additionalOptions: {
             'accessToken': 'pk.eyJ1IjoiYXJ0b2IiLCJhIjoiY2ptaXM5bzNjMDdraTNrcGZ2eW9pZThlNSJ9.mTZOp7pGeEqDgQdJQPVCRg',
-            'id': 'mapbox.streets',
+            'id': 'mapbox.outdoors',
           },
         ),
         MarkerLayerOptions(
