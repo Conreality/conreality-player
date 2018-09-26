@@ -130,6 +130,14 @@ class Strings {
       'en': "Loading...",
       'fi': "Ladataan...",
     },
+    'local': {
+      'en': "Local",
+      'fi': "Paikalliset",
+    },
+    'localGame': {
+      'en': "Local game",
+      'fi': "Lähipeli",
+    },
     'map': {
       'en': "Map",
       'fi': "Kartta",
@@ -138,9 +146,17 @@ class Strings {
       'en': "Player",
       'fi': "Pelaaja",
     },
+    'remoteGame': {
+      'en': "Remote game",
+      'fi': "Etäpeli",
+    },
     'retry': {
       'en': "Retry",
       'fi': "Uudestaan",
+    },
+    'saved': {
+      'en': "Saved",
+      'fi': "Tallennetut",
     },
     'scanThisWithAnotherDevice': {
       'en': "Scan this with another device to connect it to this game.",
@@ -185,9 +201,13 @@ class Strings {
   String get home => get('home');
   String get legalese => get('legalese');
   String get loading => get('loading');
+  String get local => get('local');
+  String get localGame => get('localGame');
   String get map => get('map');
   String get player => get('player');
+  String get remoteGame => get('remoteGame');
   String get retry => get('retry');
+  String get saved => get('saved');
   String get scanThisWithAnotherDevice => get('scanThisWithAnotherDevice');
   String get sendFeedback => get('sendFeedback');
   String get sendMessage => get('sendMessage');
