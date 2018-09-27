@@ -30,10 +30,32 @@ Build Prerequisites
 - `Xcode <https://developer.apple.com/xcode/>`__
   (for iOS only)
 
+- `fastlane <https://fastlane.tools/>`__
+  (optional)
+
+Development Prerequisites
+-------------------------
+
+Development Environment
+^^^^^^^^^^^^^^^^^^^^^^^
+
+We recommend using `Visual Studio Code <https://code.visualstudio.com/>`__
+as a comparatively lightweight development environment for developing this
+app.
+
+----
+
+Installation
+============
+
+Build a debug release and run the app on an emulator or device as follows::
+
+   $ flutter run
+
 ----
 
 See Also
 ========
 
 - `Conreality Development Environment
-   <https://github.com/conreality/conreality-devbox>`__
+  <https://github.com/conreality/conreality-devbox>`__
