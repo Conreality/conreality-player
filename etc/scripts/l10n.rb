@@ -41,6 +41,7 @@ localized_strings.keys.sort.each do |string_id|
   localized_strings[string_id].keys.sort.each do |language_code|
     string_translation = localized_strings[string_id][language_code]
     next if language_code != :en && string_translation == string_original # skip redundant strings
+    next if string_translation.empty?
     puts "      '#{language_code}': #{string_translation.to_json},"
   end
   puts "    },"
