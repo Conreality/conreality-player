@@ -78,6 +78,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
+  conreality:
+    dependency: "direct main"
+    description:
+      name: conreality
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   console_log_handler:
     dependency: transitive
     description:

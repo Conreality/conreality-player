@@ -10,13 +10,16 @@ description: Conreality Player app for Android and iOS.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+
+  # Conreality SDK for Dart:
+  conreality: ^0.0.1
 
   # Google Dart libraries:
   stream_transform: ^0.0.14+1
