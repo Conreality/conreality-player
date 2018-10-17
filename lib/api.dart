@@ -5,15 +5,17 @@ import 'package:grpc/grpc.dart' as gRPC;
 
 import 'game.dart';
 
-import 'generated/conreality.pb.dart';
-import 'generated/conreality.pbgrpc.dart';
+import 'generated/conreality_common.pb.dart';
+import 'generated/conreality_master.pb.dart';
+import 'generated/conreality_master.pbgrpc.dart';
 
-export 'generated/conreality.pb.dart';
-export 'generated/conreality.pbgrpc.dart';
+export 'generated/conreality_common.pb.dart';
+export 'generated/conreality_master.pb.dart';
+export 'generated/conreality_master.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Client extends MasterClient {
+class Client extends PublicClient {
   static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
 
   Client(final Game game)
@@ -26,9 +28,8 @@ class Client extends MasterClient {
 
   void connect() async {}
 
-  Future<Null> disconnect() async {
+  Future<void> disconnect() async {
     //return _channel.shutdown(); // FIXME: fix upstream bug first
-    return Future.value();
   }
 
   Future<HelloResponse> helloSimple(final String version) async {

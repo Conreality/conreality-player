@@ -47,7 +47,7 @@ class GameState extends State<GameScreen> {
       super();
 
   @override
-  Future<Null> dispose() async {
+  Future<void> dispose() async {
     super.dispose();
     return _client.disconnect();
   }

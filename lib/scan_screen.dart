@@ -28,7 +28,7 @@ class ScanScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return new DefaultTabController(
+    return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
@@ -49,7 +49,7 @@ class ScanScreen extends StatelessWidget {
         ),
         drawer: ScanDrawer(),
         body: TabBarView(
-          children: [
+          children: <Widget>[
             Center(child: ScanTab()),
             Center(child: Text("TODO")), // TODO
           ],
