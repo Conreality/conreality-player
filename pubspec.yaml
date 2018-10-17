@@ -32,8 +32,8 @@ dependencies:
   path_provider: ^0.4.1
   sensors: ^0.3.5
   share: ^0.5.3
-  shared_preferences: ^0.4.2
-  url_launcher: ^3.0.3
+  shared_preferences: ^0.4.3
+  url_launcher: ^4.0.1
 
   # Third-party Flutter plugins:
   flutter_compass: ^0.0.2
