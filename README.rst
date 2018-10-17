@@ -54,6 +54,16 @@ Build a debug release and run the app on an emulator or device as follows::
 
 ----
 
+Development Tips
+================
+
+To view the string translations pretty-printed in the terminal, use
+``column(1)`` (requires ``bsdmainutils`` on Debian and derivatives)::
+
+   $ column -t -s $'\t' etc/strings.tsv
+
+----
+
 See Also
 ========
 

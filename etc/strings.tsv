@@ -1,0 +1,89 @@
+ID	Type	English	Finnish	Swedish	Ukrainian	Russian	Slovak	Czech	Polish	Romanian	German	French	Spanish	Portuguese	Chinese	Japanese
+appTitle	name	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player	Conreality Player
+appVersion	date	October 2018	Lokakuu 2018	Oktober 2018	Жовтень 2018 р	Октябрь 2018 г.	Október 2018	Říjen 2018	Październik 2018	Octombrie 2018	Oktober 2018	Octobre 2018	Octubre de 2018	Outubro de 2018	2018年10月	2018年10月
+austria	country	Austria														
+belgium	country	Belgium														
+camera	noun	Camera	Kamera													
+cancel	verb	Cancel	Peruuta				Zrušiť									
+chat	noun	Chat	Juttelu	Chatt			Rozhovor									
+china	country	China	Kiina													
+chinese	language	Chinese	kiina													
+compass	noun	Compass	Kompassi	Kompass			Kompas									
+connect	verb	Connect	Yhdistä	Anslut			Pripojiť									
+connectToGame	phrase	Connect to a game...	Yhdistä peliin...	Anslut till ett spel...			Pripojiť ku hre...									
+connectToWiFiToJoin	phrase	Connect to a Wi-Fi network to join a game.	Liity Wi-Fi -verkkoon yhdistääksesi peliin.				Pripojiť ku WiFi sieti a pridať do hry.									
+connecting	status	Connecting...	Yhdistetään...	Ansluter...			Pripájam...									
+continue_	verb	Continue	Jatka													
+country	noun	Country	Maa													
+czech	language	Czech	tšekki													
+czechia	country	Czechia	Tšekki													
+drone	noun	Drone	drooni													
+dutch	language	Dutch	hollanti													
+england	country	United Kingdom	Englanti													
+english	language	English	englanti	engelska	англійська	английский	anglický	anglický	angielski	engleza	Englische	Anglaise	inglés	Inglesa	英语	英語
+enterGameURL	prompt	Enter the game URL:	Anna pelin URL-osoite:				Zadaj URL adresu hry:									
+estonia	country	Estonia														
+estonian	language	Estonian														
+exit	verb	Exit	Poistu	Avsluta			Ukončiť									
+exitGame	phrase	Exit this game	Poistu tästä pelistä	Avsluta spelet			Ukončiť hru									
+feedbackURL	link	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new	https://github.com/conreality/conreality-player/issues/new
+finland	country	Finland	Suomi	Finland	Фінляндія	Финляндия	Fínsko	Finsko	Finlandia	Finlanda	Finnland	Finlande	Finlandia	Finlândia	芬兰	フィンランド
+finnish	language	Finnish	suomi	finska	Фінська	Финский										
+france	country	France	Ranska													
+french	language	French	ranska													
+german	language	German	saksa													
+germany	country	Germany	Saksa													
+home	noun	Home	Koti	Hem			Domov									
+ireland	country	Ireland														
+irish	language	Irish														
+japan	country	Japan	Japani													
+japanese	language	Japanese	japani													
+latvia	country	Latvia														
+latvian	language	Latvian														
+legalese	phrase	This is free and unencumbered software released into the public domain.	Tämä on tekijänoikeudeton julkisohjelma, käytettäväksi vapaasti ja rajoituksetta.				Tento program je voľne šíriteľný a nezaťažený licenčnými podmienkami.									
+lithuania	country	Lithuania														
+lithuanian	language	Lithuanian														
+loading	status	Loading...	Ladataan...	Laddar...			Načítavam...									
+local	adjective	Local	Paikalliset	Lokalt spel			Lokálne									
+localGame	phrase	Local game	Lähipeli	Lokalt			Lokálna hra									
+maneuver	noun	Maneuver	Manööveri													
+map	noun	Map	Kartta	Karta			Mapa	Mapa								
+netherlands	country	Netherlands														
+norway	country	Norway	Norja													
+norwegian	language	Norwegian	norja													
+notImplemented	phrase	Not implemented yet.	Ei vielä toteutettu.	Inte genomförd än.												
+objective	noun	Objective	Päämäärä													
+pistol	noun	Pistol	Pistooli													
+player	noun	Player	Pelaaja	Spelare			Hráč	Hráč								
+poland	country	Poland	Puola													
+polish	language	Polish	puola													
+portugal	country	Portugal	Portugali													
+portuguese	language	Portuguese	portugali													
+reload	verb	Reload														
+remoteGame	phrase	Remote game	Etäpeli	Fjärrspel			Vzdialená hra									
+retry	verb	Retry	Uudestaan	Försök igen			Skúsiť znova									
+rifle	noun	Rifle	Kivääri													
+romania	country	Romania	Romania													
+romanian	language	Romanian	romania													
+russia	country	Russia	Venäjä													
+russian	language	Russian	venäjä													
+saved	adjective	Saved	Tallennetut	Sparade			Uložené									
+scan	verb	Scan	Skannaa													
+scanThisWithAnotherDevice	phrase	Scan this with another device to connect it to this game.	Skannaa tämä toisella laitteella liittääksesi se tähän peliin.				Oskenuj s druhým zariadením na pripojenie do tejto hry.									
+scotland	country	Scotland														
+send	verb	Send	Lähetä													
+sendFeedback	phrase	Send feedback	Lähetä palautetta	Skicka feedback			Poslať pripomienku									
+sendMessage	phrase	Send a message	Lähetä viesti	Skicka ett meddelande			Poslať správu									
+settings	noun	Settings	Asetukset	Inställningar			Nastavenia									
+share	verb	Share	Jaa	Delgiva			Zdielať									
+slovak	language	Slovak	slovakia													
+slovakia	country	Slovakia	Slovakia													
+spain	country	Spain	Espanja													
+spanish	language	Spanish	espanja													
+sweden	country	Sweden	Ruotsi													
+swedish	language	Swedish	ruotsi	svenska												
+switzerland	country	Switzerland	Sveitsi													
+team	noun	Team	Joukkue	Lag			Tím									
+turret	noun	Turret	Torni													
+ukraine	country	Ukraine	Ukraina													
+ukrainian	language	Ukrainian	ukraina													
