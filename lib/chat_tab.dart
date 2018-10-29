@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'api.dart' as API;
-import 'strings.dart';
+import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -12,8 +12,9 @@ import 'game_drawer.dart';
 import 'home_tab.dart';
 import 'map_tab.dart';
 import 'share_tab.dart';
-import 'strings.dart';
 import 'team_tab.dart';
+
+import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

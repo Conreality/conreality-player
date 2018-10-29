@@ -5,7 +5,8 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'scan_error_body.dart';
-import 'strings.dart';
+
+import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'game.dart';
-import 'strings.dart';
+import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

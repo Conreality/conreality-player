@@ -8,7 +8,8 @@ import 'game.dart';
 import 'game_loader.dart';
 import 'scan_drawer.dart';
 import 'scan_tab.dart';
-import 'strings.dart';
+
+import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

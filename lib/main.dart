@@ -13,7 +13,8 @@ import 'game.dart';
 import 'game_loader.dart';
 import 'map_screen.dart';
 import 'scan_screen.dart';
-import 'strings.dart';
+
+import 'src/strings.dart';
 
 void main() => runApp(App());
 

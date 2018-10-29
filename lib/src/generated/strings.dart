@@ -1,64 +1,37 @@
 /* This is free and unencumbered software released into the public domain. */
 
-import 'dart:async';
+import 'dart:ui' show Locale;
 
-import 'package:flutter/foundation.dart' show SynchronousFuture;
-import 'package:flutter/material.dart';
+abstract class GeneratedStrings {
+  final Locale currentLocale;
+  final Locale defaultLocale;
 
-////////////////////////////////////////////////////////////////////////////////
+  GeneratedStrings(this.currentLocale, this.defaultLocale);
 
-const supportedLocales = <Locale>[
-  // Default language:
-  Locale('en'), // English
-  // Other languages:
-  Locale('cs'), // Czech
-  Locale('de'), // German
-  Locale('es'), // Spanish
-  Locale('fi'), // Finnish
-  Locale('fr'), // French
-  Locale('ja'), // Japanese
-  Locale('pl'), // Polish
-  Locale('pt'), // Portuguese
-  Locale('ro'), // Romanian
-  Locale('ru'), // Russian
-  Locale('sk'), // Slovak
-  Locale('sv'), // Swedish
-  Locale('uk'), // Ukrainian
-  Locale('zh'), // Chinese
-];
+  String get(final String id) =>
+    _data[id][currentLocale.languageCode] ?? _data[id][defaultLocale.languageCode];
 
-////////////////////////////////////////////////////////////////////////////////
-
-class StringsDelegate extends LocalizationsDelegate<Strings> {
-  final Set<String> supportedLanguageCodes;
-
-  StringsDelegate() :
-    supportedLanguageCodes = supportedLocales.map((locale) => locale.languageCode).toSet();
-
-  @override
-  bool isSupported(final Locale locale) => supportedLanguageCodes.contains(locale.languageCode);
-
-  @override
-  Future<Strings> load(final Locale locale) {
-    return SynchronousFuture<Strings>(Strings(locale));
-  }
-
-  @override
-  bool shouldReload(final StringsDelegate _) => false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class Strings {
-  final Locale locale;
-
-  Strings(this.locale);
-
-  String get(final String id) => _data[id][locale.languageCode] ?? _data[id]['en'];
-
-  static Strings of(final BuildContext context) {
-    return Localizations.of<Strings>(context, Strings);
-  }
+  static const supportedLocales = <Locale>[
+  // BEGIN LOCALES
+    // Default language:
+    Locale('en'), // English
+    // Other languages:
+    Locale('cs'), // Czech
+    Locale('de'), // German
+    Locale('es'), // Spanish
+    Locale('fi'), // Finnish
+    Locale('fr'), // French
+    Locale('ja'), // Japanese
+    Locale('pl'), // Polish
+    Locale('pt'), // Portuguese
+    Locale('ro'), // Romanian
+    Locale('ru'), // Russian
+    Locale('sk'), // Slovak
+    Locale('sv'), // Swedish
+    Locale('uk'), // Ukrainian
+    Locale('zh'), // Chinese
+  // END LOCALES
+  ];
 
   // BEGIN GETTERS
   String get appTitle => get('appTitle');
@@ -151,8 +124,8 @@ class Strings {
   String get ukrainian => get('ukrainian');
   // END GETTERS
 
-  static Map<String, Map<String, String>> _data =
-  { // BEGIN STRINGS
+  static Map<String, Map<String, String>> _data = {
+  // BEGIN STRINGS
     'appTitle': {
       'en': "Conreality Player",
     },
@@ -580,5 +553,6 @@ class Strings {
       'en': "Ukrainian",
       'fi': "ukraina",
     },
-  }; // END STRINGS
+  // END STRINGS
+  };
 }
