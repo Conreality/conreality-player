@@ -46,6 +46,7 @@ dependencies:
   flutter_offline: ^0.2.1
   flutter_spinkit: ^2.1.0
   flutter_sqlcipher: ^0.0.2
+  font_awesome_flutter: ^8.1.0
   grpc: ^0.6.6
   #postgres: ^1.0.2
   protobuf: ^0.10.4
