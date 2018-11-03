@@ -26,7 +26,8 @@ dependencies:
   # Conreality SDK for Dart:
   conreality: ^0.0.1
 
-  # Google Dart libraries:
+  # Dart libraries:
+  drylib: ^0.0.0
   stream_transform: ^0.0.14+1
 
   # Google Flutter plugins:
