@@ -24,7 +24,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   # Conreality SDK for Dart:
-  conreality: ^0.0.1
+  conreality: ^0.0.3
 
   # Dart libraries:
   drylib: ^0.0.0
@@ -42,15 +42,14 @@ dependencies:
   url_launcher: ^4.0.1
 
   # Third-party Flutter plugins:
-  flutter_android: ^0.1.0
+  flutter_android: ^0.1.2
   flutter_compass: ^0.0.2
   flutter_map: ^0.3.0
   flutter_offline: ^0.2.1
-  flutter_spinkit: ^2.1.0
-  flutter_sqlcipher: ^0.0.2
-  font_awesome_flutter: ^8.1.0
-  grpc: ^0.6.6
-  #postgres: ^1.0.2
+  flutter_spinkit: ^3.0.0
+  flutter_sqlcipher: ^0.0.4
+  font_awesome_flutter: ^8.2.0
+  grpc: ^0.6.8
   protobuf: ^0.10.4
   qr_flutter: ^1.1.5
 
