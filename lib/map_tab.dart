@@ -3,11 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
+import 'api.dart' as API;
 import 'package:latlong/latlong.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class MapTab extends StatefulWidget {
+  MapTab({Key key, this.info}) : super(key: key);
+
+  final API.GameInformation info;
+
   @override
   MapState createState() => MapState();
 }
@@ -19,9 +24,10 @@ class MapState extends State<MapTab> {
 
   @override
   Widget build(final BuildContext context) {
+    final API.Location origin = widget.info.origin;
     return FlutterMap(
       mapController: _controller,
-      options: MapOptions(center: LatLng(51.5, -0.09), zoom: 13.0), // TODO
+      options: MapOptions(center: LatLng(origin.latitude, origin.longitude), zoom: 15.0),
       layers: [
         TileLayerOptions(
           urlTemplate: "https://api.tiles.mapbox.com/v4/"
@@ -32,7 +38,9 @@ class MapState extends State<MapTab> {
           },
         ),
         MarkerLayerOptions(
-          markers: [],
+          markers: [
+            // TODO: theater radius
+          ],
         ),
       ],
     );
