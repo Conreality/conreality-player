@@ -15,7 +15,7 @@ export 'generated/master.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Client extends PublicClient {
+class Client extends SessionClient {
   static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
 
   Client(final Game game)
@@ -32,9 +32,9 @@ class Client extends PublicClient {
     //return _channel.shutdown(); // FIXME: fix upstream bug first
   }
 
-  Future<HelloResponse> helloSimple(final String version) async {
-    return hello(HelloRequest()..version = version);
-  }
+  //Future<HelloResponse> helloSimple(final String version) async {
+  //  return hello(HelloRequest()..version = version);
+  //}
 }
 
 ////////////////////////////////////////////////////////////////////////////////

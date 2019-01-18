@@ -24,22 +24,22 @@ class GameLoader extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameLoaderState extends State<GameLoader> {
-  Future<API.HelloResponse> _response;
+  Future<API.GameInformation> _response;
 
   @override
   void initState() {
     super.initState();
     var client = API.Client(widget.game);
-    _response = Future.sync(() => client.helloSimple("0.0.0")) // TODO: version
+    _response = Future.sync(() => client.getGameInfo(API.Nothing()))
       .whenComplete(client.disconnect);
   }
 
   @override
   Widget build(final BuildContext context) {
     final game = widget.game;
-    return FutureBuilder<API.HelloResponse>(
+    return FutureBuilder<API.GameInformation>(
       future: _response,
-      builder: (final BuildContext context, final AsyncSnapshot<API.HelloResponse> snapshot) {
+      builder: (final BuildContext context, final AsyncSnapshot<API.GameInformation> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.active:
@@ -48,7 +48,7 @@ class GameLoaderState extends State<GameLoader> {
           case ConnectionState.done:
             return (snapshot.hasError) ?
               GameErrorScreen(game: game, error: snapshot.error) :
-              GameScreen(game: game, info: null/*snapshot.data.game*/); // FIXME
+              GameScreen(game: game, info: snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable
