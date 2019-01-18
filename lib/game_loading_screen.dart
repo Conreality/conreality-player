@@ -29,7 +29,7 @@ class GameLoadingScreen extends StatelessWidget {
         child: SpinKitFadingCircle(
           color: Colors.grey,
           size: 300.0,
-        )
+        ),
       ),
     );
   }

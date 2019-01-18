@@ -42,7 +42,7 @@ class GameState extends State<GameScreen> {
       _tabs = [
         HomeTab(info: info),
         ShareTab(gameURL: game.url.toString()),
-        TeamTab(),
+        TeamTab(client: client),
         ChatTab(client: client),
         CompassTab(),
         MapTab(info: info),

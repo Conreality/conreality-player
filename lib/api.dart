@@ -6,10 +6,12 @@ import 'package:grpc/grpc.dart' as gRPC;
 import 'game.dart';
 
 import 'generated/common.pb.dart';
+import 'generated/model.pb.dart';
 import 'generated/master.pb.dart';
 import 'generated/master.pbgrpc.dart';
 
 export 'generated/common.pb.dart';
+export 'generated/model.pb.dart';
 export 'generated/master.pb.dart';
 export 'generated/master.pbgrpc.dart';
 
