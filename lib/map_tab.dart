@@ -24,22 +24,41 @@ class MapState extends State<MapTab> {
 
   @override
   Widget build(final BuildContext context) {
-    final API.Location origin = widget.info.origin;
+    final API.GameInformation info = widget.info;
+    final LatLng origin = LatLng(info.origin.latitude, info.origin.longitude);
     return FlutterMap(
       mapController: _controller,
-      options: MapOptions(center: LatLng(origin.latitude, origin.longitude), zoom: 15.0),
+      options: MapOptions(center: origin, zoom: 15.0),
       layers: [
         TileLayerOptions(
           urlTemplate: "https://api.tiles.mapbox.com/v4/"
               "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
           additionalOptions: {
-            'accessToken': 'pk.eyJ1IjoiYXJ0b2IiLCJhIjoiY2ptaXM5bzNjMDdraTNrcGZ2eW9pZThlNSJ9.mTZOp7pGeEqDgQdJQPVCRg',
+            'accessToken': 'pk.eyJ1IjoiYXJ0b2IiLCJhIjoiY2ptaXM5bzNjMDdraTNrcGZ2eW9pZThlNSJ9.mTZOp7pGeEqDgQdJQPVCRg', // TODO: make this configurable
             'id': 'mapbox.outdoors',
           },
         ),
         MarkerLayerOptions(
-          markers: [
-            // TODO: theater radius
+          markers: <Marker>[
+            // The origin marker (using a home icon, for now):
+            Marker(
+              point: origin,
+              width: 40.0,
+              height: 40.0,
+              builder: (context) => Container(child: Icon(Icons.home, color: Colors.black)),
+            ),
+          ],
+        ),
+        CircleLayerOptions(
+          circles: <CircleMarker>[
+            // The border for the game theater (a circular shape only, for now):
+            CircleMarker(
+              point: origin,
+              radius: info.radius, // FIXME: https://github.com/johnpryan/flutter_map/pull/213
+              color: Colors.blue.withOpacity(0.1),
+              borderColor: Colors.red.withOpacity(1.0),
+              borderStrokeWidth: 0.1, // FIXME: no effect?
+            ),
           ],
         ),
       ],
