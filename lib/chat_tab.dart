@@ -87,7 +87,7 @@ class ChatState extends State<ChatTab> {
     _textController.clear();
     ChatMessage message = ChatMessage(text: text);
     setState(() { _messages.insert(0, message); });
-    widget.client.sendMessage(API.SendMessageRequest()..text = text);
+    //widget.client.sendMessage(API.SendMessageRequest()..text = text); // FIXME
   }
 }
 

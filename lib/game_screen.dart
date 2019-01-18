@@ -22,7 +22,8 @@ class GameScreen extends StatefulWidget {
   GameScreen({this.game, this.info});
 
   final Game game;
-  final API.GameInformation info;
+  //final API.GameInformation info; // FIXME
+  final Object info;
 
   @override
   GameState createState() => GameState(game, API.Client(game));
@@ -57,7 +58,8 @@ class GameState extends State<GameScreen> {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.info.name ?? ""),
+        //title: Text(widget.info.name ?? ""), // FIXME
+        title: Text("TODO"),
         actions: <Widget>[
           PopupMenuButton<GameMenuChoice>(
             onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),

@@ -42,7 +42,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.6"
+    version: "0.2.9+1"
   charcode:
     dependency: transitive
     description:
@@ -64,13 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2"
-  conreality:
-    dependency: "direct main"
-    description:
-      name: conreality
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   console_log_handler:
     dependency: transitive
     description:
@@ -92,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   drylib:
     dependency: "direct main"
     description:
@@ -124,14 +110,14 @@ packages:
       name: flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.14"
+    version: "0.2.3"
   flutter_compass:
     dependency: "direct main"
     description:
       name: flutter_compass
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.3"
+    version: "0.1.0"
   flutter_image:
     dependency: transitive
     description:
@@ -150,7 +136,7 @@ packages:
       name: flutter_map
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   flutter_offline:
     dependency: "direct main"
     description:
@@ -171,7 +157,7 @@ packages:
       name: flutter_sqlcipher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -197,7 +183,7 @@ packages:
       name: grpc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.8+1"
+    version: "1.0.0"
   http:
     dependency: transitive
     description:
@@ -260,7 +246,7 @@ packages:
       name: package_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.2+1"
   path:
     dependency: transitive
     description:
@@ -282,13 +268,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  positioned_tap_detector:
+    dependency: transitive
+    description:
+      name: positioned_tap_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   protobuf:
     dependency: "direct main"
     description:
       name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.5"
+    version: "0.12.0"
   qr:
     dependency: transitive
     description:
@@ -302,7 +295,7 @@ packages:
       name: qr_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.5"
+    version: "1.1.6"
   quiver:
     dependency: transitive
     description:

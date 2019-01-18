@@ -17,17 +17,17 @@ class Config {
   final SharedPreferences prefs;
 
   static Future<Config> load() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     return Config(prefs: prefs);
   }
+
+  Future<bool> clear() => prefs.clear();
 
   bool hasKey(final String key) => (prefs.get(key) != null);
 
   String getString(final String key) => prefs.getString(key);
 
   String getCurrentGameURL() => prefs.getString('game.url') ?? null;
-
-  Future<bool> clear() => prefs.clear();
 
   Future<Game> setCurrentGame(final Game game) async {
     if (game == null) {

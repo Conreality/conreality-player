@@ -5,13 +5,13 @@ import 'package:grpc/grpc.dart' as gRPC;
 
 import 'game.dart';
 
-import 'generated/conreality_common.pb.dart';
-import 'generated/conreality_master.pb.dart';
-import 'generated/conreality_master.pbgrpc.dart';
+import 'generated/common.pb.dart';
+import 'generated/master.pb.dart';
+import 'generated/master.pbgrpc.dart';
 
-export 'generated/conreality_common.pb.dart';
-export 'generated/conreality_master.pb.dart';
-export 'generated/conreality_master.pbgrpc.dart';
+export 'generated/common.pb.dart';
+export 'generated/master.pb.dart';
+export 'generated/master.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 

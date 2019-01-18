@@ -48,7 +48,7 @@ class GameLoaderState extends State<GameLoader> {
           case ConnectionState.done:
             return (snapshot.hasError) ?
               GameErrorScreen(game: game, error: snapshot.error) :
-              GameScreen(game: game, info: snapshot.data.game);
+              GameScreen(game: game, info: null/*snapshot.data.game*/); // FIXME
         }
         assert(false, "unreachable");
         return null; // unreachable

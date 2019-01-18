@@ -15,6 +15,7 @@ import 'map_screen.dart';
 import 'scan_screen.dart';
 
 import 'src/strings.dart';
+import 'src/generated/strings.dart' show GeneratedStrings;
 
 void main() => runApp(App());
 
@@ -45,7 +46,7 @@ class AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: supportedLocales,
+      supportedLocales: GeneratedStrings.supportedLocales,
       color: Colors.grey,
       theme: ThemeData(
         primaryColor: Colors.black,
