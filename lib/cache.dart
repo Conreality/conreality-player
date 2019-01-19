@@ -10,15 +10,20 @@ import 'package:flutter_android/android_content.dart' show Context;
 ////////////////////////////////////////////////////////////////////////////////
 
 class Cache {
-  Cache({this.db});
+  final SQLiteDatabase _db;
 
-  final SQLiteDatabase db;
+  Cache._(this._db);
 
-  static Future<Cache> load() async {
-    final Directory cacheDir = await Context.cacheDir;
-    await cacheDir.create(recursive: true);
-    final String cachePath = "${cacheDir.path}/cache.db";
-    final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cachePath);
-    return Cache(db: db);
+  static Cache _instance;
+
+  static Future<Cache> get instance async {
+    if (_instance == null) {
+      final Directory cacheDir = await Context.cacheDir;
+      await cacheDir.create(recursive: true);
+      final String cachePath = "${cacheDir.path}/cache.db";
+      final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cachePath);
+      _instance = Cache._(db);
+    }
+    return _instance;
   }
 }

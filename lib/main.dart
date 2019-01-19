@@ -14,7 +14,6 @@ import 'discover_screen.dart';
 import 'game.dart';
 import 'game_loader.dart';
 import 'map_screen.dart';
-import 'share_screen.dart';
 
 import 'src/strings.dart';
 import 'src/generated/strings.dart' show GeneratedStrings;
@@ -89,7 +88,7 @@ class AppState extends State<App> {
   void _load() async {
     final Config config = await Config.load();
     //await config.clear(); // DEBUG
-    final Cache cache = await Cache.load();
+    final Cache cache = await Cache.instance;
     setState(() {
       final bool hasGame = config.hasKey('game.url');
       _game = Future.value(!hasGame ? null :
