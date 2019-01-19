@@ -41,7 +41,7 @@ class GameState extends State<GameScreen> {
     : _info = info,
       _client = client,
       _tabs = [
-        PlayerTab(info: info),
+        PlayerTab(player: null), // TODO
         TeamTab(client: client),
         MissionTab(client: client, info: info),
         ChatTab(client: client),

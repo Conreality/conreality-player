@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'api.dart' as API;
+import 'player_screen.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -74,8 +75,19 @@ class TeamList extends StatelessWidget {
         return ListTile(
           leading: CircleAvatar(child: Text(player.nick.substring(0, 1))),
           title: Text(player.nick),
-          subtitle: Text(player.rank ?? "No rank"),
-          trailing: Icon(Icons.info, color: Theme.of(context).disabledColor),
+          subtitle: Text(player.rank != null && player.rank.isNotEmpty ? player.rank : "No rank"),
+          trailing: GestureDetector(
+            child: Icon(Icons.info, color: Theme.of(context).disabledColor),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (final BuildContext context) {
+                    return PlayerScreen(player: player);
+                  }
+                )
+              );
+            }
+          ),
         );
       },
       separatorBuilder: (final BuildContext context, final int index) {

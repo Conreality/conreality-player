@@ -7,9 +7,9 @@ import 'api.dart' as API;
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerTab extends StatefulWidget {
-  PlayerTab({Key key, this.info}) : super(key: key);
+  PlayerTab({Key key, this.player}) : super(key: key);
 
-  final API.GameInformation info;
+  final API.Player player;
 
   @override
   State<PlayerTab> createState() => PlayerState();
@@ -19,6 +19,7 @@ class PlayerTab extends StatefulWidget {
 class PlayerState extends State<PlayerTab> {
   @override
   Widget build(final BuildContext context) {
+    final API.Player player = widget.player;
     return Container(
       color: Colors.grey[850],
       child: Center(
@@ -34,12 +35,12 @@ class PlayerState extends State<PlayerTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  child: Text("Player Name", style: TextStyle(fontSize: 32.0)), // TODO: nick
+                  child: Text(player != null && player.nick != null ? player.nick : "Player Name", style: TextStyle(fontSize: 32.0)), // TODO: nick
                   padding: EdgeInsets.all(16.0),
                   alignment: Alignment.topLeft,
                 ),
                 Container(
-                  child: Text("Private"), // TODO: rank
+                  child: Text(player != null && player.rank != null && player.rank.isNotEmpty ? player.rank : "No rank"),
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.topLeft,
                 ),
