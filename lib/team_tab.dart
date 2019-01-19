@@ -1,6 +1,7 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async';
+import 'dart:math' show Random;
 
 import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
@@ -90,17 +91,27 @@ class TeamList extends StatelessWidget {
           subtitle: Row(
             children: <Widget>[
               Container(
-                child: Icon(index % 2 == 0 ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white),
+                child: Icon(index % 2 == 0 ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white70, size: 16.0),
                 padding: EdgeInsets.all(0.0),
                 alignment: Alignment.topLeft,
               ),
               Container(
-                child: Icon(MdiIcons.heartPulse, color: Colors.red),
+                child: Icon(MdiIcons.heartPulse, color: Colors.red, size: 16.0),
                 padding: EdgeInsets.only(left: 8.0),
                 alignment: Alignment.topLeft,
               ),
               Container(
-                child: Text("42"),
+                child: Text((40 + Random().nextInt(60)).toString()),
+                padding: EdgeInsets.only(left: 4.0),
+                alignment: Alignment.topLeft,
+              ),
+              Container(
+                child: Icon(MdiIcons.walk, color: Colors.white70, size: 16.0),
+                padding: EdgeInsets.only(left: 8.0),
+                alignment: Alignment.topLeft,
+              ),
+              Container(
+                child: Text("${Random().nextInt(300)}m"),
                 padding: EdgeInsets.only(left: 4.0),
                 alignment: Alignment.topLeft,
               ),
