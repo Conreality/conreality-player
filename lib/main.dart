@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'chat_screen.dart';
+import 'cache.dart';
 import 'config.dart';
 import 'compass_screen.dart';
 import 'discover_screen.dart';
@@ -17,6 +18,8 @@ import 'share_screen.dart';
 
 import 'src/strings.dart';
 import 'src/generated/strings.dart' show GeneratedStrings;
+
+////////////////////////////////////////////////////////////////////////////////
 
 void main() => runApp(App());
 
@@ -86,6 +89,7 @@ class AppState extends State<App> {
   void _load() async {
     final Config config = await Config.load();
     //await config.clear(); // DEBUG
+    final Cache cache = await Cache.load();
     setState(() {
       final bool hasGame = config.hasKey('game.url');
       _game = Future.value(!hasGame ? null :

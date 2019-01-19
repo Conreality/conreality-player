@@ -43,9 +43,10 @@ class PlayerState extends State<PlayerTab> {
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.topLeft,
                 ),
+                // TODO: status (ingame/outgame)
                 // TODO: heart beat
                 // TODO: shot count
-                // TODO: nationality
+                // TODO: nationality/language
               ],
             ),
           ],
