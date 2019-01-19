@@ -57,10 +57,39 @@ Build a debug release and run the app on an emulator or device as follows::
 Development Tips
 ================
 
+View the Localizations
+----------------------
+
 To view the string translations pretty-printed in the terminal, use
 ``column(1)`` (requires ``bsdmainutils`` on Debian and derivatives)::
 
    $ column -t -s $'\t' etc/strings.tsv
+
+Dump the Cache
+--------------
+
+To dump the app's SQLite cache using the `Android Debug Bridge
+<https://developer.android.com/studio/command-line/adb>`__, execute::
+
+   $ adb exec-out run-as org.conreality.player sqlite3 /data/user/0/org.conreality.player/cache/cache.db .dump
+
+To copy the app's SQLite database to your development host, execute::
+
+   $ adb exec-out run-as org.conreality.player cat /data/user/0/org.conreality.player/cache/cache.db > cache.db
+
+Clear the Cache
+---------------
+
+To clear the app's SQLite cache, execute::
+
+   $ adb exec-out run-as org.conreality.player rm /data/user/0/org.conreality.player/cache/cache.db
+
+Share a Link From Computer
+--------------------------
+
+::
+
+   $ adb shell am start -D -W -a android.intent.action.SEND -t text/plain -e android.intent.extra.TEXT https://example.org
 
 ----
 
