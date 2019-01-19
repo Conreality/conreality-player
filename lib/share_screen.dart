@@ -19,7 +19,9 @@ class ShareScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.of(context).share),
-        actions: <Widget>[],
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.share), onPressed: () {}),
+        ],
       ),
       body: ShareTab(gameURL: this.gameURL),
     );

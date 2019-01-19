@@ -16,16 +16,22 @@ class ShareTab extends StatelessWidget {
   Widget build(final BuildContext context) {
     assert(this.gameURL != null);
     return Container(
-      color: Colors.white,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            QrImage(data: this.gameURL ?? "", size: 300.0),
-            Text(
-              Strings.of(context).scanThisWithAnotherDevice,
-              style: TextStyle(color: Colors.black),
-              textAlign: TextAlign.center,
+            Container(
+              color: Colors.white,
+              child: QrImage(data: this.gameURL ?? "", size: 300.0),
+            ),
+            Container(
+              width: 300.0,
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                Strings.of(context).scanThisWithAnotherDevice,
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
