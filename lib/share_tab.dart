@@ -10,11 +10,11 @@ import 'src/strings.dart';
 class ShareTab extends StatelessWidget {
   final String gameURL;
 
-  ShareTab({this.gameURL});
+  ShareTab({Key key, this.gameURL}) : super(key: key);
 
   @override
   Widget build(final BuildContext context) {
-    assert(gameURL != null);
+    assert(this.gameURL != null);
     return Container(
       color: Colors.white,
       child: Center(

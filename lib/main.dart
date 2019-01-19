@@ -79,7 +79,6 @@ class AppState extends State<App> {
         '/map': (context) => MapScreen(title: Strings.of(context).map),
         '/discover': (context) => DiscoverScreen(title: Strings.of(context).appTitle),
         //'/team': (context) => TeamScreen(title: Strings.of(context).team), // TODO
-        '/share': (context) => ShareScreen(),
       },
     );
   }

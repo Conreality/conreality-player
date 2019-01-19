@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 
 import 'api.dart' as API;
 import 'chat_tab.dart';
+import 'config.dart';
 import 'game.dart';
 import 'game_drawer.dart';
 import 'map_tab.dart';
 import 'mission_tab.dart';
 import 'player_tab.dart';
+import 'share_screen.dart';
 import 'team_tab.dart';
 
 import 'src/strings.dart';
@@ -113,7 +115,16 @@ class GameState extends State<GameScreen> {
   void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
     switch (choice) {
       case GameMenuChoice.share:
-        Navigator.of(context).pushNamed('/share');
+        Config.load()
+          .then((final Config config) {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (final BuildContext context) {
+                  return ShareScreen(gameURL: config.getCurrentGameURL() ?? Config.DEFAULT_URL);
+                }
+              )
+            );
+          });
         break;
       case GameMenuChoice.exit:
         exitGame(context);
