@@ -13,6 +13,7 @@ import 'game.dart';
 import 'game_loader.dart';
 import 'map_screen.dart';
 import 'scan_screen.dart';
+import 'share_screen.dart';
 
 import 'src/strings.dart';
 import 'src/generated/strings.dart' show GeneratedStrings;
@@ -78,6 +79,7 @@ class AppState extends State<App> {
         '/map': (context) => MapScreen(title: Strings.of(context).map),
         '/scan': (context) => ScanScreen(title: Strings.of(context).appTitle),
         //'/team': (context) => TeamScreen(title: Strings.of(context).team), // TODO
+        '/share': (context) => ShareScreen(),
       },
     );
   }

@@ -11,7 +11,6 @@ import 'game.dart';
 import 'game_drawer.dart';
 import 'home_tab.dart';
 import 'map_tab.dart';
-import 'share_tab.dart';
 import 'team_tab.dart';
 
 import 'src/strings.dart';
@@ -41,10 +40,9 @@ class GameState extends State<GameScreen> {
       _client = client,
       _tabs = [
         HomeTab(info: info),
-        ShareTab(gameURL: game.url.toString()),
         TeamTab(client: client),
+        // TODO: GameTab(client: client, info: info),
         ChatTab(client: client),
-        CompassTab(),
         MapTab(info: info),
       ],
       super();
@@ -65,6 +63,10 @@ class GameState extends State<GameScreen> {
             onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
             itemBuilder: (final BuildContext context) => <PopupMenuEntry<GameMenuChoice>>[
               PopupMenuItem<GameMenuChoice>(
+                value: GameMenuChoice.share,
+                child: Text("Share game URL..."), // TODO: Text(Strings.of(context).share
+              ),
+              PopupMenuItem<GameMenuChoice>(
                 value: GameMenuChoice.exit,
                 child: Text(Strings.of(context).exitGame),
               ),
@@ -84,20 +86,13 @@ class GameState extends State<GameScreen> {
             title: Text(Strings.of(context).home),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.share),
-            title: Text(Strings.of(context).share),
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             title: Text(Strings.of(context).team),
           ),
+          // TODO: game tab
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             title: Text(Strings.of(context).chat),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.navigation),
-            title: Text(Strings.of(context).compass),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
@@ -114,6 +109,9 @@ class GameState extends State<GameScreen> {
 
   void _onMenuAction(final BuildContext context, final GameMenuChoice choice) {
     switch (choice) {
+      case GameMenuChoice.share:
+        Navigator.of(context).pushNamed('/share');
+        break;
       case GameMenuChoice.exit:
         exitGame(context);
         break;
