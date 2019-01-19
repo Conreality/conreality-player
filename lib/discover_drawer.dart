@@ -7,7 +7,7 @@ import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ScanDrawer extends StatelessWidget {
+class DiscoverDrawer extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final List<Widget> allDrawerItems = <Widget>[

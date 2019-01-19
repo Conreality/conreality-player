@@ -9,10 +9,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'chat_screen.dart';
 import 'config.dart';
 import 'compass_screen.dart';
+import 'discover_screen.dart';
 import 'game.dart';
 import 'game_loader.dart';
 import 'map_screen.dart';
-import 'scan_screen.dart';
 import 'share_screen.dart';
 
 import 'src/strings.dart';
@@ -64,7 +64,7 @@ class AppState extends State<App> {
             case ConnectionState.done:
               final Game game = snapshot.data;
               if (snapshot.hasError || game == null) {
-                return ScanScreen(title: Strings.of(context).appTitle);
+                return DiscoverScreen(title: Strings.of(context).appTitle);
               }
               return GameLoader(game: game);
           }
@@ -77,7 +77,7 @@ class AppState extends State<App> {
         '/compass': (context) => CompassScreen(title: Strings.of(context).compass),
         //'/game': (context) => GameScreen(game: game), // TODO
         '/map': (context) => MapScreen(title: Strings.of(context).map),
-        '/scan': (context) => ScanScreen(title: Strings.of(context).appTitle),
+        '/discover': (context) => DiscoverScreen(title: Strings.of(context).appTitle),
         //'/team': (context) => TeamScreen(title: Strings.of(context).team), // TODO
         '/share': (context) => ShareScreen(),
       },

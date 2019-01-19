@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 
 import 'config.dart';
 import 'connect_dialog.dart';
+import 'discover_drawer.dart';
+import 'discover_tab.dart';
 import 'game.dart';
 import 'game_loader.dart';
-import 'scan_drawer.dart';
-import 'scan_tab.dart';
 
 import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-enum ScanMenuChoice { connect }
+enum DiscoverMenuChoice { connect }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ScanScreen extends StatelessWidget {
-  ScanScreen({Key key, this.title}) : super(key: key);
+class DiscoverScreen extends StatelessWidget {
+  DiscoverScreen({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -36,11 +36,11 @@ class ScanScreen extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.camera_alt), onPressed: _scan),
-            PopupMenuButton<ScanMenuChoice>(
-              onSelected: (final ScanMenuChoice choice) => _onMenuAction(choice, context),
-              itemBuilder: (final BuildContext context) => <PopupMenuEntry<ScanMenuChoice>>[
-                PopupMenuItem<ScanMenuChoice>(
-                  value: ScanMenuChoice.connect,
+            PopupMenuButton<DiscoverMenuChoice>(
+              onSelected: (final DiscoverMenuChoice choice) => _onMenuAction(choice, context),
+              itemBuilder: (final BuildContext context) => <PopupMenuEntry<DiscoverMenuChoice>>[
+                PopupMenuItem<DiscoverMenuChoice>(
+                  value: DiscoverMenuChoice.connect,
                   child: Text(Strings.of(context).connectToGame),
                 ),
               ],
@@ -48,10 +48,10 @@ class ScanScreen extends StatelessWidget {
           ],
           bottom: TabBar(tabs: _tabs),
         ),
-        drawer: ScanDrawer(),
+        drawer: DiscoverDrawer(),
         body: TabBarView(
           children: <Widget>[
-            Center(child: ScanTab()),
+            Center(child: DiscoverTab()),
             Center(child: Text("TODO")), // TODO
           ],
         ),
@@ -63,9 +63,9 @@ class ScanScreen extends StatelessWidget {
     // TODO: scan QR code.
   }
 
-  void _onMenuAction(final ScanMenuChoice choice, final BuildContext context) {
+  void _onMenuAction(final DiscoverMenuChoice choice, final BuildContext context) {
     switch (choice) {
-      case ScanMenuChoice.connect:
+      case DiscoverMenuChoice.connect:
         Config.load().then((final Config config) {
           showConnectDialog(context, config.getCurrentGameURL() ?? Config.DEFAULT_URL)
             .then((final Uri gameURL) {

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ScanErrorBody extends StatelessWidget {
-  ScanErrorBody({this.error});
+class DiscoverErrorBody extends StatelessWidget {
+  DiscoverErrorBody({this.error});
 
   final Object error;
 

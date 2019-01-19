@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'scan_error_body.dart';
+import 'discover_error_body.dart';
 
 import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ScanTab extends StatefulWidget {
-  ScanTab({Key key}) : super(key: key);
+class DiscoverTab extends StatefulWidget {
+  DiscoverTab({Key key}) : super(key: key);
 
   @override
-  ScanState createState() => ScanState();
+  State<DiscoverTab> createState() => DiscoverState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ScanState extends State<ScanTab> {
+class DiscoverState extends State<DiscoverTab> {
   //static const platform = MethodChannel('app.conreality.org/start');
 
   @override
@@ -31,7 +31,7 @@ class ScanState extends State<ScanTab> {
         final Widget child,
       ) {
         final bool isConnected = (connectivity == ConnectivityResult.wifi);
-        return isConnected ? child : ScanErrorBody(error: Strings.of(context).connectToWiFiToJoin);
+        return isConnected ? child : DiscoverErrorBody(error: Strings.of(context).connectToWiFiToJoin);
       },
       child: SpinKitRipple(color: Colors.grey, size: 300.0), // TODO
 /*

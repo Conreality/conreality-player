@@ -47,6 +47,7 @@ class MapState extends State<MapTab> {
               height: 40.0,
               builder: (context) => Container(child: Icon(Icons.home, color: Colors.black)),
             ),
+            // TODO: Compass
           ],
         ),
         CircleLayerOptions(
