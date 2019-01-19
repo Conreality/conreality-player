@@ -78,6 +78,7 @@ class GameState extends State<GameScreen> {
       ),
       drawer: GameDrawer(),
       body: _tabs[_tabIndex],
+      floatingActionButton: addButton(_tabIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _onTabTapped,
@@ -106,6 +107,24 @@ class GameState extends State<GameScreen> {
         ],
       ),
     );
+  }
+
+  FloatingActionButton addButton(final int tabIndex) {
+    switch (tabIndex) {
+      case 0: return null; // Me TODO
+      case 1: // Team
+        return FloatingActionButton(
+          tooltip: "Add",
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute<void>(
+              builder: (final BuildContext context) => null, // TODO
+              fullscreenDialog: true,
+            ));
+          },
+        );
+      default: return null;
+    }
   }
 
   void _onTabTapped(final int index) {
