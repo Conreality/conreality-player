@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 import 'api.dart' as API;
 import 'chat_tab.dart';
-import 'compass_tab.dart';
 import 'game.dart';
 import 'game_drawer.dart';
-import 'home_tab.dart';
 import 'map_tab.dart';
+import 'mission_tab.dart';
+import 'player_tab.dart';
 import 'team_tab.dart';
 
 import 'src/strings.dart';
@@ -39,9 +39,9 @@ class GameState extends State<GameScreen> {
     : _info = info,
       _client = client,
       _tabs = [
-        HomeTab(info: info),
+        PlayerTab(info: info),
         TeamTab(client: client),
-        // TODO: GameTab(client: client, info: info),
+        MissionTab(client: client, info: info),
         ChatTab(client: client),
         MapTab(info: info),
       ],
@@ -82,14 +82,17 @@ class GameState extends State<GameScreen> {
         currentIndex: _tabIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text(Strings.of(context).home),
+            icon: Icon(Icons.person_outline),
+            title: Text("Me"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             title: Text(Strings.of(context).team),
           ),
-          // TODO: game tab
+          BottomNavigationBarItem(
+            icon: Icon(Icons.games), // TODO: better icon?
+            title: Text("Mission"),
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             title: Text(Strings.of(context).chat),

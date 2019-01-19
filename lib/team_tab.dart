@@ -72,9 +72,9 @@ class TeamList extends StatelessWidget {
       itemBuilder: (final BuildContext context, final int index) {
         final API.Player player = players[index];
         return ListTile(
-          leading: CircleAvatar(child: Text(player.nick)),
+          leading: CircleAvatar(child: Text(player.nick.substring(0, 1))),
           title: Text(player.nick),
-          subtitle: Text(player.rank ?? ""),
+          subtitle: Text(player.rank ?? "No rank"),
           trailing: Icon(Icons.info, color: Theme.of(context).disabledColor),
         );
       },

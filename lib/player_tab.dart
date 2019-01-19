@@ -6,17 +6,17 @@ import 'api.dart' as API;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class HomeTab extends StatefulWidget {
-  HomeTab({Key key, this.info}) : super(key: key);
+class PlayerTab extends StatefulWidget {
+  PlayerTab({Key key, this.info}) : super(key: key);
 
   final API.GameInformation info;
 
   @override
-  State<HomeTab> createState() => HomeState();
+  State<PlayerTab> createState() => PlayerState();
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-class HomeState extends State<HomeTab> {
+class PlayerState extends State<PlayerTab> {
   @override
   Widget build(final BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class HomeState extends State<HomeTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ExpansionTile(
+            /*ExpansionTile(
               title: Text("Mission", overflow: TextOverflow.ellipsis),
               backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
               initiallyExpanded: true,
@@ -36,7 +36,7 @@ class HomeState extends State<HomeTab> {
                 ),
                 Container(padding: EdgeInsets.only(bottom: 16.0)),
               ],
-            ),
+            ),*/
           ],
         ),
       ),
