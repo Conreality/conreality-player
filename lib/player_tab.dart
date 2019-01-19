@@ -22,21 +22,32 @@ class PlayerState extends State<PlayerTab> {
     return Container(
       color: Colors.grey[850],
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Row(
           children: <Widget>[
-            /*ExpansionTile(
-              title: Text("Mission", overflow: TextOverflow.ellipsis),
-              backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
-              initiallyExpanded: true,
+            Column(
               children: <Widget>[
-                ListTile(
-                  title: Text(widget.info.title),
-                  subtitle: Text(widget.info.mission),
-                ),
-                Container(padding: EdgeInsets.only(bottom: 16.0)),
+                Icon(Icons.person_outline, size: 160.0),
               ],
-            ),*/
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: Text("Player Name", style: TextStyle(fontSize: 32.0)), // TODO: nick
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.topLeft,
+                ),
+                Container(
+                  child: Text("Private"), // TODO: rank
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.topLeft,
+                ),
+                // TODO: heart beat
+                // TODO: shot count
+                // TODO: nationality
+              ],
+            ),
           ],
         ),
       ),

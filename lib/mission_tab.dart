@@ -26,6 +26,11 @@ class MissionState extends State<MissionTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Container(
+              child: Text("Game not started yet", style: TextStyle(fontSize: 32.0)), // TODO: game state
+              padding: EdgeInsets.all(16.0),
+              alignment: Alignment.center,
+            ),
             ExpansionTile(
               title: Text("Mission", overflow: TextOverflow.ellipsis),
               backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
