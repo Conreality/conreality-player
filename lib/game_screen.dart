@@ -26,7 +26,7 @@ class GameScreen extends StatefulWidget {
   final API.GameInformation info;
 
   @override
-  GameState createState() => GameState(game, info, API.Client(game));
+  State<GameScreen> createState() => GameState(game, info, API.Client(game));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

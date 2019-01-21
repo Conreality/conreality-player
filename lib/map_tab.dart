@@ -14,7 +14,7 @@ class MapTab extends StatefulWidget {
   final API.GameInformation info;
 
   @override
-  MapState createState() => MapState();
+  State<MapTab> createState() => MapState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

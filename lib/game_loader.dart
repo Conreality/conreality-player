@@ -20,7 +20,7 @@ class GameLoader extends StatefulWidget {
   final Game game;
 
   @override
-  GameLoaderState createState() => GameLoaderState();
+  State<GameLoader> createState() => GameLoaderState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@ import 'package:flutter_compass/flutter_compass.dart';
 
 class CompassTab extends StatefulWidget {
   @override
-  CompassState createState() => CompassState();
+  State<CompassTab> createState() => CompassState();
 }
 
 class CompassState extends State<CompassTab> {

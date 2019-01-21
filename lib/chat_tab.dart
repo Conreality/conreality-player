@@ -15,7 +15,7 @@ class ChatTab extends StatefulWidget {
   final String title;
 
   @override
-  ChatState createState() => ChatState();
+  State<ChatTab> createState() => ChatState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

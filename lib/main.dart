@@ -26,7 +26,7 @@ void main() => runApp(App());
 
 class App extends StatefulWidget {
   @override
-  AppState createState() => AppState();
+  State<App> createState() => AppState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

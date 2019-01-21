@@ -29,7 +29,7 @@ class ConnectDialog extends StatefulWidget {
   final String defaultURL;
 
   @override
-  ConnectState createState() => ConnectState();
+  State<ConnectDialog> createState() => ConnectState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
