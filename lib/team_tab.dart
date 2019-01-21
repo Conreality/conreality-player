@@ -9,6 +9,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'api.dart' as API;
 import 'cache.dart';
 import 'player_screen.dart';
+import 'player_status.dart' show PlayerStatus;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -91,35 +92,7 @@ class TeamList extends StatelessWidget {
               ),
             ],
           ),
-          subtitle: Row(
-            children: <Widget>[
-              Container(
-                child: Icon(player?.headset == true ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white70, size: 16.0),
-                padding: EdgeInsets.all(0.0),
-                alignment: Alignment.topLeft,
-              ),
-              Container(
-                child: Icon(MdiIcons.heartPulse, color: player?.heartrate != null ? Colors.red : Colors.white70, size: 16.0),
-                padding: EdgeInsets.only(left: 8.0),
-                alignment: Alignment.topLeft,
-              ),
-              Container(
-                child: Text((player?.heartrate ?? "N/A").toString()),
-                padding: EdgeInsets.only(left: 4.0),
-                alignment: Alignment.topLeft,
-              ),
-              Container(
-                child: Icon(MdiIcons.walk, color: Colors.white70, size: 16.0),
-                padding: EdgeInsets.only(left: 8.0),
-                alignment: Alignment.topLeft,
-              ),
-              Container(
-                child: Text(player?.distance != null ? "${player.distance.toInt()}m" : "N/A"),
-                padding: EdgeInsets.only(left: 4.0),
-                alignment: Alignment.topLeft,
-              ),
-            ],
-          ),
+          subtitle: PlayerStatus(player: player),
           trailing: GestureDetector(
             child: Icon(Icons.info, color: Theme.of(context).disabledColor),
             onTap: () {

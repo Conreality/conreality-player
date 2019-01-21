@@ -1,9 +1,9 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'cache.dart' show Player;
+import 'player_status.dart' show PlayerStatus;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -46,35 +46,11 @@ class PlayerState extends State<PlayerTab> {
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.topLeft,
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      child: Icon(player?.headset == true ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white70, size: 16.0),
-                      padding: EdgeInsets.all(16.0), // TODO: RHS should be 8.0
-                      alignment: Alignment.topLeft,
-                    ),
-                    Container(
-                      child: Icon(MdiIcons.heartPulse, color: player?.heartrate != null ? Colors.red : Colors.white70, size: 16.0),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      alignment: Alignment.topLeft,
-                    ),
-                    Container(
-                      child: Text((player?.heartrate ?? "N/A").toString()),
-                      padding: EdgeInsets.all(4.0),
-                      alignment: Alignment.topLeft,
-                    ),
-                    Container(
-                      child: Icon(MdiIcons.walk, color: Colors.white70, size: 16.0),
-                      padding: EdgeInsets.only(left: 8.0),
-                      alignment: Alignment.topLeft,
-                    ),
-                    Container(
-                      child: Text(player?.distance != null ? "${player.distance.toInt()}m" : "N/A"),
-                      padding: EdgeInsets.only(left: 4.0),
-                      alignment: Alignment.topLeft,
-                    ),
-                  ],
-                )
+                Container(
+                  child: PlayerStatus(player: player),
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.topLeft,
+                ),
                 // TODO: status (ingame/outgame)
                 // TODO: heart beat
                 // TODO: shot count
