@@ -1,9 +1,9 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'game.dart';
+import 'spinner.dart';
 import 'src/strings.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,12 +25,7 @@ class GameLoadingScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: SpinKitFadingCircle(
-          color: Colors.grey,
-          size: 300.0,
-        ),
-      ),
+      body: Spinner(),
     );
   }
 }

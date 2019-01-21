@@ -3,13 +3,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'api.dart' as API;
 import 'cache.dart';
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
+import 'spinner.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -47,12 +46,7 @@ class TeamState extends State<TeamTab> {
           case ConnectionState.none:
           case ConnectionState.active:
           case ConnectionState.waiting:
-            return Center(
-              child: SpinKitFadingCircle(
-                color: Colors.grey,
-                size: 300.0,
-              ),
-            );
+            return Spinner();
           case ConnectionState.done:
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
             return TeamList(snapshot.data);
