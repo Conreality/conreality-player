@@ -1,7 +1,6 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'api.dart' as API;
 import 'cache.dart';
@@ -23,10 +22,20 @@ class ChatTab extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatState extends State<ChatTab> {
-  static const platform = MethodChannel('app.conreality.org/chat');
-
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
+  Future<List<Message>> _data;
+
+  @override
+  void initState() {
+    super.initState();
+    _data = Future.sync(() => _load());
+  }
+
+  Future<List<Message>> _load() async {
+    final Cache cache = await Cache.instance;
+    return cache.fetchMessages();
+  }
 
   @override
   void dispose() {
@@ -36,24 +45,33 @@ class ChatState extends State<ChatTab> {
 
   @override
   Widget build(final BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Flexible(
-          child: ListView.builder(
-            padding: EdgeInsets.all(8.0),
-            reverse: true,
-            itemBuilder: (_, int index) => _messages[index],
-            itemCount: _messages.length,
-          ),
-        ),
-        Divider(height: 1.0),
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-          ),
-          child: _buildTextComposer(),
-        ),
-      ],
+    return FutureBuilder<List<Message>>(
+      future: _data,
+      builder: (final BuildContext context, final AsyncSnapshot<List<Message>> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            return Spinner();
+          case ConnectionState.done: {
+            if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
+            return Column(
+              children: <Widget>[
+                Flexible(child: ChatMessageHistory(messages: snapshot.data)),
+                Divider(height: 1.0),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: _buildTextComposer(),
+                ),
+              ],
+            );
+          }
+        }
+        assert(false, "unreachable");
+        return null; // unreachable
+      },
     );
   }
 
@@ -85,19 +103,48 @@ class ChatState extends State<ChatTab> {
     );
   }
 
-  void _handleSubmitted(final String text) {
+  void _handleSubmitted(final String text) async {
     _textController.clear();
-    ChatMessage message = ChatMessage(text: text);
-    setState(() { _messages.insert(0, message); });
+
+    final Message message = Message(text: text);
+
+    ChatMessage messageWidget = ChatMessage(message: message);
+    setState(() { _messages.insert(0, messageWidget); });
+
     widget.client.sendMessage(API.Message()..text = text);
+
+    final Cache cache = await Cache.instance;
+    await cache.sendMessage(API.Message()..text = text);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class ChatMessageHistory extends StatelessWidget {
+  final List<Message> messages;
+
+  ChatMessageHistory({this.messages});
+
+  @override
+  Widget build(final BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.all(8.0),
+      reverse: true,
+      itemCount: messages.length,
+      itemBuilder: (_, int index) {
+        return ChatMessage(message: messages[index]);
+      },
+    );
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatMessage extends StatelessWidget {
-  ChatMessage({this.text});
-  final String text;
+  final Message message;
+
+  ChatMessage({this.message});
+
   @override
   Widget build(final BuildContext context) {
     return Container(
@@ -107,15 +154,15 @@ class ChatMessage extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(child: Text("I")),
+            child: CircleAvatar(child: Text("I")), // TODO
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Me", style: Theme.of(context).textTheme.subhead),
+              Text("Me", style: Theme.of(context).textTheme.subhead), // TODO
               Container(
                 margin: EdgeInsets.only(top: 5.0),
-                child: Text(text),
+                child: Text(message.text),
               ),
             ],
           ),

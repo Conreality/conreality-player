@@ -5,7 +5,6 @@ import 'dart:io' show Directory;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
 
-import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sqlcipher/sqlite.dart';
 import 'package:flutter_android/android_content.dart' show Context;
@@ -50,7 +49,7 @@ class Cache {
   Future<void> clear() => _clear(_db);
 
   Future<int> addPlayer(final API.Player player) {
-    return _db.insert(table: "team", values: <String, dynamic>{
+    return _db.insert(table: "player", values: <String, dynamic>{
       "player_id": player.id.toInt(),
       "player_nick": player.nick,
       "player_rank": player.rank,
@@ -62,7 +61,7 @@ class Cache {
   }
 
   Future<List<Player>> listPlayers() async {
-    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM team ORDER BY player_nick ASC");
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player ORDER BY player_nick ASC");
     try {
       return cursor.toList().map((Map<String, dynamic> row) {
         return Player(
@@ -80,7 +79,43 @@ class Cache {
       await cursor.close();
     }
   }
+
+  Future<int> sendMessage(final API.Message message) {
+    return _db.insert(table: "message", values: <String, dynamic>{
+      "message_id": null, // TODO
+      "message_timestamp": 0, // TODO
+      "message_seen": 0,
+      "message_sender": null, // TODO
+      "message_recipient": null, // TODO
+      "message_text": message.text,
+      "message_audio": null, // TODO
+    });
+  }
+
+  Future<List<Message>> fetchMessages() async {
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM message ORDER BY message_id DESC");
+    try {
+      return cursor.toList().map((Map<String, dynamic> row) {
+        return Message(
+          id: row['message_id'],
+          timestamp: DateTime.fromMillisecondsSinceEpoch(row['message_timestamp']),
+          seen: row['message_seen'] == 1,
+          sender: row['message_sender'],
+          recipient: row['message_recipient'],
+          text: row['message_text'],
+          audio: row['message_audio'],
+        );
+      }).toList();
+    }
+    finally {
+      await cursor.close();
+    }
+  }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+//class Game {} // TODO
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -94,4 +129,26 @@ class Player {
   final Uint8List avatar;
 
   Player({this.id, this.nick, this.rank, this.headset, this.heartrate, this.distance, this.avatar});
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class Message {
+  final int id;
+  final DateTime timestamp;
+  final bool seen;
+  final Player sender;
+  final Player recipient;
+  final String text;
+  final Uint8List audio;
+
+  Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.text, this.audio});
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class Target {
+  final int id;
+
+  Target({this.id});
 }
