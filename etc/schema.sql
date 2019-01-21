@@ -9,6 +9,7 @@ CREATE TABLE team (
   player_rank TEXT NULL,
   player_headset INTEGER NULL,
   player_heartrate INTEGER NULL,
+  player_distance REAL NULL,
   player_avatar BLOB NULL
 );
 

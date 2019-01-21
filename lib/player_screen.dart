@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'api.dart' as API;
+import 'cache.dart' show Player;
 import 'player_tab.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerScreen extends StatelessWidget {
-  final API.Player player;
+  final Player player;
 
   PlayerScreen({Key key, this.player}) : super(key: key);
 

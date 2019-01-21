@@ -2,9 +2,11 @@
 
 import 'dart:async';
 
+import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
 
 import 'api.dart' as API;
+import 'cache.dart';
 import 'game.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
@@ -30,7 +32,7 @@ class GameLoaderState extends State<GameLoader> {
   void initState() {
     super.initState();
     var client = API.Client(widget.game);
-    _response = Future.sync(() => client.getGameInfo(API.Nothing()))
+    _response = Future.sync(() => _loadGame(client))
       .whenComplete(client.disconnect);
   }
 
@@ -55,4 +57,20 @@ class GameLoaderState extends State<GameLoader> {
       },
     );
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+Future<API.GameInformation> _loadGame(final API.Client client) async {
+  final Cache cache = await Cache.instance;
+  await cache.clear();
+
+  final API.GameInformation info = await client.getGameInfo(API.Nothing());
+
+  final API.PlayerList players = await client.listPlayers(API.UnitID()..value = Int64(0));
+  for (final API.Player player in players.values) {
+    cache.addPlayer(player);
+  }
+
+  return info;
 }

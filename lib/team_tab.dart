@@ -1,14 +1,13 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async';
-import 'dart:math' show Random;
 
-import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'api.dart' as API;
+import 'cache.dart';
 import 'player_screen.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,20 +24,24 @@ class TeamTab extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamState extends State<TeamTab> {
-  Future<API.PlayerList> _response;
+  Future<List<Player>> _data;
 
   @override
   void initState() {
     super.initState();
-    _response = Future.sync(() => widget.client.listPlayers(API.UnitID()..value = Int64(0)))
-      .whenComplete(widget.client.disconnect);;
+    _data = Future.sync(() => _load());
+  }
+
+  Future<List<Player>> _load() async {
+    final Cache cache = await Cache.instance;
+    return cache.listPlayers();
   }
 
   @override
   Widget build(final BuildContext context) {
-    return FutureBuilder<API.PlayerList>(
-      future: _response,
-      builder: (final BuildContext context, final AsyncSnapshot<API.PlayerList> snapshot) {
+    return FutureBuilder<List<Player>>(
+      future: _data,
+      builder: (final BuildContext context, final AsyncSnapshot<List<Player>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.active:
@@ -51,7 +54,7 @@ class TeamState extends State<TeamTab> {
             );
           case ConnectionState.done:
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return TeamList(snapshot.data.values);
+            return TeamList(snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable
@@ -63,7 +66,7 @@ class TeamState extends State<TeamTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamList extends StatelessWidget {
-  final List<API.Player> players;
+  final List<Player> players;
 
   TeamList(this.players);
 
@@ -75,7 +78,7 @@ class TeamList extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       itemCount: players.length,
       itemBuilder: (final BuildContext context, final int index) {
-        final API.Player player = players[index];
+        final player = players[index];
         return ListTile(
           leading: CircleAvatar(child: Text(player.nick.substring(0, 1))),
           title: Row(
@@ -91,17 +94,17 @@ class TeamList extends StatelessWidget {
           subtitle: Row(
             children: <Widget>[
               Container(
-                child: Icon(index % 2 == 0 ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white70, size: 16.0),
+                child: Icon(player?.headset == true ? MdiIcons.headset : MdiIcons.headsetOff, color: Colors.white70, size: 16.0),
                 padding: EdgeInsets.all(0.0),
                 alignment: Alignment.topLeft,
               ),
               Container(
-                child: Icon(MdiIcons.heartPulse, color: Colors.red, size: 16.0),
+                child: Icon(MdiIcons.heartPulse, color: player?.heartrate != null ? Colors.red : Colors.white70, size: 16.0),
                 padding: EdgeInsets.only(left: 8.0),
                 alignment: Alignment.topLeft,
               ),
               Container(
-                child: Text((40 + Random().nextInt(60)).toString()),
+                child: Text((player?.heartrate ?? "N/A").toString()),
                 padding: EdgeInsets.only(left: 4.0),
                 alignment: Alignment.topLeft,
               ),
@@ -111,7 +114,7 @@ class TeamList extends StatelessWidget {
                 alignment: Alignment.topLeft,
               ),
               Container(
-                child: Text("${Random().nextInt(300)}m"),
+                child: Text(player?.distance != null ? "${player.distance.toInt()}m" : "N/A"),
                 padding: EdgeInsets.only(left: 4.0),
                 alignment: Alignment.topLeft,
               ),
