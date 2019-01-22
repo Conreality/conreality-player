@@ -6,7 +6,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'api.dart' as API;
 import 'cache.dart';
-import 'speech.dart';
+import 'speech.dart' show say;
 import 'spinner.dart';
 import 'src/strings.dart';
 
