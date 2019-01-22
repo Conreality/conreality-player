@@ -1,12 +1,12 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemSound, SystemSoundType;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'api.dart' as API;
 import 'cache.dart';
+import 'speech.dart';
 import 'spinner.dart';
 import 'src/strings.dart';
 
@@ -177,10 +177,15 @@ class ChatMessage extends StatelessWidget {
         ],
       ),
       subtitle: Text(message.text),
-      trailing: !message.hasAudio ? null : GestureDetector(
+      trailing: GestureDetector(
         child: Icon(MdiIcons.playCircleOutline, color: Theme.of(context).disabledColor),
-        onTap: () {
-          SystemSound.play(SystemSoundType.click); // TODO: play audio stream
+        onTap: () async {
+          if (message.hasAudio) {
+            // TODO: for audio messages, play the original audio stream.
+          }
+          else {
+            await say(message.text);
+          }
         },
       ),
       contentPadding: EdgeInsets.zero,
