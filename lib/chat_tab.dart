@@ -184,7 +184,7 @@ class ChatMessage extends StatelessWidget {
             // TODO: for audio messages, play the original audio stream.
           }
           else {
-            await say(message.text);
+            await say(message.text, language: message.language);
           }
         },
       ),

@@ -33,6 +33,7 @@ CREATE TABLE message (
   message_seen BOOLEAN NOT NULL,
   message_sender INTEGER NULL,
   message_recipient INTEGER NULL,
+  message_language VARCHAR(5) NULL,
   message_text TEXT NULL,
   message_audio BLOB NULL
 );

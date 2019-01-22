@@ -138,6 +138,7 @@ class Cache {
       "message_seen": 0,
       "message_sender": null, // TODO
       "message_recipient": null, // TODO
+      "message_language": null, // TODO: the user's configured language
       "message_text": message.text,
       "message_audio": null, // TODO
     });
@@ -153,6 +154,7 @@ class Cache {
           seen: row['message_seen'] == 1,
           sender: row['message_sender'],
           recipient: row['message_recipient'],
+          language: row['message_language'],
           text: row['message_text'],
           audio: row['message_audio'],
         );
@@ -196,13 +198,15 @@ class Message {
   final bool seen;
   final int sender;
   final int recipient;
+  final String language;
   final String text;
   final Uint8List audio;
 
-  Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.text, this.audio});
+  Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.language, this.text, this.audio});
 
   bool get isSystem => sender == null;
   bool get isPrivate => recipient != null;
+  bool get isLanguageKnown => language != null;
   bool get hasText => text != null;
   bool get hasAudio => audio != null;
 }
