@@ -1,6 +1,9 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemSound, SystemSoundType;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'api.dart' as API;
 import 'cache.dart';
@@ -91,14 +94,14 @@ class ChatState extends State<ChatTab> {
                   hintText: Strings.of(context).sendMessage,
                 ),
                 textInputAction: TextInputAction.send,
+                onChanged: (_) { setState(() {}); },
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
                 icon: Icon(Icons.send),
-                //onPressed: _textController.text.isEmpty ? null : () => _handleSubmitted(_textController.text)), // FIXME
-                onPressed: () => _handleSubmitted(_textController.text)),
+                onPressed: _textController.text.isEmpty ? null : () => _handleSubmitted(_textController.text)),
             ),
           ],
         ),
@@ -109,7 +112,9 @@ class ChatState extends State<ChatTab> {
   void _handleSubmitted(final String text) async {
     if (text.isEmpty) return;
 
-    _textController.clear();
+    setState(() {
+      _textController.clear();
+    });
 
     final Message message = Message(text: text);
 
@@ -137,7 +142,7 @@ class ChatMessageHistory extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       reverse: true,
       itemCount: messages.length,
-      itemBuilder: (_, int index) {
+      itemBuilder: (_, final int index) {
         return ChatMessage(cache: cache, message: messages[index]);
       },
     );
@@ -154,30 +159,33 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    final ThemeData theme = Theme.of(context);
+    final TextStyle timestampStyle = theme.textTheme.body1.copyWith(color: theme.textTheme.caption.color, fontSize: 12.0);
+    return ListTile(
+      leading: CircleAvatar(
+        child: Text(senderInitials),
+        backgroundColor: senderColor,
+      ),
+      title: Row(
         children: <Widget>[
+          Text(sender, style: Theme.of(context).textTheme.subhead),
           Container(
-            margin: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              child: Text(senderInitials),
-              backgroundColor: senderColor,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(sender, style: Theme.of(context).textTheme.subhead),
-              Container(
-                margin: EdgeInsets.only(top: 5.0),
-                child: Text(message.text),
-              ),
-            ],
+            child: Text(timeago.format(message.timestamp), style: timestampStyle),
+            padding: EdgeInsets.only(left: 16.0),
+            alignment: Alignment.topLeft,
           ),
         ],
       ),
+      subtitle: Text(message.text),
+      trailing: !message.hasAudio ? null : GestureDetector(
+        child: Icon(MdiIcons.playCircleOutline, color: Theme.of(context).disabledColor),
+        onTap: () {
+          SystemSound.play(SystemSoundType.click); // TODO: play audio stream
+        },
+      ),
+      contentPadding: EdgeInsets.zero,
+      onTap: () {}, // TODO
+      onLongPress: () {}, // TODO: select the message
     );
   }
 
@@ -186,7 +194,7 @@ class ChatMessage extends StatelessWidget {
   }
 
   String get senderInitials {
-    return (message.sender != null) ? cache.getName(message.sender).substring(0, 1) : "";
+    return message.isSystem ? "" : cache.getName(message.sender).substring(0, 1);
   }
 
   Color get senderColor {

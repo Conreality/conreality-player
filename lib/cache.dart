@@ -149,7 +149,7 @@ class Cache {
       return cursor.toList().map((Map<String, dynamic> row) {
         return Message(
           id: row['message_id'],
-          timestamp: DateTime.fromMillisecondsSinceEpoch(row['message_timestamp']),
+          timestamp: DateTime.fromMillisecondsSinceEpoch(row['message_timestamp'] * 1000),
           seen: row['message_seen'] == 1,
           sender: row['message_sender'],
           recipient: row['message_recipient'],
@@ -179,6 +179,12 @@ class Player {
   final double distance;
   final Uint8List avatar;
 
+  bool get hasRank => rank != null && rank.isNotEmpty;
+  bool get hasHeadset => headset == true;
+  bool get hasHeartrate => heartrate != null;
+  bool get hasDistance => distance != null;
+  bool get hasAvatar => avatar != null;
+
   Player({this.id, this.nick, this.rank, this.headset, this.heartrate, this.distance, this.avatar});
 }
 
@@ -194,6 +200,11 @@ class Message {
   final Uint8List audio;
 
   Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.text, this.audio});
+
+  bool get isSystem => sender == null;
+  bool get isPrivate => recipient != null;
+  bool get hasText => text != null;
+  bool get hasAudio => audio != null;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
