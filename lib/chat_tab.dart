@@ -6,6 +6,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'api.dart' as API;
 import 'cache.dart';
+import 'player_screen.dart' show PlayerScreen;
 import 'speech.dart' show say;
 import 'spinner.dart';
 import 'src/strings.dart';
@@ -162,9 +163,21 @@ class ChatMessage extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final TextStyle timestampStyle = theme.textTheme.body1.copyWith(color: theme.textTheme.caption.color, fontSize: 12.0);
     return ListTile(
-      leading: CircleAvatar(
-        child: Text(senderInitials),
-        backgroundColor: senderColor,
+      leading: GestureDetector(
+        child: CircleAvatar(
+          child: Text(senderInitials),
+          backgroundColor: senderColor,
+        ),
+        onTap: message.isSystem ? null : () async {
+          final Player sender = await cache.getPlayer(message.sender);
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (final BuildContext context) {
+                return PlayerScreen(player: sender);
+              }
+            )
+          );
+        },
       ),
       title: Row(
         children: <Widget>[
@@ -190,7 +203,7 @@ class ChatMessage extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.zero,
       onTap: () {}, // TODO
-      onLongPress: () {}, // TODO: select the message
+      onLongPress: () {}, // TODO: copy the message text
     );
   }
 
