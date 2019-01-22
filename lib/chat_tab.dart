@@ -25,6 +25,7 @@ class ChatState extends State<ChatTab> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
   Future<List<Message>> _data;
+  Cache _cache;
 
   @override
   void initState() {
@@ -33,8 +34,8 @@ class ChatState extends State<ChatTab> {
   }
 
   Future<List<Message>> _load() async {
-    final Cache cache = await Cache.instance;
-    return cache.fetchMessages();
+    _cache = await Cache.instance;
+    return _cache.fetchMessages();
   }
 
   @override
@@ -57,7 +58,7 @@ class ChatState extends State<ChatTab> {
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
             return Column(
               children: <Widget>[
-                Flexible(child: ChatMessageHistory(messages: snapshot.data)),
+                Flexible(child: ChatMessageHistory(cache: _cache, messages: snapshot.data)),
                 Divider(height: 1.0),
                 Container(
                   decoration: BoxDecoration(
@@ -89,12 +90,14 @@ class ChatState extends State<ChatTab> {
                 decoration: InputDecoration.collapsed(
                   hintText: Strings.of(context).sendMessage,
                 ),
+                textInputAction: TextInputAction.send,
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
                 icon: Icon(Icons.send),
+                //onPressed: _textController.text.isEmpty ? null : () => _handleSubmitted(_textController.text)), // FIXME
                 onPressed: () => _handleSubmitted(_textController.text)),
             ),
           ],
@@ -104,6 +107,8 @@ class ChatState extends State<ChatTab> {
   }
 
   void _handleSubmitted(final String text) async {
+    if (text.isEmpty) return;
+
     _textController.clear();
 
     final Message message = Message(text: text);
@@ -121,9 +126,10 @@ class ChatState extends State<ChatTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatMessageHistory extends StatelessWidget {
+  final Cache cache;
   final List<Message> messages;
 
-  ChatMessageHistory({this.messages});
+  ChatMessageHistory({this.cache, this.messages});
 
   @override
   Widget build(final BuildContext context) {
@@ -132,7 +138,7 @@ class ChatMessageHistory extends StatelessWidget {
       reverse: true,
       itemCount: messages.length,
       itemBuilder: (_, int index) {
-        return ChatMessage(message: messages[index]);
+        return ChatMessage(cache: cache, message: messages[index]);
       },
     );
   }
@@ -141,9 +147,10 @@ class ChatMessageHistory extends StatelessWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatMessage extends StatelessWidget {
+  final Cache cache;
   final Message message;
 
-  ChatMessage({this.message});
+  ChatMessage({this.cache, this.message});
 
   @override
   Widget build(final BuildContext context) {
@@ -154,12 +161,15 @@ class ChatMessage extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(child: Text("I")), // TODO
+            child: CircleAvatar(
+              child: Text(senderInitials),
+              backgroundColor: senderColor,
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Me", style: Theme.of(context).textTheme.subhead), // TODO
+              Text(sender, style: Theme.of(context).textTheme.subhead),
               Container(
                 margin: EdgeInsets.only(top: 5.0),
                 child: Text(message.text),
@@ -169,5 +179,17 @@ class ChatMessage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String get sender {
+    return cache.getName(message.sender) ?? "Unknown";
+  }
+
+  String get senderInitials {
+    return (message.sender != null) ? cache.getName(message.sender).substring(0, 1) : "";
+  }
+
+  Color get senderColor {
+    return cache.getColor(message.sender);
   }
 }

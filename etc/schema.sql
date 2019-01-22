@@ -1,4 +1,8 @@
 DROP TABLE IF EXISTS user;
+CREATE TABLE user (
+  player_id INTEGER PRIMARY KEY NOT NULL
+);
+INSERT INTO user VALUES (2);
 
 --------------------------------------------------------------------------------
 

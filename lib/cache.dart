@@ -4,7 +4,9 @@ import 'dart:async' show Future;
 import 'dart:io' show Directory;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'dart:ui' show Color;
 
+import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sqlcipher/sqlite.dart';
 import 'package:flutter_android/android_content.dart' show Context;
@@ -20,6 +22,7 @@ class Cache {
   Cache._(this._db);
 
   static Cache _instance;
+  static Map<int, String> _names = {};
 
   static Future<Cache> get instance async {
     if (_instance == null) {
@@ -48,7 +51,33 @@ class Cache {
 
   Future<void> clear() => _clear(_db);
 
+  String getName(final int playerID) {
+    return (playerID == null) ? "System" : _names[playerID];
+  }
+
+  Color getColor(final int playerID) {
+    return (playerID == null) ? Colors.black : Colors.brown.shade800;
+  }
+
+  Future<int> getPlayerID() async {
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT player_id FROM user LIMIT 1");
+    try {
+      return cursor.toList().first['player_id'];
+    }
+    finally {
+      await cursor.close();
+    }
+  }
+
+  Future<void> setPlayerID(final int playerID) async {
+    await _db.execSQL("DELETE FROM user");
+    return await _db.insert(table: "user", values: <String, dynamic>{
+      "player_id": playerID,
+    });
+  }
+
   Future<int> addPlayer(final API.Player player) {
+    _names[player.id.toInt()] = player.nick;
     return _db.insert(table: "player", values: <String, dynamic>{
       "player_id": player.id.toInt(),
       "player_nick": player.nick,
@@ -58,6 +87,28 @@ class Cache {
       "player_distance": Random().nextInt(300), // TODO
       "player_avatar": null, // TODO
     });
+  }
+
+  Future<Player> getPlayer([final int playerID]) async {
+    final arg = (playerID ?? await getPlayerID()).toString();
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player WHERE player_id = ? LIMIT 1", [arg]);
+    try {
+      final result = cursor.toList();
+      return result.isEmpty ? null : result.map((Map<String, dynamic> row) {
+        return Player(
+          id: row['player_id'],
+          nick: row['player_nick'],
+          rank: row['player_rank'],
+          headset: row['player_headset'] == 1,
+          heartrate: row['player_heartrate'],
+          distance: row['player_distance'],
+          avatar: row['player_avatar']
+        );
+      }).first;
+    }
+    finally {
+      await cursor.close();
+    }
   }
 
   Future<List<Player>> listPlayers() async {
@@ -137,8 +188,8 @@ class Message {
   final int id;
   final DateTime timestamp;
   final bool seen;
-  final Player sender;
-  final Player recipient;
+  final int sender;
+  final int recipient;
   final String text;
   final Uint8List audio;
 
