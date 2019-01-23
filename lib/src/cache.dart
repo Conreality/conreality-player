@@ -76,7 +76,20 @@ class Cache {
     });
   }
 
-  Future<int> addPlayer(final API.Player player) {
+  Future<int> putMessage(final API.Message message) {
+    return _db.insert(table: "message", values: <String, dynamic>{
+      "message_id": message.id.toInt(),
+      "message_timestamp": message.timestamp.toInt(),
+      "message_seen": 0, // always false initially
+      "message_sender": message.hasSender() ? message.sender.toInt() : null,
+      "message_recipient": message.hasRecipient() ? message.recipient.toInt() : null,
+      "message_language": message.hasLanguage() ? message.language : null,
+      "message_text": message.text,
+      "message_audio": null, // TODO
+    });
+  }
+
+  Future<int> putPlayer(final API.Player player) {
     _names[player.id.toInt()] = player.nick;
     return _db.insert(table: "player", values: <String, dynamic>{
       "player_id": player.id.toInt(),
@@ -129,19 +142,6 @@ class Cache {
     finally {
       await cursor.close();
     }
-  }
-
-  Future<int> sendMessage(final API.Message message) {
-    return _db.insert(table: "message", values: <String, dynamic>{
-      "message_id": null, // TODO
-      "message_timestamp": 0, // TODO
-      "message_seen": 0,
-      "message_sender": null, // TODO
-      "message_recipient": null, // TODO
-      "message_language": null, // TODO: the user's configured language
-      "message_text": message.text,
-      "message_audio": null, // TODO
-    });
   }
 
   Future<List<Message>> fetchMessages() async {

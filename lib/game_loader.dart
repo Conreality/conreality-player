@@ -4,11 +4,13 @@ import 'dart:async';
 
 import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc.dart' as gRPC;
 
 import 'game.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
+import 'keys.dart' show refreshChatKey;
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
@@ -74,8 +76,17 @@ Future<API.GameInformation> _loadGame() async {
 
   final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..value = Int64(0));
   for (final API.Player player in players.values) {
-    cache.addPlayer(player);
+    cache.putPlayer(player);
   }
+
+  final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.Nothing());
+  messages.forEach((final API.Message message) {
+    cache.putMessage(message);
+    refreshChatKey.currentState?.reload();
+  });
+
+  //await cache.setPlayerID(2);
+  //print(await cache.getPlayer(2));
 
   return info;
 }

@@ -36,11 +36,19 @@ class ChatState extends State<ChatTab> {
   @override
   void initState() {
     super.initState();
-    _data = Future.sync(() => _load());
+    reload();
+  }
+
+  void reload() {
+    setState(() {
+      _data = Future.sync(() => _load());
+    });
   }
 
   Future<List<Message>> _load() async {
-    _cache = await Cache.instance;
+    if (_cache == null) {
+      _cache = await Cache.instance;
+    }
     return _cache.fetchMessages();
   }
 
@@ -128,7 +136,7 @@ class ChatState extends State<ChatTab> {
     client.rpc.sendMessage(API.Message()..text = text);
 
     final Cache cache = await Cache.instance;
-    await cache.sendMessage(API.Message()..text = text);
+    await cache.putMessage(API.Message()..text = text);
   }
 }
 

@@ -8,6 +8,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'chat_tab.dart';
 import 'game.dart';
 import 'game_drawer.dart';
+import 'keys.dart';
 import 'map_tab.dart';
 import 'mission_tab.dart';
 import 'player_tab.dart';
@@ -42,11 +43,11 @@ class GameState extends State<GameScreen> {
   GameState(final Game game, final API.GameInformation info)
     : _info = info,
       _tabs = [
-        PlayerTab(player: null), // TODO
-        TeamTab(),
-        MissionTab(info: info),
-        ChatTab(),
-        MapTab(info: info),
+        PlayerTab(key: refreshMeKey, player: null), // TODO
+        TeamTab(key: refreshTeamKey),
+        MissionTab(key: refreshGameKey, info: info),
+        ChatTab(key: refreshChatKey),
+        MapTab(key: refreshMapKey, info: info),
       ],
       super();
 
