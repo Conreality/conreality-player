@@ -26,6 +26,7 @@ class MissionState extends State<MissionTab> {
       color: Colors.grey[850],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           GameState(game: widget.info), // fixed
           Expanded(child: GameDescription(game: widget.info)), // scrollable
