@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/config.dart' show Config;
+import 'config.dart' show Config;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -27,7 +27,3 @@ class Game {
 
   int port() => url.hasPort ? url.port : Config.DEFAULT_PORT;
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-enum GameMenuChoice { share, exit }

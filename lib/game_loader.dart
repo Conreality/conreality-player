@@ -2,21 +2,15 @@
 
 import 'dart:async';
 
-import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
-import 'package:grpc/grpc.dart' as gRPC;
 
-import 'game.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
-import 'keys.dart' show refreshChatKey, refreshGameKey;
+import 'load.dart' show load;
 
 import 'src/api.dart' as API;
-import 'src/cache.dart' show Cache;
-import 'src/client.dart' show Client;
-import 'src/connection.dart' show Connection;
-import 'src/speech.dart' show say;
+import 'src/game.dart' show Game;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +31,7 @@ class GameLoaderState extends State<GameLoader> {
   @override
   void initState() {
     super.initState();
-    _response = Future.sync(() => _loadGame());
+    _response = Future.sync(() => load());
   }
 
   @override
@@ -60,53 +54,5 @@ class GameLoaderState extends State<GameLoader> {
         return null; // unreachable
       },
     );
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-Future<API.GameInformation> _loadGame() async {
-  final Cache cache = await Cache.instance;
-  await cache.clear();
-
-  final Connection conn = await Connection.instance;
-  final Client client = Client(conn);
-  await client.ping();
-
-  final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
-
-  final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..value = Int64(0));
-  for (final API.Player player in players.values) {
-    cache.putPlayer(player);
-  }
-
-  final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.Nothing());
-  messages.forEach((final API.Message message) {
-    print("-> message: ${message.writeToJson()}"); // DEBUG
-    cache.putMessage(message);
-    refreshChatKey.currentState?.reload();
-  });
-
-  final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.Nothing());
-  events.forEach((final API.Event event) {
-    print("-> event: ${event.writeToJson()}"); // DEBUG
-    cache.putEvent(event);
-    //refreshGameKey.currentState?.reload(); // TODO
-    final String announcement = composeEventAnnouncement(event);
-    if (announcement != null) {
-      say(announcement);
-    }
-  });
-
-  return info;
-}
-
-String composeEventAnnouncement(final API.Event event) {
-  switch (event.predicate) {
-    case "started": return "Game started";
-    case "paused":  return "Game paused";
-    case "resumed": return "Game resumed";
-    case "stopped": return "Game stopped";
-    default:        return null; // unknown predicate
   }
 }

@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'game.dart';
-
+import 'src/game.dart' show Game, exitGame;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////

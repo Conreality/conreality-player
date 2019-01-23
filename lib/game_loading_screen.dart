@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'game.dart';
+import 'src/game.dart' show Game, exitGame;
 import 'src/spinner.dart' show Spinner;
 import 'src/strings.dart' show Strings;
 

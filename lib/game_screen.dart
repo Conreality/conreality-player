@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart' show MdiIcons;
 
 import 'chat_tab.dart';
-import 'game.dart';
 import 'game_drawer.dart';
 import 'keys.dart';
 import 'map_tab.dart';
@@ -17,9 +16,14 @@ import 'team_tab.dart';
 
 import 'src/api.dart' as API;
 import 'src/config.dart' show Config;
-import 'src/strings.dart' show Strings;
 import 'src/connection.dart' show Connection;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
+import 'src/game.dart' show Game, exitGame;
+import 'src/strings.dart' show Strings;
+
+////////////////////////////////////////////////////////////////////////////////
+
+enum GameMenuChoice { share, exit }
 
 ////////////////////////////////////////////////////////////////////////////////
 
