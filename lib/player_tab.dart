@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'cache.dart' show Player;
 import 'player_status.dart' show PlayerStatus;
 
+import 'src/text_section.dart' show TextSection;
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerTab extends StatefulWidget {
@@ -91,17 +93,11 @@ class PlayerBio extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ListView(
       children: <Widget>[
-        ExpansionTile(
-          title: Text("Bio", overflow: TextOverflow.ellipsis),
-          backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
+        TextSection( // TODO: bio
+          title: "Bio",
+          subtitle: "",
+          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel pulvinar lacus. Donec id ligula dolor. Ut ac vestibulum massa. Integer nec nulla pellentesque eros sollicitudin ullamcorper.",
           initiallyExpanded: true,
-          children: <Widget>[
-            Container( // TODO: bio
-              child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel pulvinar lacus. Donec id ligula dolor. Ut ac vestibulum massa. Integer nec nulla pellentesque eros sollicitudin ullamcorper."),
-              padding: EdgeInsets.all(16.0),
-            ),
-            Container(padding: EdgeInsets.only(bottom: 16.0)),
-          ],
         ),
       ],
     );

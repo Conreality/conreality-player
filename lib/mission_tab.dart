@@ -6,6 +6,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'api.dart' as API;
 import 'speech.dart' show say;
 
+import 'src/text_section.dart' show TextSection;
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class MissionTab extends StatefulWidget {
@@ -64,42 +66,17 @@ class GameDescription extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ListView(
       children: <Widget>[
-        ExpansionTile(
-          title: Text("Mission", overflow: TextOverflow.ellipsis),
-          backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
+        TextSection(
+          title: "Mission",
+          subtitle: game.title,
+          text: game.mission,
           initiallyExpanded: true,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: ListTile(
-                    title: Text(game.title ?? ""),
-                    subtitle: Text(game.mission ?? ""),
-                  ),
-                ),
-                Column(
-                  children: (game.mission == null) ? <Widget>[] : <Widget>[
-                    GestureDetector(
-                      child: Icon(MdiIcons.playCircleOutline, color: Theme.of(context).disabledColor),
-                      onTap: () async => await say(game.mission),
-                    ),
-                  ],
-                ),
-                Container(padding: EdgeInsets.only(right: 16.0)),
-              ],
-            ),
-            Container(padding: EdgeInsets.only(bottom: 16.0)),
-          ],
         ),
-        ExpansionTile(
-          title: Text("Rules", overflow: TextOverflow.ellipsis),
-          backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
+        TextSection(
+          title: "Rules",
+          subtitle: null,
+          text: "", // TODO: list of rules
           initiallyExpanded: false,
-          children: <Widget>[
-            // TODO: list of rules
-            Container(padding: EdgeInsets.only(bottom: 16.0)),
-          ],
         ),
         ExpansionTile(
           title: Text("Theater", overflow: TextOverflow.ellipsis),
