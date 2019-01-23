@@ -163,10 +163,11 @@ class ChatMessage extends StatelessWidget {
   Widget build(final BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final TextStyle timestampStyle = theme.textTheme.body1.copyWith(color: theme.textTheme.caption.color, fontSize: 12.0);
+    final Image appIcon = Image.asset("assets/icon.png");
     return ListTile(
       leading: GestureDetector(
         child: CircleAvatar(
-          child: Text(senderInitials),
+          child: message.isSystem ? appIcon : Text(senderInitials),
           backgroundColor: senderColor,
         ),
         onTap: message.isSystem ? null : () async {
