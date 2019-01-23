@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart' show MdiIcons;
 
 import 'chat_tab.dart';
 import 'game.dart';
@@ -60,7 +60,13 @@ class GameState extends State<GameScreen> {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.info.title ?? "(Unnamed game)"),
+        title: Row(
+          children: <Widget>[
+            Text(widget.info.title ?? "(Unnamed game)"),
+            SizedBox(width: 8),
+            Icon(MdiIcons.circleMedium, color: Colors.green), // TODO: connection indicator
+          ],
+        ),
         actions: <Widget>[
           PopupMenuButton<GameMenuChoice>(
             onSelected: (final GameMenuChoice choice) => _onMenuAction(context, choice),
@@ -117,12 +123,23 @@ class GameState extends State<GameScreen> {
         return FloatingActionButton(
           tooltip: "Add",
           child: Icon(Icons.add),
-          onPressed: () {
+          /*onPressed: () {
             Navigator.push(context, MaterialPageRoute<void>(
               builder: (final BuildContext context) => null, // TODO
               fullscreenDialog: true,
             ));
-          },
+          },*/
+        );
+      case 2: // Game
+        return FloatingActionButton(
+          tooltip: "Start",
+          child: Icon(MdiIcons.clockStart),
+          /*onPressed: () {
+            Navigator.push(context, MaterialPageRoute<void>(
+              builder: (final BuildContext context) => null, // TODO
+              fullscreenDialog: true,
+            ));
+          },*/
         );
       default: return null;
     }
