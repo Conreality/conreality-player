@@ -16,6 +16,7 @@ import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
 import 'src/connection.dart' show Connection;
+import 'src/speech.dart' show say;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -91,12 +92,21 @@ Future<API.GameInformation> _loadGame() async {
     print("-> event: ${event.writeToJson()}"); // DEBUG
     cache.putEvent(event);
     //refreshGameKey.currentState?.reload(); // TODO
-    switch (event.predicate) {
-      case "started":
-      case "stopped":
-        // TODO: pronounce the current game state
+    final String announcement = composeEventAnnouncement(event);
+    if (announcement != null) {
+      say(announcement);
     }
   });
 
   return info;
+}
+
+String composeEventAnnouncement(final API.Event event) {
+  switch (event.predicate) {
+    case "started": return "Game started";
+    case "paused":  return "Game paused";
+    case "resumed": return "Game resumed";
+    case "stopped": return "Game stopped";
+    default:        return null; // unknown predicate
+  }
 }
