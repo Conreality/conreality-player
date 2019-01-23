@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'package:grpc/grpc.dart' as gRPC;
 
-import 'game.dart';
+import '../game.dart'; // FIXME
 
 import 'generated/common.pb.dart';
 import 'generated/model.pb.dart';

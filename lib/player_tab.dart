@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'cache.dart' show Player;
 import 'player_status.dart' show PlayerStatus;
 
+import 'src/cache.dart' show Player;
 import 'src/text_section.dart' show TextSection;
 
 ////////////////////////////////////////////////////////////////////////////////

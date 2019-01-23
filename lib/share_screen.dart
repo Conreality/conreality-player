@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'share_tab.dart';
 
-import 'src/strings.dart';
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

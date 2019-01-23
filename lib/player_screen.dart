@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'cache.dart' show Player;
 import 'player_tab.dart';
+
+import 'src/cache.dart' show Player;
 
 ////////////////////////////////////////////////////////////////////////////////
 

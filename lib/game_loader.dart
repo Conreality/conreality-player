@@ -5,12 +5,13 @@ import 'dart:async';
 import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:flutter/material.dart';
 
-import 'api.dart' as API;
-import 'cache.dart';
 import 'game.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
+
+import 'src/api.dart' as API;
+import 'src/cache.dart' show Cache;
 
 ////////////////////////////////////////////////////////////////////////////////
 

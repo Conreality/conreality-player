@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart' show MdiIcons;
 
-import '../speech.dart' show say;
+import 'speech.dart' show say;
 
 ////////////////////////////////////////////////////////////////////////////////
 

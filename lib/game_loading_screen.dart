@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'game.dart';
-import 'spinner.dart';
-import 'src/strings.dart';
+import 'src/spinner.dart' show Spinner;
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

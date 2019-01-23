@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'game.dart';
+import '../game.dart'; // FIXME
 
 ////////////////////////////////////////////////////////////////////////////////
 

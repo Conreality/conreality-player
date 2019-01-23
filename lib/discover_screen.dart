@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-import 'config.dart';
 import 'connect_dialog.dart';
 import 'discover_drawer.dart';
 import 'discover_tab.dart';
 import 'game.dart';
 import 'game_loader.dart';
 
-import 'src/strings.dart';
+import 'src/config.dart' show Config;
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

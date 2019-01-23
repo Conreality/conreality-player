@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'config.dart';
+import 'src/config.dart' show Config;
 
 ////////////////////////////////////////////////////////////////////////////////
 

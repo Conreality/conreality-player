@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'cache.dart' show Player;
+import 'src/cache.dart' show Player;
 
 ////////////////////////////////////////////////////////////////////////////////
 

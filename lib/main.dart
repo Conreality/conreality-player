@@ -7,15 +7,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'chat_screen.dart';
-import 'cache.dart';
-import 'config.dart';
 import 'compass_screen.dart';
 import 'discover_screen.dart';
 import 'game.dart';
 import 'game_loader.dart';
 import 'map_screen.dart';
 
-import 'src/strings.dart';
+import 'src/cache.dart' show Cache;
+import 'src/config.dart' show Config;
+import 'src/strings.dart' show Strings, StringsDelegate;
 import 'src/generated/strings.dart' show GeneratedStrings;
 
 ////////////////////////////////////////////////////////////////////////////////

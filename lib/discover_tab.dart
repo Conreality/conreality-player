@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'discover_error_body.dart';
 
-import 'src/strings.dart';
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

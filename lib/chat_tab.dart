@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'api.dart' as API;
-import 'cache.dart';
 import 'player_screen.dart' show PlayerScreen;
-import 'speech.dart' show say;
-import 'spinner.dart';
-import 'src/strings.dart';
+
+import 'src/api.dart' as API;
+import 'src/cache.dart' show Cache, Message, Player;
+import 'src/spinner.dart' show Spinner;
+import 'src/speech.dart' show say;
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

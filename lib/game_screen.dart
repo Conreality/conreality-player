@@ -3,10 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'api.dart' as API;
 import 'chat_tab.dart';
-import 'config.dart';
 import 'game.dart';
 import 'game_drawer.dart';
 import 'map_tab.dart';
@@ -15,7 +14,9 @@ import 'player_tab.dart';
 import 'share_screen.dart';
 import 'team_tab.dart';
 
-import 'src/strings.dart';
+import 'src/api.dart' as API;
+import 'src/config.dart' show Config;
+import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

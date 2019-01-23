@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-
-import 'api.dart' as API;
 import 'package:latlong/latlong.dart';
+
+import 'src/api.dart' as API;
 
 ////////////////////////////////////////////////////////////////////////////////
 

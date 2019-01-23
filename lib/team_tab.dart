@@ -4,11 +4,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'api.dart' as API;
-import 'cache.dart';
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
-import 'spinner.dart';
+
+import 'src/api.dart' as API;
+import 'src/cache.dart' show Cache, Player;
+import 'src/spinner.dart' show Spinner;
 
 ////////////////////////////////////////////////////////////////////////////////
 

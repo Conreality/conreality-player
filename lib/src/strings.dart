@@ -6,7 +6,7 @@ import 'dart:ui' show Locale;
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart' show BuildContext, Localizations, LocalizationsDelegate;
 
-import 'generated/strings.dart';
+import 'generated/strings.dart' show GeneratedStrings;
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'api.dart' as API;
-import 'speech.dart' show say;
-
+import 'src/api.dart' as API;
+import 'src/speech.dart' show say;
 import 'src/text_section.dart' show TextSection;
 
 ////////////////////////////////////////////////////////////////////////////////
