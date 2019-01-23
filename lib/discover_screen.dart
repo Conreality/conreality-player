@@ -52,7 +52,7 @@ class DiscoverScreen extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             Center(child: DiscoverTab()),
-            Center(child: Text("TODO")), // TODO
+            Center(child: Text("")), // TODO
           ],
         ),
       ),
