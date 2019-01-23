@@ -17,9 +17,11 @@ export 'generated/master.pbgrpc.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
+@deprecated
 class Client extends SessionClient {
   static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
 
+  @deprecated
   Client(final Game game)
     : super(ClientChannel(game.host(),
         port: game.port(),
@@ -41,7 +43,9 @@ class Client extends SessionClient {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+@deprecated
 class ClientChannel extends gRPC.ClientChannel {
+  @deprecated
   ClientChannel(
     final String host, {
       final int port = 443,

@@ -17,6 +17,8 @@ import 'team_tab.dart';
 import 'src/api.dart' as API;
 import 'src/config.dart' show Config;
 import 'src/strings.dart' show Strings;
+import 'src/connection.dart' show Connection;
+import 'src/connection_indicator.dart' show ConnectionIndicator;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +66,7 @@ class GameState extends State<GameScreen> {
           children: <Widget>[
             Text(widget.info.title ?? "(Unnamed game)"),
             SizedBox(width: 8),
-            Icon(MdiIcons.circleMedium, color: Colors.green), // TODO: connection indicator
+            ConnectionIndicator(connection: Connection.instance),
           ],
         ),
         actions: <Widget>[

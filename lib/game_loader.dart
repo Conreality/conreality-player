@@ -12,6 +12,7 @@ import 'game_screen.dart';
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
+import 'src/connection.dart' show Connection;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -32,9 +33,7 @@ class GameLoaderState extends State<GameLoader> {
   @override
   void initState() {
     super.initState();
-    var client = API.Client(widget.game);
-    _response = Future.sync(() => _loadGame(client))
-      .whenComplete(client.disconnect);
+    _response = Future.sync(() => _loadGame());
   }
 
   @override
@@ -62,9 +61,13 @@ class GameLoaderState extends State<GameLoader> {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Future<API.GameInformation> _loadGame(final API.Client client) async {
+Future<API.GameInformation> _loadGame() async {
   final Cache cache = await Cache.instance;
   await cache.clear();
+
+  final Connection conn = await Connection.instance;
+  final client = conn.client;
+  await client.ping(API.Nothing());
 
   final API.GameInformation info = await client.getGameInfo(API.Nothing());
 
