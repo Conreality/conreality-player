@@ -76,13 +76,17 @@ class Cache {
     });
   }
 
+  Future<int> putEvent(final API.Event event) {
+    return Future.value(0); // TODO
+  }
+
   Future<int> putMessage(final API.Message message) {
     return _db.insert(table: "message", values: <String, dynamic>{
       "message_id": message.id.toInt(),
       "message_timestamp": message.timestamp.toInt(),
       "message_seen": 0, // always false initially
-      "message_sender": message.hasSender() ? message.sender.toInt() : null,
-      "message_recipient": message.hasRecipient() ? message.recipient.toInt() : null,
+      "message_sender": message.hasSenderId() ? message.senderId.toInt() : null,
+      "message_recipient": message.hasRecipientId() ? message.recipientId.toInt() : null,
       "message_language": message.hasLanguage() ? message.language : null,
       "message_text": message.text,
       "message_audio": null, // TODO

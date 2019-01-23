@@ -26,6 +26,10 @@ CREATE TABLE game (
 
 --------------------------------------------------------------------------------
 
+DROP TABLE IF EXISTS event;
+
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS message;
 CREATE TABLE message (
   message_id INTEGER PRIMARY KEY NOT NULL,

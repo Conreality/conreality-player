@@ -10,7 +10,7 @@ import 'game.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
-import 'keys.dart' show refreshChatKey;
+import 'keys.dart' show refreshChatKey, refreshGameKey;
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
@@ -81,12 +81,22 @@ Future<API.GameInformation> _loadGame() async {
 
   final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.Nothing());
   messages.forEach((final API.Message message) {
+    print("-> message: ${message.writeToJson()}"); // DEBUG
     cache.putMessage(message);
     refreshChatKey.currentState?.reload();
   });
 
-  //await cache.setPlayerID(2);
-  //print(await cache.getPlayer(2));
+  final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.Nothing());
+  events.forEach((final API.Event event) {
+    print("-> event: ${event.writeToJson()}"); // DEBUG
+    cache.putEvent(event);
+    //refreshGameKey.currentState?.reload(); // TODO
+    switch (event.predicate) {
+      case "started":
+      case "stopped":
+        // TODO: pronounce the current game state
+    }
+  });
 
   return info;
 }
