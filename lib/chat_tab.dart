@@ -8,6 +8,8 @@ import 'player_screen.dart' show PlayerScreen;
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache, Message, Player;
+import 'src/client.dart' show Client;
+import 'src/connection.dart' show Connection;
 import 'src/spinner.dart' show Spinner;
 import 'src/speech.dart' show say;
 import 'src/strings.dart' show Strings;
@@ -15,9 +17,8 @@ import 'src/strings.dart' show Strings;
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatTab extends StatefulWidget {
-  ChatTab({Key key, this.title, this.client}) : super(key: key);
+  ChatTab({Key key, this.title}) : super(key: key);
 
-  final API.Client client;
   final String title;
 
   @override
@@ -123,7 +124,8 @@ class ChatState extends State<ChatTab> {
     ChatMessage messageWidget = ChatMessage(message: message);
     setState(() { _messages.insert(0, messageWidget); });
 
-    widget.client.sendMessage(API.Message()..text = text);
+    final Client client = Client(await Connection.instance);
+    client.rpc.sendMessage(API.Message()..text = text);
 
     final Cache cache = await Cache.instance;
     await cache.sendMessage(API.Message()..text = text);

@@ -7,16 +7,13 @@ import 'package:flutter/material.dart';
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
 
-import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache, Player;
 import 'src/spinner.dart' show Spinner;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamTab extends StatefulWidget {
-  TeamTab({Key key, this.client}) : super(key: key);
-
-  final API.Client client;
+  TeamTab({Key key}) : super(key: key);
 
   @override
   State<TeamTab> createState() => TeamState();

@@ -4,7 +4,7 @@ import 'dart:async' show Future;
 
 import 'package:grpc/grpc.dart' as gRPC;
 
-import 'api.dart' as API;
+import 'client.dart' show Client;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -29,9 +29,13 @@ class Connection {
 
   gRPC.ConnectionState get state => _conn.state;
 
+  gRPC.ClientChannel get channel => _channel;
+
+  Client get client => Client(this);
+
   Future<void> close() => _channel.shutdown();
 
   Future<void> abort() => _channel.terminate();
 
-  API.SessionClient get client => API.SessionClient(_channel);
+  Future<void> check() => client.ping();
 }

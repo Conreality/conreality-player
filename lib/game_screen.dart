@@ -29,33 +29,32 @@ class GameScreen extends StatefulWidget {
   final API.GameInformation info;
 
   @override
-  State<GameScreen> createState() => GameState(game, info, API.Client(game));
+  State<GameScreen> createState() => GameState(game, info);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameState extends State<GameScreen> {
   final API.GameInformation _info;
-  final API.Client _client;
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  GameState(final Game game, final API.GameInformation info, final API.Client client)
+  GameState(final Game game, final API.GameInformation info)
     : _info = info,
-      _client = client,
       _tabs = [
         PlayerTab(player: null), // TODO
-        TeamTab(client: client),
-        MissionTab(client: client, info: info),
-        ChatTab(client: client),
+        TeamTab(),
+        MissionTab(info: info),
+        ChatTab(),
         MapTab(info: info),
       ],
       super();
 
   @override
   Future<void> dispose() async {
+    final Connection connection = await Connection.instance;
+    await connection.close();
     super.dispose();
-    return _client.disconnect();
   }
 
   @override

@@ -12,6 +12,7 @@ import 'game_screen.dart';
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
+import 'src/client.dart' show Client;
 import 'src/connection.dart' show Connection;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,12 +67,12 @@ Future<API.GameInformation> _loadGame() async {
   await cache.clear();
 
   final Connection conn = await Connection.instance;
-  final client = conn.client;
-  await client.ping(API.Nothing());
+  final Client client = Client(conn);
+  await client.ping();
 
-  final API.GameInformation info = await client.getGameInfo(API.Nothing());
+  final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
 
-  final API.PlayerList players = await client.listPlayers(API.UnitID()..value = Int64(0));
+  final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..value = Int64(0));
   for (final API.Player player in players.values) {
     cache.addPlayer(player);
   }
