@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:grpc/grpc.dart' as gRPC;
 
-import 'keys.dart' show refreshChatKey, refreshGameKey;
+import 'keys.dart';
 
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
@@ -42,14 +42,45 @@ Future<API.GameInformation> loadGame() async {
 
   final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
 
-  final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..id = Int64(0));
-  for (final API.Player player in players.list) { // TODO: streaming
+  // Players:
+  final gRPC.ResponseStream<API.Player> players = client.rpc.listPlayers(API.UnitID()..id = Int64(0));
+  players.forEach((final API.Player player) {
     print("-> player: ${player.writeToJson()}"); // DEBUG
     cache.putPlayer(player);
-  }
 
-  // TODO: await client.rpc.listTargets(API.UnitID()..id = Int64(0));
+    if (true) { // TODO: check if loading already finished
+      //refreshMeKey.currentState?.reload(); // TODO: only if own nick/rank/avatar changed
+      refreshTeamKey.currentState?.reload();
+      refreshChatKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
+      //refreshMapKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
+    }
+  });
 
+  // Units:
+  final gRPC.ResponseStream<API.Unit> units = client.rpc.listUnits(API.UnitID()..id = Int64(0));
+  units.forEach((final API.Unit unit) {
+    print("-> unit: ${unit.writeToJson()}"); // DEBUG
+    //cache.putUnit(unit);
+
+    if (true) { // TODO: check if loading already finished
+      //refreshMeKey.currentState?.reload(); // TODO: only if own unit changed
+      refreshTeamKey.currentState?.reload();
+      //refreshMapKey.currentState?.reload(); // TODO
+    }
+  });
+
+  // Targets:
+  final gRPC.ResponseStream<API.Target> targets = client.rpc.listTargets(API.UnitID()..id = Int64(0));
+  targets.forEach((final API.Target target) {
+    print("-> target: ${target.writeToJson()}"); // DEBUG
+    cache.putTarget(target);
+
+    if (true) { // TODO: check if loading already finished
+      //refreshMapKey.currentState?.reload(); // TODO
+    }
+  });
+
+  // Messages:
   final int seenMessageID = await cache.getMaxMessageID() ?? 0;
   final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.MessageID()..id = Int64(seenMessageID));
   messages.forEach((final API.Message message) {
@@ -62,6 +93,7 @@ Future<API.GameInformation> loadGame() async {
     }
   });
 
+  // Events:
   final int seenEventID = await cache.getMaxEventID() ?? 0;
   final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.EventID()..id = Int64(seenEventID));
   events.forEach((final API.Event event) {
@@ -69,7 +101,7 @@ Future<API.GameInformation> loadGame() async {
     cache.putEvent(event);
 
     if (true) { // TODO: check if loading already finished
-      //refreshGameKey.currentState?.reload(); // TODO
+      //refreshGameKey.currentState?.reload(); // TODO: only if game state changed
       final String announcement = composeEventAnnouncement(event);
       if (announcement != null) {
         say(announcement);

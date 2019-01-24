@@ -6,22 +6,6 @@ INSERT INTO user VALUES (2);
 
 --------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS player;
-CREATE TABLE player (
-  player_id INTEGER PRIMARY KEY NOT NULL,
-  player_nick TEXT NOT NULL,
-  player_rank TEXT NULL,
-  player_headset BOOLEAN NULL,
-  player_heartrate INTEGER NULL,
-  player_distance REAL NULL,
-  player_position_x REAL NULL,
-  player_position_y REAL NULL,
-  player_position_z REAL NULL,
-  player_avatar BLOB NULL
-);
-
---------------------------------------------------------------------------------
-
 DROP TABLE IF EXISTS game;
 CREATE TABLE game (
   game_id INTEGER PRIMARY KEY NOT NULL
@@ -50,4 +34,27 @@ CREATE TABLE message (
   message_language VARCHAR(5) NULL,
   message_text TEXT NULL,
   message_audio BLOB NULL
+);
+
+--------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS player;
+CREATE TABLE player (
+  player_id INTEGER PRIMARY KEY NOT NULL,
+  player_nick TEXT NOT NULL,
+  player_rank TEXT NULL,
+  player_headset BOOLEAN NULL,
+  player_heartrate INTEGER NULL,
+  player_distance REAL NULL,
+  player_position_x REAL NULL,
+  player_position_y REAL NULL,
+  player_position_z REAL NULL,
+  player_avatar BLOB NULL
+);
+
+--------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS target;
+CREATE TABLE target (
+  target_id INTEGER PRIMARY KEY NOT NULL
 );

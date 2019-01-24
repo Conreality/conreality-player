@@ -24,16 +24,25 @@ class TeamTab extends StatefulWidget {
 
 class TeamState extends State<TeamTab> {
   Future<List<Player>> _data;
+  Cache _cache;
 
   @override
   void initState() {
     super.initState();
-    _data = Future.sync(() => _load());
+    reload();
+  }
+
+  void reload() {
+    setState(() {
+      _data = Future.sync(() => _load());
+    });
   }
 
   Future<List<Player>> _load() async {
-    final Cache cache = await Cache.instance;
-    return cache.listPlayers();
+    if (_cache == null) {
+      _cache = await Cache.instance;
+    }
+    return _cache.listPlayers();
   }
 
   @override

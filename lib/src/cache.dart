@@ -148,6 +148,15 @@ class Cache {
     });
   }
 
+  Future<int> putTarget(final API.Target target) {
+    assert(target != null);
+    assert(target.id != null);
+
+    return _db.replace(table: "target", values: <String, dynamic>{
+      "target_id": target.id.toInt(),
+    });
+  }
+
   Future<Player> getPlayer([final int playerID]) async {
     final arg = (playerID ?? await getPlayerID()).toString();
     final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player WHERE player_id = ? LIMIT 1", [arg]);
