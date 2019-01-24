@@ -42,34 +42,38 @@ Future<API.GameInformation> loadGame() async {
 
   final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
 
-  // TODO: find the max player ID in cache
   final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..id = Int64(0));
   for (final API.Player player in players.list) { // TODO: streaming
     print("-> player: ${player.writeToJson()}"); // DEBUG
-    cache.putPlayer(player); // FIXME
+    cache.putPlayer(player);
   }
 
-  // TODO: find the max target ID in cache
-  // TODO: subscribe to targets
+  // TODO: await client.rpc.listTargets(API.UnitID()..id = Int64(0));
 
-  // TODO: find the max message ID in cache
-  final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.Nothing());
+  final int seenMessageID = await cache.getMaxMessageID() ?? 0;
+  final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.MessageID()..id = Int64(seenMessageID));
   messages.forEach((final API.Message message) {
     print("-> message: ${message.writeToJson()}"); // DEBUG
     cache.putMessage(message);
-    refreshChatKey.currentState?.reload();
-    // TODO: optional text-to-speech
+
+    if (true) { // TODO: check if loading already finished
+      refreshChatKey.currentState?.reload();
+      // TODO: optional text-to-speech
+    }
   });
 
-  // TODO: find the max event ID in cache
-  final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.Nothing());
+  final int seenEventID = await cache.getMaxEventID() ?? 0;
+  final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.EventID()..id = Int64(seenEventID));
   events.forEach((final API.Event event) {
     print("-> event: ${event.writeToJson()}"); // DEBUG
     cache.putEvent(event);
-    //refreshGameKey.currentState?.reload(); // TODO
-    final String announcement = composeEventAnnouncement(event);
-    if (announcement != null) {
-      say(announcement);
+
+    if (true) { // TODO: check if loading already finished
+      //refreshGameKey.currentState?.reload(); // TODO
+      final String announcement = composeEventAnnouncement(event);
+      if (announcement != null) {
+        say(announcement);
+      }
     }
   });
 

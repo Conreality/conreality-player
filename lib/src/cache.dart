@@ -59,7 +59,21 @@ class Cache {
   }
 
   Color getColor(final int playerID) {
-    return (playerID == null) ? Colors.black : Colors.brown.shade800;
+    return (playerID == null) ? Colors.black : Colors.brown.shade800; // TODO
+  }
+
+  Future<int> getMaxEventID() async {
+    return 0; // TODO
+  }
+
+  Future<int> getMaxMessageID() async {
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT MAX(message_id) AS id FROM message LIMIT 1");
+    try {
+      return cursor.toList().first['id'];
+    }
+    finally {
+      await cursor.close();
+    }
   }
 
   Future<int> getPlayerID() async {
