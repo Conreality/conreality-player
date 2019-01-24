@@ -11,6 +11,7 @@ import 'api.dart' as API;
 ////////////////////////////////////////////////////////////////////////////////
 
 enum GameState {
+  planned,
   begun,
   paused,
   resumed,
@@ -28,6 +29,17 @@ class Game {
   final String rules;
 
   Game({this.state, this.origin, this.radius, this.title, this.mission, this.rules});
+
+  static GameState parseState(final String state) {
+    switch (state) {
+      case "planned": return GameState.planned;
+      case "begun":   return GameState.begun;
+      case "paused":  return GameState.paused;
+      case "resumed": return GameState.resumed;
+      case "ended":   return GameState.ended;
+      default:        return null; // unknown state
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

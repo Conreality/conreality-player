@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/model.dart' show Game;
+import 'src/model.dart';
 import 'src/session.dart' show GameSession;
 import 'src/text_section.dart' show TextSection;
 
@@ -28,7 +28,7 @@ class MissionState extends State<MissionTab> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          GameState(game: game), // fixed
+          GameStatus(game: game), // fixed
           Expanded(child: GameDescription(game: game)), // scrollable
         ],
       ),
@@ -38,18 +38,29 @@ class MissionState extends State<MissionTab> {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class GameState extends StatelessWidget {
+class GameStatus extends StatelessWidget {
   final Game game;
 
-  GameState({this.game});
+  GameStatus({this.game});
 
   @override
   Widget build(final BuildContext context) {
     return Container(
-      child: Text("Game not started yet", style: TextStyle(fontSize: 32.0)), // TODO: game state
+      child: Text(_gameState(), style: TextStyle(fontSize: 32.0)),
       padding: EdgeInsets.all(16.0),
       alignment: Alignment.center,
     );
+  }
+
+  String _gameState() {
+    switch (game.state) {
+      case GameState.planned: return "Game planned";
+      case GameState.begun:   return "Game begun";
+      case GameState.paused:  return "Game paused";
+      case GameState.resumed: return "Game resumed";
+      case GameState.ended:   return "Game ended";
+      default: return "";
+    }
   }
 }
 

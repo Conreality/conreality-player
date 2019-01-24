@@ -120,7 +120,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   return GameSession(
     url: gameURL,
     game: Game(
-      state: null, // FIXME
+      state: Game.parseState(info.state),
       origin: LatLng(info.origin.latitude, info.origin.longitude),
       radius: info.radius,
       title: info.title,
