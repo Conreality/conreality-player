@@ -7,36 +7,39 @@ import 'package:flutter/material.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
-import 'load.dart' show load;
+import 'load.dart' show loadGame;
 
 import 'src/api.dart' as API;
 import 'src/game.dart' show Game;
+import 'src/model.dart' show Player;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameLoader extends StatefulWidget {
-  GameLoader({Key key, this.game}) : super(key: key);
+  GameLoader({Key key, this.game, this.player}) : super(key: key);
 
   final Game game;
+  final Player player;
 
   @override
-  State<GameLoader> createState() => GameLoaderState();
+  State<GameLoader> createState() => _GameLoaderState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class GameLoaderState extends State<GameLoader> {
+class _GameLoaderState extends State<GameLoader> {
   Future<API.GameInformation> _response;
 
   @override
   void initState() {
     super.initState();
-    _response = Future.sync(() => load());
+    _response = Future.sync(() => loadGame());
   }
 
   @override
   Widget build(final BuildContext context) {
     final game = widget.game;
+    final player = widget.player;
     return FutureBuilder<API.GameInformation>(
       future: _response,
       builder: (final BuildContext context, final AsyncSnapshot<API.GameInformation> snapshot) {
@@ -48,7 +51,7 @@ class GameLoaderState extends State<GameLoader> {
           case ConnectionState.done:
             return (snapshot.hasError) ?
               GameErrorScreen(game: game, error: snapshot.error) :
-              GameScreen(game: game, info: snapshot.data);
+              GameScreen(game: game, player: player, info: snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable

@@ -19,6 +19,7 @@ import 'src/config.dart' show Config;
 import 'src/connection.dart' show Connection;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
 import 'src/game.dart' show Game, exitGame;
+import 'src/model.dart' show Player;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,13 +29,14 @@ enum GameMenuChoice { share, exit }
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameScreen extends StatefulWidget {
-  GameScreen({this.game, this.info});
+  GameScreen({this.game, this.player, this.info});
 
   final Game game;
+  final Player player;
   final API.GameInformation info;
 
   @override
-  State<GameScreen> createState() => GameState(game, info);
+  State<GameScreen> createState() => GameState(game, player, info);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,10 +46,10 @@ class GameState extends State<GameScreen> {
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  GameState(final Game game, final API.GameInformation info)
+  GameState(final Game _game, final Player player, final API.GameInformation info)
     : _info = info,
       _tabs = [
-        PlayerTab(key: refreshMeKey, player: null), // TODO
+        PlayerTab(key: refreshMeKey, player: player),
         TeamTab(key: refreshTeamKey),
         MissionTab(key: refreshGameKey, info: info),
         ChatTab(key: refreshChatKey),

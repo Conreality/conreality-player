@@ -10,13 +10,31 @@ import 'keys.dart' show refreshChatKey, refreshGameKey;
 import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
+import 'src/config.dart' show Config;
 import 'src/connection.dart' show Connection;
 import 'src/game.dart' show Game;
 import 'src/speech.dart' show say;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Future<API.GameInformation> load() async {
+Future<Game> loadApp() async {
+  final Config config = await Config.load();
+  //await config.clear(); // DEBUG
+
+  //final Cache cache = await Cache.instance;
+
+  final bool hasGame = config.hasKey('game.url');
+
+  return !hasGame ? null : Game(
+    url:   Uri.tryParse(config.getString('game.url')),
+    uuid:  config.getString('game.uuid'),
+    title: config.getString('game.title'),
+  );
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+Future<API.GameInformation> loadGame() async {
   final Cache cache = await Cache.instance;
   await cache.clear();
 
@@ -50,7 +68,7 @@ Future<API.GameInformation> load() async {
     }
   });
 
-  await cache.setPlayerID(2);
+  await cache.setPlayerID(2); // FIXME
   print(await cache.getPlayer(2));
 
   return info;
