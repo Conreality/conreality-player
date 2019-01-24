@@ -3,7 +3,6 @@
 import 'dart:async' show Future;
 import 'dart:io' show Directory;
 import 'dart:math' show Random;
-import 'dart:typed_data' show Uint8List;
 import 'dart:ui' show Color;
 
 import 'package:flutter/material.dart' show Colors;
@@ -13,6 +12,7 @@ import 'package:flutter_android/android_content.dart' show Context;
 //import 'package:flutter_android/android_database.dart' show DatabaseUtils; // DEBUG
 
 import 'api.dart' as API;
+import 'model.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -102,6 +102,9 @@ class Cache {
       "player_headset": 1, // TODO
       "player_heartrate": 40 + Random().nextInt(60), // TODO
       "player_distance": Random().nextInt(300), // TODO
+      "player_position_x": null,
+      "player_position_y": null,
+      "player_position_z": null,
       "player_avatar": null, // TODO
     });
   }
@@ -119,6 +122,7 @@ class Cache {
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],
           distance: row['player_distance'],
+          position: null, // TODO
           avatar: row['player_avatar']
         );
       }).first;
@@ -139,6 +143,7 @@ class Cache {
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],
           distance: row['player_distance'],
+          position: null, // TODO
           avatar: row['player_avatar']
         );
       }).toList();
@@ -168,57 +173,4 @@ class Cache {
       await cursor.close();
     }
   }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-//class Game {} // TODO
-
-////////////////////////////////////////////////////////////////////////////////
-
-class Player {
-  final int id;
-  final String nick;
-  final String rank;
-  final bool headset;
-  final int heartrate;
-  final double distance;
-  final Uint8List avatar;
-
-  bool get hasRank => rank != null && rank.isNotEmpty;
-  bool get hasHeadset => headset == true;
-  bool get hasHeartrate => heartrate != null;
-  bool get hasDistance => distance != null;
-  bool get hasAvatar => avatar != null;
-
-  Player({this.id, this.nick, this.rank, this.headset, this.heartrate, this.distance, this.avatar});
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class Message {
-  final int id;
-  final DateTime timestamp;
-  final bool seen;
-  final int sender;
-  final int recipient;
-  final String language;
-  final String text;
-  final Uint8List audio;
-
-  Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.language, this.text, this.audio});
-
-  bool get isSystem => sender == null;
-  bool get isPrivate => recipient != null;
-  bool get isLanguageKnown => language != null;
-  bool get hasText => text != null;
-  bool get hasAudio => audio != null;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class Target {
-  final int id;
-
-  Target({this.id});
 }

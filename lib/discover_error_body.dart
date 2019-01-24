@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class DiscoverErrorBody extends StatelessWidget {
   DiscoverErrorBody({this.error});
 
-  final Object error;
+  final dynamic error;
 
   @override
   Widget build(final BuildContext context) {

@@ -14,6 +14,9 @@ CREATE TABLE player (
   player_headset BOOLEAN NULL,
   player_heartrate INTEGER NULL,
   player_distance REAL NULL,
+  player_position_x REAL NULL,
+  player_position_y REAL NULL,
+  player_position_z REAL NULL,
   player_avatar BLOB NULL
 );
 

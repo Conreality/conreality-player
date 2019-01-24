@@ -7,9 +7,10 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'player_screen.dart' show PlayerScreen;
 
 import 'src/api.dart' as API;
-import 'src/cache.dart' show Cache, Message, Player;
+import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
 import 'src/connection.dart' show Connection;
+import 'src/model.dart' show Message, Player;
 import 'src/spinner.dart' show Spinner;
 import 'src/speech.dart' show say;
 import 'src/strings.dart' show Strings;

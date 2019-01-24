@@ -11,7 +11,7 @@ class GameErrorScreen extends StatelessWidget {
   GameErrorScreen({this.game, this.error});
 
   final Game game;
-  final Object error;
+  final dynamic error;
 
   @override
   Widget build(final BuildContext context) {

@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
 
-import 'src/cache.dart' show Cache, Player;
+import 'src/cache.dart' show Cache;
+import 'src/model.dart' show Player;
 import 'src/spinner.dart' show Spinner;
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -93,6 +93,17 @@ Share a Link From Computer
 
 ----
 
+Development Notes
+=================
+
+- Since our model defines an ``Object`` class, which is usually used without
+  explicit namespacing, when upcasting we should prefer Dart's ``dynamic``
+  type over its ``Object`` base class to avoid ambiguity and confusion. [#]_
+
+.. [#] https://stackoverflow.com/q/31257735
+
+----
+
 See Also
 ========
 
