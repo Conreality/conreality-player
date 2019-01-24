@@ -8,7 +8,6 @@ import 'discover_tab.dart';
 import 'game_loader.dart';
 
 import 'src/config.dart' show Config;
-import 'src/game.dart' show Game;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,13 +69,13 @@ class DiscoverScreen extends StatelessWidget {
           showConnectDialog(context, config.getCurrentGameURL() ?? Config.DEFAULT_URL)
             .then((final Uri gameURL) {
               if (gameURL == null) throw ConnectCanceled();
-              return config.setCurrentGame(Game(url: gameURL));
+              return config.setCurrentGameURL(gameURL);
             })
-            .then((final Game game) {
+            .then((final Uri gameURL) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute<void>(
                   builder: (final BuildContext context) {
-                    return GameLoader(game: game);
+                    return GameLoader(gameURL: gameURL);
                   }
                 )
               );

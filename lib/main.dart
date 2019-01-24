@@ -13,7 +13,6 @@ import 'game_loader.dart';
 import 'load.dart' show loadApp;
 import 'map_screen.dart';
 
-import 'src/game.dart' show Game;
 import 'src/strings.dart' show Strings, StringsDelegate;
 import 'src/generated/strings.dart' show GeneratedStrings;
 
@@ -31,12 +30,12 @@ class App extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class _AppState extends State<App> {
-  Future<Game> _game;
+  Future<Uri> _gameURL;
 
   @override
   initState() {
     super.initState();
-    _game = Future.sync(() => loadApp());
+    _gameURL = Future.sync(() => loadApp());
   }
 
   @override
@@ -54,20 +53,20 @@ class _AppState extends State<App> {
         primaryColor: Colors.black,
         brightness: Brightness.dark,
       ),
-      home: FutureBuilder<Game>(
-        future: _game,
-        builder: (final BuildContext context, final AsyncSnapshot<Game> snapshot) {
+      home: FutureBuilder<Uri>(
+        future: _gameURL,
+        builder: (final BuildContext context, final AsyncSnapshot<Uri> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return AppLoading(); // TODO: replace with splash screen
+              return AppLoading(); // TODO: replace with splash screen?
             case ConnectionState.done:
-              final Game game = snapshot.data;
-              if (snapshot.hasError || game == null) {
+              final Uri gameURL = snapshot.data;
+              if (snapshot.hasError || gameURL == null) {
                 return DiscoverScreen(title: Strings.of(context).appTitle);
               }
-              return GameLoader(game: game);
+              return GameLoader(gameURL: gameURL);
           }
           assert(false, "unreachable");
           return null; // unreachable

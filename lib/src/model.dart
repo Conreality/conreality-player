@@ -4,12 +4,31 @@ import 'dart:typed_data' show Uint8List;
 import 'dart:ui' show Color;
 
 import 'package:fixnum/fixnum.dart' show Int64;
+import 'package:latlong/latlong.dart' show LatLng;
 
 import 'api.dart' as API;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//class Game {} // TODO
+enum GameState {
+  begun,
+  paused,
+  resumed,
+  ended,
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class Game {
+  final GameState state;
+  final LatLng origin;
+  final double radius;
+  final String title;
+  final String mission;
+  final String rules;
+
+  Game({this.state, this.origin, this.radius, this.title, this.mission, this.rules});
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -2,22 +2,21 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/game.dart' show Game, exitGame;
+import 'src/game.dart' show exitGame;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameErrorScreen extends StatelessWidget {
-  GameErrorScreen({this.game, this.error});
+  GameErrorScreen({this.error});
 
-  final Game game;
   final dynamic error;
 
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title ?? Strings.of(context).connecting),
+        title: Text(Strings.of(context).connecting),
         actions: <Widget>[
           FlatButton(
             child: Text(Strings.of(context).retry.toUpperCase()),

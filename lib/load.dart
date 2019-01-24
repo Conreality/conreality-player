@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:grpc/grpc.dart' as gRPC;
+import 'package:latlong/latlong.dart' show LatLng;
 
 import 'keys.dart';
 
@@ -12,31 +13,36 @@ import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
 import 'src/config.dart' show Config;
 import 'src/connection.dart' show Connection;
-import 'src/game.dart' show Game;
+import 'src/model.dart' show Game, Player;
+import 'src/session.dart' show GameSession;
 import 'src/speech.dart' show say;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Future<Game> loadApp() async {
+Future<Uri> loadApp() async {
   final Config config = await Config.load();
   //await config.clear(); // DEBUG
 
-  final bool hasGame = config.hasKey('game.url');
+  if (!config.hasKey('game.url')) {
+    return null; // not connected to a game
+  }
 
-  return !hasGame ? null : Game(
-    url:   Uri.tryParse(config.getString('game.url')),
-    uuid:  config.getString('game.uuid'),
-    title: config.getString('game.title'),
-  );
+  final Uri gameURL = Uri.tryParse(config.getString('game.url'));
+  if (gameURL == null) {
+    assert(false, "unreachable");
+    return null; // unreachable
+  }
+
+  return gameURL;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Future<API.GameInformation> loadGame() async {
+Future<GameSession> loadGame(final Uri gameURL) async {
   final Cache cache = await Cache.instance;
   //await cache.clear(); // DEBUG
 
-  final Connection conn = await Connection.instance;
+  final Connection conn = await Connection.to(gameURL); // (re)connect to game
   final Client client = Client(conn);
   await client.ping();
 
@@ -111,7 +117,18 @@ Future<API.GameInformation> loadGame() async {
 
   await cache.setPlayerID(2); // FIXME
 
-  return info;
+  return GameSession(
+    url: gameURL,
+    game: Game(
+      state: null, // FIXME
+      origin: LatLng(info.origin.latitude, info.origin.longitude),
+      radius: info.radius,
+      title: info.title,
+      mission: info.mission,
+      rules: null, // TODO
+    ),
+    player: null, // FIXME
+  );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

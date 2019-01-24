@@ -4,8 +4,6 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'game.dart' show Game;
-
 ////////////////////////////////////////////////////////////////////////////////
 
 // TODO: make this a singleton instance, mirroring Cache.instance
@@ -30,21 +28,17 @@ class Config {
 
   String getCurrentGameURL() => prefs.getString('game.url') ?? null;
 
-  Future<Game> setCurrentGame(final Game game) async {
-    if (game == null) {
+  Future<Uri> setCurrentGameURL(final Uri gameURL) async {
+    if (gameURL == null) {
       await Future.wait([
         prefs.remove('game.url'),
-        prefs.remove('game.uuid'),
-        prefs.remove('game.title'),
       ]);
     }
     else {
       await Future.wait([
-        prefs.setString('game.url', game.url.toString()),
-        prefs.setString('game.uuid', game.uuid),
-        prefs.setString('game.title', game.title),
+        prefs.setString('game.url', gameURL.toString()),
       ]);
     }
-    return game;
+    return gameURL;
   }
 }

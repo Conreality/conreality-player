@@ -9,12 +9,15 @@ import 'player_status.dart' show PlayerStatus;
 
 import 'src/cache.dart' show Cache;
 import 'src/model.dart' show Player;
+import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamTab extends StatefulWidget {
-  TeamTab({Key key}) : super(key: key);
+  final GameSession session;
+
+  TeamTab({Key key, this.session}) : super(key: key);
 
   @override
   State<TeamTab> createState() => TeamState();

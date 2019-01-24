@@ -14,12 +14,12 @@ import 'player_tab.dart';
 import 'share_screen.dart';
 import 'team_tab.dart';
 
-import 'src/api.dart' as API;
 import 'src/config.dart' show Config;
 import 'src/connection.dart' show Connection;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
-import 'src/game.dart' show Game, exitGame;
-import 'src/model.dart' show Player;
+import 'src/game.dart' show exitGame;
+import 'src/model.dart' show Game;
+import 'src/session.dart' show GameSession;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,31 +29,27 @@ enum GameMenuChoice { share, exit }
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameScreen extends StatefulWidget {
-  GameScreen({this.game, this.player, this.info});
+  final GameSession session;
 
-  final Game game;
-  final Player player;
-  final API.GameInformation info;
+  GameScreen({this.session});
 
   @override
-  State<GameScreen> createState() => GameState(game, player, info);
+  State<GameScreen> createState() => GameState(session);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameState extends State<GameScreen> {
-  final API.GameInformation _info;
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  GameState(final Game _game, final Player player, final API.GameInformation info)
-    : _info = info,
-      _tabs = [
-        PlayerTab(key: refreshMeKey),
-        TeamTab(key: refreshTeamKey),
-        MissionTab(key: refreshGameKey, info: info),
-        ChatTab(key: refreshChatKey),
-        MapTab(key: refreshMapKey, info: info),
+  GameState(final GameSession session)
+    : _tabs = [
+        PlayerTab(key: refreshMeKey, session: session),
+        TeamTab(key: refreshTeamKey, session: session),
+        MissionTab(key: refreshGameKey, session: session),
+        ChatTab(key: refreshChatKey, session: session),
+        MapTab(key: refreshMapKey, session: session),
       ],
       super();
 
@@ -66,11 +62,12 @@ class GameState extends State<GameScreen> {
 
   @override
   Widget build(final BuildContext context) {
+    final Game game = widget.session.game;
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Text(widget.info.title ?? "(Unnamed game)"),
+            Text(game.title ?? "(Unnamed game)"),
             SizedBox(width: 8),
             ConnectionIndicator(connection: Connection.instance),
           ],

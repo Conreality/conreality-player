@@ -6,11 +6,11 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'player_screen.dart' show PlayerScreen;
 
-import 'src/api.dart' as API;
 import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
 import 'src/connection.dart' show Connection;
 import 'src/model.dart' show Message, Player;
+import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
 import 'src/speech.dart' show say;
 import 'src/strings.dart' show Strings;
@@ -18,9 +18,9 @@ import 'src/strings.dart' show Strings;
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatTab extends StatefulWidget {
-  ChatTab({Key key, this.title}) : super(key: key);
+  ChatTab({Key key, this.session}) : super(key: key);
 
-  final String title;
+  final GameSession session;
 
   @override
   State<ChatTab> createState() => ChatState();

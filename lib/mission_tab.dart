@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/api.dart' as API;
+import 'src/model.dart' show Game;
+import 'src/session.dart' show GameSession;
 import 'src/text_section.dart' show TextSection;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class MissionTab extends StatefulWidget {
-  MissionTab({Key key, this.info}) : super(key: key);
+  final GameSession session;
 
-  final API.GameInformation info;
+  MissionTab({Key key, this.session}) : super(key: key);
 
   @override
   State<MissionTab> createState() => MissionState();
@@ -20,14 +21,15 @@ class MissionTab extends StatefulWidget {
 class MissionState extends State<MissionTab> {
   @override
   Widget build(final BuildContext context) {
+    final game = widget.session.game;
     return Container(
       color: Colors.grey[850],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          GameState(game: widget.info), // fixed
-          Expanded(child: GameDescription(game: widget.info)), // scrollable
+          GameState(game: game), // fixed
+          Expanded(child: GameDescription(game: game)), // scrollable
         ],
       ),
     );
@@ -37,7 +39,7 @@ class MissionState extends State<MissionTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameState extends StatelessWidget {
-  final API.GameInformation game;
+  final Game game;
 
   GameState({this.game});
 
@@ -54,7 +56,7 @@ class GameState extends StatelessWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameDescription extends StatelessWidget {
-  final API.GameInformation game;
+  final Game game;
 
   GameDescription({this.game});
 

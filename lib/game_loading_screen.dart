@@ -2,22 +2,22 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/game.dart' show Game, exitGame;
+import 'src/game.dart' show exitGame;
 import 'src/spinner.dart' show Spinner;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameLoadingScreen extends StatelessWidget {
-  GameLoadingScreen({this.game});
+  final Uri gameURL;
 
-  final Game game;
+  GameLoadingScreen({this.gameURL});
 
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title ?? Strings.of(context).loading),
+        title: Text(Strings.of(context).loading),
         actions: <Widget>[
           FlatButton(
             child: Text(Strings.of(context).cancel.toUpperCase()),

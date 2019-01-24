@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
-import 'src/api.dart' as API;
+import 'src/model.dart' show Game;
+import 'src/session.dart' show GameSession;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class MapTab extends StatefulWidget {
-  MapTab({Key key, this.info}) : super(key: key);
+  final GameSession session;
 
-  final API.GameInformation info;
+  MapTab({Key key, this.session}) : super(key: key);
 
   @override
   State<MapTab> createState() => MapState();
@@ -24,8 +25,8 @@ class MapState extends State<MapTab> {
 
   @override
   Widget build(final BuildContext context) {
-    final API.GameInformation info = widget.info;
-    final LatLng origin = LatLng(info.origin.latitude, info.origin.longitude);
+    final Game game = widget.session.game;
+    final LatLng origin = game.origin;
     return FlutterMap(
       mapController: _controller,
       options: MapOptions(center: origin, zoom: 15.0),
@@ -55,7 +56,7 @@ class MapState extends State<MapTab> {
             // The border for the game theater (a circular shape only, for now):
             CircleMarker(
               point: origin,
-              radius: info.radius, // FIXME: https://github.com/johnpryan/flutter_map/pull/213
+              radius: game.radius, // FIXME: https://github.com/johnpryan/flutter_map/pull/213
               color: Colors.blue.withOpacity(0.1),
               borderColor: Colors.red.withOpacity(1.0),
               borderStrokeWidth: 0.1, // FIXME: no effect?

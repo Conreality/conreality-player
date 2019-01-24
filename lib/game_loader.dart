@@ -9,17 +9,14 @@ import 'game_error_screen.dart';
 import 'game_screen.dart';
 import 'load.dart' show loadGame;
 
-import 'src/api.dart' as API;
-import 'src/game.dart' show Game;
-import 'src/model.dart' show Player;
+import 'src/session.dart' show GameSession;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class GameLoader extends StatefulWidget {
-  GameLoader({Key key, this.game, this.player}) : super(key: key);
+  GameLoader({Key key, this.gameURL}) : super(key: key);
 
-  final Game game;
-  final Player player;
+  final Uri gameURL;
 
   @override
   State<GameLoader> createState() => _GameLoaderState();
@@ -28,30 +25,29 @@ class GameLoader extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class _GameLoaderState extends State<GameLoader> {
-  Future<API.GameInformation> _response;
+  Future<GameSession> _session;
 
   @override
   void initState() {
     super.initState();
-    _response = Future.sync(() => loadGame());
+    _session = Future.sync(() => loadGame(widget.gameURL));
   }
 
   @override
   Widget build(final BuildContext context) {
-    final game = widget.game;
-    final player = widget.player;
-    return FutureBuilder<API.GameInformation>(
-      future: _response,
-      builder: (final BuildContext context, final AsyncSnapshot<API.GameInformation> snapshot) {
+    final Uri gameURL = widget.gameURL;
+    return FutureBuilder<GameSession>(
+      future: _session,
+      builder: (final BuildContext context, final AsyncSnapshot<GameSession> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.active:
           case ConnectionState.waiting:
-            return GameLoadingScreen(game: game);
+            return GameLoadingScreen(gameURL: gameURL);
           case ConnectionState.done:
             return (snapshot.hasError) ?
-              GameErrorScreen(game: game, error: snapshot.error) :
-              GameScreen(game: game, player: player, info: snapshot.data);
+              GameErrorScreen(error: snapshot.error) :
+              GameScreen(session: snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable

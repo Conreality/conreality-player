@@ -5,6 +5,7 @@ import 'dart:async' show Future;
 import 'package:grpc/grpc.dart' as gRPC;
 
 import 'client.dart' show Client;
+import 'config.dart' show Config;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -17,13 +18,23 @@ class Connection {
   static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
   static Connection _instance;
 
+  static Future<Connection> to(final Uri url) async {
+    assert(url != null && url.isAbsolute);
+
+    final host = url.host;
+    assert(host != null && host.isNotEmpty);
+
+    final port = url.hasPort ? url.port : Config.DEFAULT_PORT;
+    assert(port != null && port > 0 && port < 65535);
+
+    final options = gRPC.ChannelOptions(credentials: creds); // TODO
+    final channel = gRPC.ClientChannel(host, port: port, options: options);
+    final conn = await channel.getConnection();
+    return _instance = Connection._(conn, channel);
+  }
+
   static Future<Connection> get instance async {
-    if (_instance == null) {
-      final options = gRPC.ChannelOptions(credentials: creds); // TODO
-      final channel = gRPC.ClientChannel("192.168.1.101", port: 50051, options: options);
-      final conn = await channel.getConnection();
-      _instance = Connection._(conn, channel);
-    }
+    assert(_instance != null);
     return _instance;
   }
 
