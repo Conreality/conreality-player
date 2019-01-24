@@ -42,10 +42,26 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   final Cache cache = await Cache.instance;
   //await cache.clear(); // DEBUG
 
+  print("gameURL=${gameURL}"); // DEBUG
   final Connection conn = await Connection.to(gameURL); // (re)connect to game
   final Client client = Client(conn);
   await client.ping();
 
+  // Player nick:
+  final String playerNick = gameURL.userInfo;
+  print("playerNick=${playerNick}"); // DEBUG
+  assert(playerNick != null && playerNick.isNotEmpty);
+
+  // Player ID:
+  int playerID = (await client.rpc.lookupEntityByName(API.TextString()..value = playerNick)).id?.toInt();
+  if (playerID == null || playerID == 0) {
+    playerID = (await client.rpc.addPlayer(API.Player()..nick = playerNick)).id?.toInt();
+  }
+  print("playerID=${playerID}"); // DEBUG
+  assert(playerID != null && playerID > 0);
+  await cache.setPlayerID(playerID);
+
+  // Game:
   final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
 
   // Players:
@@ -116,8 +132,6 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     }
   });
 
-  await cache.setPlayerID(2); // FIXME
-
   return GameSession(
     url: gameURL,
     game: Game(
@@ -128,7 +142,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
       mission: info.mission,
       rules: null, // TODO
     ),
-    player: null, // FIXME
+    playerID: playerID,
   );
 }
 

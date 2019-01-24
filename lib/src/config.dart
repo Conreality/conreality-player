@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // TODO: make this a singleton instance, mirroring Cache.instance
 class Config {
   static const DEFAULT_PORT = 50051;
-  static const DEFAULT_URL = 'grpc://192.168.1.101:50051'; // 127.0.0.1:50051 on the emulator host
+  static const DEFAULT_URL = 'grpc://Alfa@192.168.1.101:50051'; // 127.0.0.1:50051 on the emulator host
 
   Config({this.prefs});
 

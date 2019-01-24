@@ -55,9 +55,9 @@ class GameState extends State<GameScreen> {
 
   @override
   Future<void> dispose() async {
+    super.dispose();
     final Connection connection = await Connection.instance;
     await connection.close();
-    super.dispose();
   }
 
   @override

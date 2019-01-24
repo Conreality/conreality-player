@@ -7,7 +7,7 @@ import 'model.dart';
 class GameSession {
   final Uri url;
   final Game game;
-  final Player player;
+  final int playerID;
 
-  GameSession({this.url, this.game, this.player});
+  GameSession({this.url, this.game, this.playerID});
 }
