@@ -53,6 +53,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   players.forEach((final API.Player player) {
     print("-> player: ${player.writeToJson()}"); // DEBUG
     cache.putPlayer(player);
+    cache.setName(player.id.toInt(), player.nick);
 
     if (true) { // TODO: check if loading already finished
       //refreshMeKey.currentState?.reload(); // TODO: only if own nick/rank/avatar changed

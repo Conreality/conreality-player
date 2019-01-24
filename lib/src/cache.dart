@@ -54,6 +54,11 @@ class Cache {
 
   Future<void> clear() => _clear(_db);
 
+  void setName(final int playerID, final String name) {
+    assert(playerID != null);
+    _names[playerID] = name;
+  }
+
   String getName(final int playerID) {
     return (playerID == null) ? "System" : _names[playerID];
   }
@@ -131,8 +136,6 @@ class Cache {
   Future<int> putPlayer(final API.Player player) {
     assert(player != null);
     assert(player.id != null);
-
-    _names[player.id.toInt()] = player.nick;
 
     return _db.replace(table: "player", values: <String, dynamic>{
       "player_id": player.id.toInt(),
