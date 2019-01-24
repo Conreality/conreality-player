@@ -121,7 +121,7 @@ class PlayerInfo extends StatelessWidget {
               alignment: Alignment.topLeft,
             ),
             Container(
-              child: Text(player?.rank != null && player.rank.isNotEmpty ? player.rank : "No rank", style: rankStyle),
+              child: Text(player?.rank != null && player.rank.isNotEmpty ? player.rank : "", style: rankStyle),
               padding: EdgeInsets.only(top: 16.0),
               alignment: Alignment.topLeft,
             ),

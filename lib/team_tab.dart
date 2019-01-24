@@ -60,7 +60,7 @@ class TeamState extends State<TeamTab> {
             return Spinner();
           case ConnectionState.done:
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return TeamList(snapshot.data);
+            return TeamList(players: snapshot.data, cache: _cache);
         }
         assert(false, "unreachable");
         return null; // unreachable
@@ -73,8 +73,9 @@ class TeamState extends State<TeamTab> {
 
 class TeamList extends StatelessWidget {
   final List<Player> players;
+  Cache cache;
 
-  TeamList(this.players);
+  TeamList({this.players, this.cache});
 
   @override
   Widget build(final BuildContext context) {
@@ -86,12 +87,15 @@ class TeamList extends StatelessWidget {
       itemBuilder: (final BuildContext context, final int index) {
         final player = players[index];
         return ListTile(
-          leading: CircleAvatar(child: Text(player.nick.substring(0, 1))),
+          leading: CircleAvatar(
+            child: Text(player.nick.substring(0, 1)),
+            backgroundColor: cache.getColor(player.id),
+          ),
           title: Row(
             children: <Widget>[
               Text(player.nick),
               Container(
-                child: Text(player.rank != null && player.rank.isNotEmpty ? player.rank : "No rank", style: style),
+                child: Text(player.rank != null && player.rank.isNotEmpty ? player.rank : "", style: style),
                 padding: EdgeInsets.only(left: 16.0),
                 alignment: Alignment.topLeft,
               ),
