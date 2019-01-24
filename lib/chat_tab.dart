@@ -128,16 +128,24 @@ class ChatState extends State<ChatTab> {
       _textController.clear();
     });
 
-    final Message message = Message(text: text);
+    final Cache cache = await Cache.instance;
+
+    final Message message = Message(
+      sender: await cache.getPlayerID(),
+      recipient: null, // everyone
+      language: "", // TODO
+      text: text,
+    );
 
     ChatMessage messageWidget = ChatMessage(message: message);
     setState(() { _messages.insert(0, messageWidget); });
 
     final Client client = Client(await Connection.instance);
-    client.rpc.sendMessage(API.Message()..text = text);
+    print(message.toRPC().writeToJson());
+    client.rpc.sendMessage(message.toRPC());
 
-    final Cache cache = await Cache.instance;
-    await cache.putMessage(API.Message()..text = text);
+    // TODO: support message status indicators:
+    //await cache.putMessage(message.toRPC());
   }
 }
 
