@@ -1,28 +1,82 @@
 /* This is free and unencumbered software released into the public domain. */
 
+import 'dart:async' show Future;
+
 import 'package:flutter/material.dart';
 
 import 'player_status.dart' show PlayerStatus;
 
+import 'src/cache.dart' show Cache;
 import 'src/model.dart' show Player;
+import 'src/spinner.dart' show Spinner;
 import 'src/text_section.dart' show TextSection;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerTab extends StatefulWidget {
-  PlayerTab({Key key, this.player}) : super(key: key);
+  final int playerID;
 
-  final Player player;
+  PlayerTab({Key key, this.playerID}) : super(key: key);
 
   @override
   State<PlayerTab> createState() => PlayerState();
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerState extends State<PlayerTab> {
+  Future<Player> _player;
+  Cache _cache;
+
+  @override
+  void initState() {
+    super.initState();
+    reload();
+  }
+
+  void reload() {
+    setState(() {
+      _player = Future.sync(() => _load());
+    });
+  }
+
+  Future<Player> _load() async {
+    if (_cache == null) {
+      _cache = await Cache.instance;
+    }
+    return _cache.getPlayer(widget.playerID);
+  }
+
   @override
   Widget build(final BuildContext context) {
-    final Player player = widget.player;
+    return FutureBuilder<Player>(
+      future: _player,
+      builder: (final BuildContext context, final AsyncSnapshot<Player> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            return Spinner();
+          case ConnectionState.done:
+            if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
+            return PlayerPage(player: snapshot.data);
+        }
+        assert(false, "unreachable");
+        return null; // unreachable
+      },
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class PlayerPage extends StatelessWidget {
+  final Player player;
+
+  PlayerPage({this.player});
+
+  @override
+  Widget build(final BuildContext context) {
     return Container(
       color: Colors.grey[850],
       child: Column(
@@ -30,6 +84,8 @@ class PlayerState extends State<PlayerTab> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           PlayerInfo(player: player), // fixed
+          // TODO: status (ingame/outgame)
+          // TODO: shot count
           Expanded(child: PlayerBio(player: player)), // scrollable
         ],
       ),
@@ -72,8 +128,6 @@ class PlayerInfo extends StatelessWidget {
               padding: EdgeInsets.only(top: 16.0),
               alignment: Alignment.topLeft,
             ),
-            // TODO: status (ingame/outgame)
-            // TODO: shot count
             // TODO: nationality/language
           ],
         ),

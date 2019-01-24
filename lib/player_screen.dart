@@ -20,7 +20,7 @@ class PlayerScreen extends StatelessWidget {
         title: Text(player.nick),
         actions: <Widget>[],
       ),
-      body: PlayerTab(player: player),
+      body: PlayerTab(playerID: player.id),
     );
   }
 }

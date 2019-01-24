@@ -49,7 +49,7 @@ class GameState extends State<GameScreen> {
   GameState(final Game _game, final Player player, final API.GameInformation info)
     : _info = info,
       _tabs = [
-        PlayerTab(key: refreshMeKey, player: player),
+        PlayerTab(key: refreshMeKey),
         TeamTab(key: refreshTeamKey),
         MissionTab(key: refreshGameKey, info: info),
         ChatTab(key: refreshChatKey),

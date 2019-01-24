@@ -1,6 +1,6 @@
 /* This is free and unencumbered software released into the public domain. */
 
-import 'dart:async';
+import 'dart:async' show Future;
 
 import 'package:flutter/material.dart';
 
