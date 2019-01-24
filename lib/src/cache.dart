@@ -63,7 +63,13 @@ class Cache {
   }
 
   Future<int> getMaxEventID() async {
-    return 0; // TODO
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT MAX(event_id) AS id FROM event LIMIT 1");
+    try {
+      return cursor.toList().first['id'];
+    }
+    finally {
+      await cursor.close();
+    }
   }
 
   Future<int> getMaxMessageID() async {
@@ -97,7 +103,13 @@ class Cache {
     assert(event != null);
     assert(event.id != null);
 
-    return Future.value(0); // TODO
+    return _db.replace(table: "event", values: <String, dynamic>{
+      "event_id": event.id.toInt(),
+      "event_timestamp": event.timestamp.toInt(),
+      "event_predicate": event.predicate,
+      "event_subject": event.hasSubjectId() ? event.subjectId.toInt() : null,
+      "event_object": event.hasObjectId() ? event.objectId.toInt() : null,
+    });
   }
 
   Future<int> putMessage(final API.Message message) {

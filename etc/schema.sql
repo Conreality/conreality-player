@@ -30,6 +30,13 @@ CREATE TABLE game (
 --------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS event;
+CREATE TABLE event (
+  event_id INTEGER PRIMARY KEY NOT NULL,
+  event_timestamp DATETIME NOT NULL,
+  event_predicate VARCHAR(63) NOT NULL,
+  event_subject INTEGER NULL,
+  event_object INTEGER NULL
+);
 
 --------------------------------------------------------------------------------
 

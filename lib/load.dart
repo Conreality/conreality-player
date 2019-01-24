@@ -78,7 +78,6 @@ Future<API.GameInformation> loadGame() async {
   });
 
   await cache.setPlayerID(2); // FIXME
-  print(await cache.getPlayer(2));
 
   return info;
 }
