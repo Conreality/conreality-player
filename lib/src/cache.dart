@@ -1,7 +1,7 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async' show Future;
-import 'dart:io' show Directory;
+import 'dart:io' show Directory, File;
 import 'dart:math' show Random;
 import 'dart:ui' show Color;
 
@@ -28,9 +28,12 @@ class Cache {
     if (_instance == null) {
       final Directory cacheDir = await Context.cacheDir;
       await cacheDir.create(recursive: true);
-      final String cachePath = "${cacheDir.path}/cache.db";
-      final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cachePath);
-      _clear(db);
+      final File cacheFile = File("${cacheDir.path}/cache.db");
+      final bool cacheCreated = !cacheFile.existsSync();
+      final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cacheFile.path);
+      if (cacheCreated) {
+        await _clear(db); // load the database schema
+      }
       _instance = Cache._(db);
     }
     return _instance;
@@ -71,17 +74,23 @@ class Cache {
 
   Future<void> setPlayerID(final int playerID) async {
     await _db.execSQL("DELETE FROM user");
-    return await _db.insert(table: "user", values: <String, dynamic>{
+    return await _db.replace(table: "user", values: <String, dynamic>{
       "player_id": playerID,
     });
   }
 
   Future<int> putEvent(final API.Event event) {
+    assert(event != null);
+    assert(event.id != null);
+
     return Future.value(0); // TODO
   }
 
   Future<int> putMessage(final API.Message message) {
-    return _db.insert(table: "message", values: <String, dynamic>{
+    assert(message != null);
+    assert(message.id != null);
+
+    return _db.replace(table: "message", values: <String, dynamic>{
       "message_id": message.id.toInt(),
       "message_timestamp": message.timestamp.toInt(),
       "message_seen": 0, // always false initially
@@ -94,8 +103,12 @@ class Cache {
   }
 
   Future<int> putPlayer(final API.Player player) {
+    assert(player != null);
+    assert(player.id != null);
+
     _names[player.id.toInt()] = player.nick;
-    return _db.insert(table: "player", values: <String, dynamic>{
+
+    return _db.replace(table: "player", values: <String, dynamic>{
       "player_id": player.id.toInt(),
       "player_nick": player.nick,
       "player_rank": player.rank,

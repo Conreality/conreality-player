@@ -21,8 +21,6 @@ Future<Game> loadApp() async {
   final Config config = await Config.load();
   //await config.clear(); // DEBUG
 
-  //final Cache cache = await Cache.instance;
-
   final bool hasGame = config.hasKey('game.url');
 
   return !hasGame ? null : Game(
@@ -36,7 +34,7 @@ Future<Game> loadApp() async {
 
 Future<API.GameInformation> loadGame() async {
   final Cache cache = await Cache.instance;
-  await cache.clear();
+  //await cache.clear(); // DEBUG
 
   final Connection conn = await Connection.instance;
   final Client client = Client(conn);
@@ -44,11 +42,17 @@ Future<API.GameInformation> loadGame() async {
 
   final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
 
+  // TODO: find the max player ID in cache
   final API.PlayerList players = await client.rpc.listPlayers(API.UnitID()..id = Int64(0));
-  for (final API.Player player in players.list) {
-    cache.putPlayer(player);
+  for (final API.Player player in players.list) { // TODO: streaming
+    print("-> player: ${player.writeToJson()}"); // DEBUG
+    cache.putPlayer(player); // FIXME
   }
 
+  // TODO: find the max target ID in cache
+  // TODO: subscribe to targets
+
+  // TODO: find the max message ID in cache
   final gRPC.ResponseStream<API.Message> messages = client.rpc.receiveMessages(API.Nothing());
   messages.forEach((final API.Message message) {
     print("-> message: ${message.writeToJson()}"); // DEBUG
@@ -57,6 +61,7 @@ Future<API.GameInformation> loadGame() async {
     // TODO: optional text-to-speech
   });
 
+  // TODO: find the max event ID in cache
   final gRPC.ResponseStream<API.Event> events = client.rpc.receiveEvents(API.Nothing());
   events.forEach((final API.Event event) {
     print("-> event: ${event.writeToJson()}"); // DEBUG
