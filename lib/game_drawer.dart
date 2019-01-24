@@ -47,9 +47,9 @@ class GameDrawer extends StatelessWidget {
           Navigator.of(context).pushNamed('/map');
         },
       ),
-*/
 
       Divider(),
+*/
 
       ListTile(
         leading: Icon(Icons.report),
