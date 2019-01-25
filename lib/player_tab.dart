@@ -126,7 +126,7 @@ class PlayerInfo extends StatelessWidget {
               alignment: Alignment.topLeft,
             ),
             Container(
-              child: PlayerStatus(player: player),
+              child: PlayerStatus(player: player, isSelf: true),
               padding: EdgeInsets.only(top: 16.0),
               alignment: Alignment.topLeft,
             ),

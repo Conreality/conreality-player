@@ -60,7 +60,7 @@ class TeamState extends State<TeamTab> {
             return Spinner();
           case ConnectionState.done:
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return TeamList(players: snapshot.data, cache: _cache);
+            return TeamList(session: widget.session, players: snapshot.data, cache: _cache);
         }
         assert(false, "unreachable");
         return null; // unreachable
@@ -72,10 +72,11 @@ class TeamState extends State<TeamTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamList extends StatelessWidget {
+  final GameSession session;
   final List<Player> players;
   Cache cache;
 
-  TeamList({this.players, this.cache});
+  TeamList({this.session, this.players, this.cache});
 
   @override
   Widget build(final BuildContext context) {
@@ -101,7 +102,7 @@ class TeamList extends StatelessWidget {
               ),
             ],
           ),
-          subtitle: PlayerStatus(player: player),
+          subtitle: PlayerStatus(player: player, isSelf: player.id == session.playerID),
           trailing: GestureDetector(
             child: Icon(Icons.info, color: Theme.of(context).disabledColor),
             onTap: () {

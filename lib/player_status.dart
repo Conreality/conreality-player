@@ -9,8 +9,9 @@ import 'src/model.dart' show Player;
 
 class PlayerStatus extends StatelessWidget {
   final Player player;
+  final bool isSelf;
 
-  PlayerStatus({Key key, this.player}) : super(key: key);
+  PlayerStatus({Key key, this.player, this.isSelf = false}) : super(key: key);
 
   @override
   Widget build(final BuildContext context) {
@@ -31,17 +32,17 @@ class PlayerStatus extends StatelessWidget {
           padding: EdgeInsets.only(left: 4.0),
           alignment: Alignment.topLeft,
         ),
-        Container(
+        isSelf ? null : Container(
           child: Icon(MdiIcons.walk, color: Colors.white70, size: 16.0),
           padding: EdgeInsets.only(left: 8.0),
           alignment: Alignment.topLeft,
         ),
-        Container(
+        isSelf ? null : Container(
           child: Text(player?.distance != null ? "${player.distance.toInt()}m" : "N/A"),
           padding: EdgeInsets.only(left: 4.0),
           alignment: Alignment.topLeft,
         ),
-      ],
+      ].where((element) => element != null).toList(),
     );
   }
 }
