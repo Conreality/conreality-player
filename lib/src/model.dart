@@ -18,10 +18,17 @@ enum GameState {
   ended,
 }
 
+enum GameAction {
+  begin,
+  pause,
+  resume,
+  end,
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class Game {
-  final GameState state;
+  GameState state;
   final LatLng origin;
   final double radius;
   final String title;
@@ -39,6 +46,10 @@ class Game {
       case "ended":   return GameState.ended;
       default:        return null; // unknown state
     }
+  }
+
+  void setState(final GameState newState) {
+    state = newState;
   }
 }
 

@@ -21,6 +21,10 @@ class MissionTab extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class MissionState extends State<MissionTab> {
+  void reload() {
+    setState(() {});
+  }
+
   @override
   Widget build(final BuildContext context) {
     final game = widget.session.game;

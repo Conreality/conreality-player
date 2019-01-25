@@ -13,7 +13,7 @@ import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
 import 'src/config.dart' show Config;
 import 'src/connection.dart' show Connection;
-import 'src/model.dart' show Game, Player;
+import 'src/model.dart' show Game, GameState, Player;
 import 'src/session.dart' show GameSession;
 import 'src/speech.dart' show say;
 
@@ -47,6 +47,9 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   final Client client = Client(conn);
   await client.ping();
 
+  // Game:
+  final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
+
   // Player nick:
   final String playerNick = gameURL.userInfo;
   print("playerNick=${playerNick}"); // DEBUG
@@ -61,8 +64,21 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   assert(playerID != null && playerID > 0);
   await cache.setPlayerID(playerID);
 
-  // Game:
-  final API.GameInformation info = await client.rpc.getGameInfo(API.Nothing());
+  // Game session:
+  final GameSession session = GameSession(
+    url: gameURL,
+    connection: conn,
+    cache: cache,
+    game: Game(
+      state: Game.parseState(info.state),
+      origin: LatLng(info.origin.latitude, info.origin.longitude),
+      radius: info.radius,
+      title: info.title,
+      mission: info.mission,
+      rules: null, // TODO
+    ),
+    playerID: playerID,
+  );
 
   // Players:
   final gRPC.ResponseStream<API.Player> players = client.rpc.listPlayers(API.UnitID()..id = Int64(0));
@@ -124,7 +140,12 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.putEvent(event);
 
     if (true) { // TODO: check if loading already finished
-      //refreshGameKey.currentState?.reload(); // TODO: only if game state changed
+      final GameState newState = Game.parseState(event.predicate);
+      if (newState != null && newState != session.game.state) {
+        session.game.setState(newState);
+        refreshGameKey.currentState?.reload();
+      }
+
       final String announcement = composeEventAnnouncement(event);
       if (announcement != null) {
         say(announcement);
@@ -132,30 +153,17 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     }
   });
 
-  return GameSession(
-    url: gameURL,
-    connection: conn,
-    cache: cache,
-    game: Game(
-      state: Game.parseState(info.state),
-      origin: LatLng(info.origin.latitude, info.origin.longitude),
-      radius: info.radius,
-      title: info.title,
-      mission: info.mission,
-      rules: null, // TODO
-    ),
-    playerID: playerID,
-  );
+  return session;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 String composeEventAnnouncement(final API.Event event) {
   switch (event.predicate) {
-    case "started": return "Game started";
+    case "begun":   return "Game started";
     case "paused":  return "Game paused";
     case "resumed": return "Game resumed";
-    case "stopped": return "Game stopped";
+    case "ended":   return "Game stopped";
     case "joined":  return "A new player joined";
     case "exited":  return "A player exited";
     default:        return null; // unknown predicate

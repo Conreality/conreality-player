@@ -14,10 +14,12 @@ import 'player_tab.dart';
 import 'share_screen.dart';
 import 'team_tab.dart';
 
+import 'src/api.dart' as API;
+import 'src/client.dart' show Client;
 import 'src/config.dart' show Config;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
 import 'src/game.dart' show exitGame;
-import 'src/model.dart' show Game;
+import 'src/model.dart' show Game, GameAction, GameState;
 import 'src/session.dart' show GameSession;
 import 'src/strings.dart' show Strings;
 
@@ -34,16 +36,16 @@ class GameScreen extends StatefulWidget {
     : assert(session != null);
 
   @override
-  State<GameScreen> createState() => GameState(session);
+  State<GameScreen> createState() => _GameState(session);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class GameState extends State<GameScreen> {
+class _GameState extends State<GameScreen> {
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  GameState(final GameSession session)
+  _GameState(final GameSession session)
     : assert(session != null),
       _tabs = [
         PlayerTab(key: refreshMeKey, session: session),
@@ -92,7 +94,7 @@ class GameState extends State<GameScreen> {
       ),
       drawer: GameDrawer(),
       body: _tabs[_tabIndex],
-      floatingActionButton: addButton(_tabIndex),
+      floatingActionButton: actionButton(_tabIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _onTabTapped,
@@ -108,7 +110,7 @@ class GameState extends State<GameScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.games), // TODO: better icon?
-            title: Text("Mission"),
+            title: Text("Game"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
@@ -123,7 +125,7 @@ class GameState extends State<GameScreen> {
     );
   }
 
-  FloatingActionButton addButton(final int tabIndex) {
+  FloatingActionButton actionButton(final int tabIndex) {
     switch (tabIndex) {
       case 0: return null; // Me TODO
       case 1: // Team
@@ -138,17 +140,59 @@ class GameState extends State<GameScreen> {
           },*/
         );
       case 2: // Game
-        return FloatingActionButton(
-          tooltip: "Start",
-          child: Icon(MdiIcons.clockStart),
-          /*onPressed: () {
-            Navigator.push(context, MaterialPageRoute<void>(
-              builder: (final BuildContext context) => null, // TODO
-              fullscreenDialog: true,
-            ));
-          },*/
+        final GameAction action = nextGameAction();
+        return (action == null) ? null : FloatingActionButton(
+          tooltip: null, // TODO
+          child: Icon(getGameActionIcon(action)),
+          onPressed: () => executeGameAction(action),
         );
       default: return null;
+    }
+  }
+
+  GameAction nextGameAction() {
+    final GameSession session = widget.session;
+    switch (session.game.state) {
+      case GameState.planned:
+      case GameState.paused:
+        return GameAction.begin;
+      case GameState.begun:
+      case GameState.resumed:
+        return GameAction.pause;
+      case GameState.ended:
+        return null; // nothing to do
+    }
+    assert(false, "unreachable");
+    return null; // unreachable
+  }
+
+  IconData getGameActionIcon(final GameAction action) {
+    switch (action) {
+      case GameAction.begin:
+      case GameAction.resume:
+        return MdiIcons.play;
+      case GameAction.pause:
+        return MdiIcons.pause;
+      case GameAction.end:
+        return MdiIcons.stop;
+      default: // null
+        return null;
+    }
+  }
+
+  Future<void> executeGameAction(final GameAction action) async {
+    final Client client = Client(widget.session.connection);
+    switch (action) {
+      case GameAction.begin:
+      case GameAction.resume:
+        await client.rpc.startGame(API.TextString());
+        break;
+      case GameAction.pause:
+        await client.rpc.pauseGame(API.TextString());
+        break;
+      case GameAction.end:
+        await client.rpc.stopGame(API.TextString());
+        break;
     }
   }
 
