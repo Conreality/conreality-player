@@ -6,9 +6,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'player_screen.dart' show PlayerScreen;
 
-import 'src/cache.dart' show Cache;
 import 'src/client.dart' show Client;
-import 'src/connection.dart' show Connection;
 import 'src/model.dart' show Message, Player;
 import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
@@ -18,9 +16,11 @@ import 'src/strings.dart' show Strings;
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatTab extends StatefulWidget {
-  ChatTab({Key key, this.session}) : super(key: key);
-
   final GameSession session;
+
+  ChatTab({Key key, @required this.session})
+    : assert(session != null),
+      super(key: key);
 
   @override
   State<ChatTab> createState() => ChatState();
@@ -32,7 +32,6 @@ class ChatState extends State<ChatTab> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
   Future<List<Message>> _data;
-  Cache _cache;
 
   @override
   void initState() {
@@ -47,10 +46,8 @@ class ChatState extends State<ChatTab> {
   }
 
   Future<List<Message>> _load() async {
-    if (_cache == null) {
-      _cache = await Cache.instance;
-    }
-    return _cache.fetchMessages();
+    final GameSession session = widget.session;
+    return session.cache.fetchMessages();
   }
 
   @override
@@ -61,6 +58,7 @@ class ChatState extends State<ChatTab> {
 
   @override
   Widget build(final BuildContext context) {
+    final GameSession session = widget.session;
     return FutureBuilder<List<Message>>(
       future: _data,
       builder: (final BuildContext context, final AsyncSnapshot<List<Message>> snapshot) {
@@ -73,7 +71,7 @@ class ChatState extends State<ChatTab> {
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
             return Column(
               children: <Widget>[
-                Flexible(child: ChatMessageHistory(cache: _cache, messages: snapshot.data)),
+                Flexible(child: ChatMessageHistory(session: session, messages: snapshot.data)),
                 Divider(height: 1.0),
                 Container(
                   decoration: BoxDecoration(
@@ -128,10 +126,10 @@ class ChatState extends State<ChatTab> {
       _textController.clear();
     });
 
-    final Cache cache = await Cache.instance;
+    final GameSession session = widget.session;
 
     final Message message = Message(
-      sender: await cache.getPlayerID(),
+      sender: session.playerID,
       recipient: null, // everyone
       language: "", // TODO
       text: text,
@@ -140,7 +138,7 @@ class ChatState extends State<ChatTab> {
     ChatMessage messageWidget = ChatMessage(message: message);
     setState(() { _messages.insert(0, messageWidget); });
 
-    final Client client = Client(await Connection.instance);
+    final Client client = Client(widget.session.connection);
     print(message.toRPC().writeToJson());
     client.rpc.sendMessage(message.toRPC());
 
@@ -152,10 +150,11 @@ class ChatState extends State<ChatTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatMessageHistory extends StatelessWidget {
-  final Cache cache;
+  final GameSession session;
   final List<Message> messages;
 
-  ChatMessageHistory({this.cache, this.messages});
+  ChatMessageHistory({@required this.session, this.messages})
+    : assert(session != null);
 
   @override
   Widget build(final BuildContext context) {
@@ -164,7 +163,7 @@ class ChatMessageHistory extends StatelessWidget {
       reverse: true,
       itemCount: messages.length,
       itemBuilder: (_, final int index) {
-        return ChatMessage(cache: cache, message: messages[index]);
+        return ChatMessage(session: session, message: messages[index]);
       },
     );
   }
@@ -173,10 +172,11 @@ class ChatMessageHistory extends StatelessWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatMessage extends StatelessWidget {
-  final Cache cache;
+  final GameSession session;
   final Message message;
 
-  ChatMessage({this.cache, this.message});
+  ChatMessage({@required this.session, this.message})
+    : assert(session != null);
 
   @override
   Widget build(final BuildContext context) {
@@ -190,11 +190,12 @@ class ChatMessage extends StatelessWidget {
           backgroundColor: senderColor,
         ),
         onTap: message.isSystem ? null : () async {
-          final Player sender = await cache.getPlayer(message.sender);
+          assert(message.hasSender);
+          final Player sender = await session.cache.getPlayer(message.sender);
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return PlayerScreen(player: sender);
+                return PlayerScreen(session: session, player: sender);
               }
             )
           );
@@ -229,14 +230,14 @@ class ChatMessage extends StatelessWidget {
   }
 
   String get sender {
-    return cache.getName(message.sender) ?? "Unknown";
+    return session.cache.getName(message.sender) ?? "Unknown";
   }
 
   String get senderInitials {
-    return message.isSystem ? "" : cache.getName(message.sender).substring(0, 1);
+    return message.isSystem ? "" : session.cache.getName(message.sender).substring(0, 1);
   }
 
   Color get senderColor {
-    return cache.getColor(message.sender);
+    return session.cache.getColor(message.sender);
   }
 }

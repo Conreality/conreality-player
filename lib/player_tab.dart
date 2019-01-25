@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'player_status.dart' show PlayerStatus;
 
-import 'src/cache.dart' show Cache;
 import 'src/model.dart' show Player;
 import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
@@ -18,7 +17,9 @@ class PlayerTab extends StatefulWidget {
   final GameSession session;
   final int playerID;
 
-  PlayerTab({Key key, this.session, this.playerID}) : super(key: key);
+  PlayerTab({Key key, @required this.session, this.playerID})
+    : assert(session != null),
+      super(key: key);
 
   @override
   State<PlayerTab> createState() => PlayerState();
@@ -28,7 +29,6 @@ class PlayerTab extends StatefulWidget {
 
 class PlayerState extends State<PlayerTab> {
   Future<Player> _player;
-  Cache _cache;
 
   @override
   void initState() {
@@ -43,10 +43,8 @@ class PlayerState extends State<PlayerTab> {
   }
 
   Future<Player> _load() async {
-    if (_cache == null) {
-      _cache = await Cache.instance;
-    }
-    return _cache.getPlayer(widget.playerID);
+    final GameSession session = widget.session;
+    return session.cache.getPlayer(widget.playerID ?? session.playerID);
   }
 
   @override

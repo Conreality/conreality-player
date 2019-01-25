@@ -12,7 +12,9 @@ import 'src/session.dart' show GameSession;
 class MapTab extends StatefulWidget {
   final GameSession session;
 
-  MapTab({Key key, this.session}) : super(key: key);
+  MapTab({Key key, @required this.session})
+    : assert(session != null),
+      super(key: key);
 
   @override
   State<MapTab> createState() => MapState();

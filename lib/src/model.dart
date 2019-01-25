@@ -166,6 +166,8 @@ class Message {
 
   Message({this.id, this.timestamp, this.seen, this.sender, this.recipient, this.language, this.text, this.audio});
 
+  bool get hasSender => sender != null;
+  bool get hasRecipient => recipient != null;
   bool get isSystem => sender == null;
   bool get isPrivate => recipient != null;
   bool get isLanguageKnown => language != null;

@@ -5,13 +5,17 @@ import 'package:flutter/material.dart';
 import 'player_tab.dart';
 
 import 'src/model.dart' show Player;
+import 'src/session.dart' show GameSession;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerScreen extends StatelessWidget {
+  final GameSession session;
   final Player player;
 
-  PlayerScreen({Key key, this.player}) : super(key: key);
+  PlayerScreen({Key key, @required this.session, this.player})
+    : assert(session != null),
+      super(key: key);
 
   @override
   Widget build(final BuildContext context) {
@@ -20,7 +24,7 @@ class PlayerScreen extends StatelessWidget {
         title: Text(player.nick),
         actions: <Widget>[],
       ),
-      body: PlayerTab(playerID: player.id),
+      body: PlayerTab(session: session, playerID: player.id),
     );
   }
 }

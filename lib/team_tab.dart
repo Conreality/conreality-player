@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
 
-import 'src/cache.dart' show Cache;
 import 'src/model.dart' show Player;
 import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
@@ -17,7 +16,9 @@ import 'src/spinner.dart' show Spinner;
 class TeamTab extends StatefulWidget {
   final GameSession session;
 
-  TeamTab({Key key, this.session}) : super(key: key);
+  TeamTab({Key key, @required this.session})
+    : assert(session != null),
+      super(key: key);
 
   @override
   State<TeamTab> createState() => TeamState();
@@ -27,7 +28,6 @@ class TeamTab extends StatefulWidget {
 
 class TeamState extends State<TeamTab> {
   Future<List<Player>> _data;
-  Cache _cache;
 
   @override
   void initState() {
@@ -42,14 +42,13 @@ class TeamState extends State<TeamTab> {
   }
 
   Future<List<Player>> _load() async {
-    if (_cache == null) {
-      _cache = await Cache.instance;
-    }
-    return _cache.listPlayers();
+    final GameSession session = widget.session;
+    return session.cache.listPlayers();
   }
 
   @override
   Widget build(final BuildContext context) {
+    final GameSession session = widget.session;
     return FutureBuilder<List<Player>>(
       future: _data,
       builder: (final BuildContext context, final AsyncSnapshot<List<Player>> snapshot) {
@@ -60,7 +59,7 @@ class TeamState extends State<TeamTab> {
             return Spinner();
           case ConnectionState.done:
             if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return TeamList(session: widget.session, players: snapshot.data, cache: _cache);
+            return TeamList(session: widget.session, players: snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable
@@ -74,9 +73,9 @@ class TeamState extends State<TeamTab> {
 class TeamList extends StatelessWidget {
   final GameSession session;
   final List<Player> players;
-  Cache cache;
 
-  TeamList({this.session, this.players, this.cache});
+  TeamList({@required this.session, this.players})
+    : assert(session != null);
 
   @override
   Widget build(final BuildContext context) {
@@ -90,7 +89,7 @@ class TeamList extends StatelessWidget {
         return ListTile(
           leading: CircleAvatar(
             child: Text(player.nick.substring(0, 1)),
-            backgroundColor: cache.getColor(player.id),
+            backgroundColor: session.cache.getColor(player.id),
           ),
           title: Row(
             children: <Widget>[
@@ -109,7 +108,7 @@ class TeamList extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (final BuildContext context) {
-                    return PlayerScreen(player: player);
+                    return PlayerScreen(session: session, player: player);
                   }
                 )
               );

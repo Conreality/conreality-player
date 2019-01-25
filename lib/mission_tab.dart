@@ -11,7 +11,9 @@ import 'src/text_section.dart' show TextSection;
 class MissionTab extends StatefulWidget {
   final GameSession session;
 
-  MissionTab({Key key, this.session}) : super(key: key);
+  MissionTab({Key key, @required this.session})
+    : assert(session != null),
+      super(key: key);
 
   @override
   State<MissionTab> createState() => MissionState();

@@ -15,7 +15,6 @@ import 'share_screen.dart';
 import 'team_tab.dart';
 
 import 'src/config.dart' show Config;
-import 'src/connection.dart' show Connection;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
 import 'src/game.dart' show exitGame;
 import 'src/model.dart' show Game;
@@ -31,7 +30,8 @@ enum GameMenuChoice { share, exit }
 class GameScreen extends StatefulWidget {
   final GameSession session;
 
-  GameScreen({this.session});
+  GameScreen({@required this.session})
+    : assert(session != null);
 
   @override
   State<GameScreen> createState() => GameState(session);
@@ -44,7 +44,8 @@ class GameState extends State<GameScreen> {
   int _tabIndex = 0;
 
   GameState(final GameSession session)
-    : _tabs = [
+    : assert(session != null),
+      _tabs = [
         PlayerTab(key: refreshMeKey, session: session),
         TeamTab(key: refreshTeamKey, session: session),
         MissionTab(key: refreshGameKey, session: session),
@@ -56,20 +57,21 @@ class GameState extends State<GameScreen> {
   @override
   Future<void> dispose() async {
     super.dispose();
-    final Connection connection = await Connection.instance;
-    await connection.close();
+    final GameSession session = widget.session;
+    await session.connection.close();
   }
 
   @override
   Widget build(final BuildContext context) {
-    final Game game = widget.session.game;
+    final GameSession session = widget.session;
+    final Game game = session.game;
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: <Widget>[
             Text(game.title ?? "(Unnamed game)"),
             SizedBox(width: 8),
-            ConnectionIndicator(connection: Connection.instance),
+            ConnectionIndicator(connection: Future.value(session.connection)),
           ],
         ),
         actions: <Widget>[

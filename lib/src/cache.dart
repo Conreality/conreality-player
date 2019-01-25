@@ -18,25 +18,20 @@ import 'model.dart';
 
 class Cache {
   final SQLiteDatabase _db;
+  final Map<int, String> _names = {};
 
   Cache._(this._db);
 
-  static Cache _instance;
-  static Map<int, String> _names = {};
-
-  static Future<Cache> get instance async {
-    if (_instance == null) {
-      final Directory cacheDir = await Context.cacheDir;
-      await cacheDir.create(recursive: true);
-      final File cacheFile = File("${cacheDir.path}/cache.db");
-      final bool cacheCreated = !cacheFile.existsSync();
-      final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cacheFile.path);
-      if (cacheCreated) {
-        await _clear(db); // load the database schema
-      }
-      _instance = Cache._(db);
+  static Future<Cache> of(final Uri gameURL) async {
+    final Directory cacheDir = await Context.cacheDir;
+    await cacheDir.create(recursive: true);
+    final File cacheFile = File("${cacheDir.path}/cache.db");
+    final bool cacheCreated = !cacheFile.existsSync();
+    final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cacheFile.path);
+    if (cacheCreated) {
+      await _clear(db); // load the database schema
     }
-    return _instance;
+    return Cache._(db);
   }
 
   static Future<void> _clear(final SQLiteDatabase db) async {
@@ -87,16 +82,7 @@ class Cache {
     }
   }
 
-  Future<int> getPlayerID() async {
-    final SQLiteCursor cursor = await _db.rawQuery("SELECT player_id FROM user LIMIT 1");
-    try {
-      return cursor.toList().first['player_id'];
-    }
-    finally {
-      await cursor.close();
-    }
-  }
-
+  @deprecated
   Future<void> setPlayerID(final int playerID) async {
     await _db.execSQL("DELETE FROM user");
     return await _db.replace(table: "user", values: <String, dynamic>{
@@ -160,9 +146,9 @@ class Cache {
     });
   }
 
-  Future<Player> getPlayer([final int playerID]) async {
-    final arg = (playerID ?? await getPlayerID()).toString();
-    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player WHERE player_id = ? LIMIT 1", [arg]);
+  Future<Player> getPlayer(final int playerID) async {
+    assert(playerID != null);
+    final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player WHERE player_id = ? LIMIT 1", [playerID.toString()]);
     try {
       final result = cursor.toList();
       return result.isEmpty ? null : result.map((Map<String, dynamic> row) {

@@ -10,13 +10,12 @@ import 'config.dart' show Config;
 ////////////////////////////////////////////////////////////////////////////////
 
 class Connection {
+  static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
+
   final gRPC.ClientConnection _conn;
   final gRPC.ClientChannel _channel;
 
   Connection._(this._conn, this._channel);
-
-  static const gRPC.ChannelCredentials creds = gRPC.ChannelCredentials.insecure();
-  static Connection _instance;
 
   static Future<Connection> to(final Uri url) async {
     assert(url != null && url.isAbsolute);
@@ -30,12 +29,7 @@ class Connection {
     final options = gRPC.ChannelOptions(credentials: creds); // TODO
     final channel = gRPC.ClientChannel(host, port: port, options: options);
     final conn = await channel.getConnection();
-    return _instance = Connection._(conn, channel);
-  }
-
-  static Future<Connection> get instance async {
-    assert(_instance != null);
-    return _instance;
+    return Connection._(conn, channel);
   }
 
   gRPC.ConnectionState get state => _conn.state;

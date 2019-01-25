@@ -39,7 +39,7 @@ Future<Uri> loadApp() async {
 ////////////////////////////////////////////////////////////////////////////////
 
 Future<GameSession> loadGame(final Uri gameURL) async {
-  final Cache cache = await Cache.instance;
+  final Cache cache = await Cache.of(gameURL);
   //await cache.clear(); // DEBUG
 
   print("gameURL=${gameURL}"); // DEBUG
@@ -134,6 +134,8 @@ Future<GameSession> loadGame(final Uri gameURL) async {
 
   return GameSession(
     url: gameURL,
+    connection: conn,
+    cache: cache,
     game: Game(
       state: Game.parseState(info.state),
       origin: LatLng(info.origin.latitude, info.origin.longitude),
