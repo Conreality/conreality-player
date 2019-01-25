@@ -136,7 +136,7 @@ class ChatState extends State<ChatTab> {
       text: text,
     );
 
-    ChatMessage messageWidget = ChatMessage(message: message);
+    ChatMessage messageWidget = ChatMessage(session: session, message: message);
     setState(() { _messages.insert(0, messageWidget); });
 
     final Client client = Client(widget.session.connection);
