@@ -141,7 +141,7 @@ class Cache {
       "player_id": player.id.toInt(),
       "player_nick": player.nick,
       "player_rank": player.rank,
-      "player_headset": 1, // TODO
+      "player_headset": 0, // TODO
       "player_heartrate": 40 + Random().nextInt(60), // TODO
       "player_distance": Random().nextInt(300), // TODO
       "player_position_x": null,
