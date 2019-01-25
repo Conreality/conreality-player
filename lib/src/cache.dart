@@ -94,47 +94,80 @@ class Cache {
     assert(event != null);
     assert(event.id != null);
 
-    return _db.replace(table: "event", values: <String, dynamic>{
-      "event_id": event.id.toInt(),
-      "event_timestamp": event.timestamp.toInt(),
-      "event_predicate": event.predicate,
-      "event_subject": event.hasSubjectId() ? event.subjectId.toInt() : null,
-      "event_object": event.hasObjectId() ? event.objectId.toInt() : null,
-    });
+    return _db.replace(
+      table: "event",
+      values: <String, dynamic>{
+        "event_id": event.id.toInt(),
+        "event_timestamp": event.timestamp.toInt(),
+        "event_predicate": event.predicate,
+        "event_subject": event.hasSubjectId() ? event.subjectId.toInt() : null,
+        "event_object": event.hasObjectId() ? event.objectId.toInt() : null,
+      },
+    );
   }
 
   Future<int> putMessage(final API.Message message) {
     assert(message != null);
     assert(message.id != null);
 
-    return _db.replace(table: "message", values: <String, dynamic>{
-      "message_id": message.id.toInt(),
-      "message_timestamp": message.timestamp.toInt(),
-      "message_seen": 0, // always false initially
-      "message_sender": message.hasSenderId() ? message.senderId.toInt() : null,
-      "message_recipient": message.hasRecipientId() ? message.recipientId.toInt() : null,
-      "message_language": message.hasLanguage() ? message.language : null,
-      "message_text": message.text,
-      "message_audio": null, // TODO
-    });
+    return _db.replace(
+      table: "message",
+      values: <String, dynamic>{
+        "message_id": message.id.toInt(),
+        "message_timestamp": message.timestamp.toInt(),
+        "message_seen": 0, // always false initially
+        "message_sender": message.hasSenderId() ? message.senderId.toInt() : null,
+        "message_recipient": message.hasRecipientId() ? message.recipientId.toInt() : null,
+        "message_language": message.hasLanguage() ? message.language : null,
+        "message_text": message.text,
+        "message_audio": null, // TODO
+      },
+    );
   }
 
   Future<int> putPlayer(final API.Player player) {
     assert(player != null);
     assert(player.id != null);
+    assert(player.nick != null);
 
-    return _db.replace(table: "player", values: <String, dynamic>{
-      "player_id": player.id.toInt(),
-      "player_nick": player.nick,
-      "player_rank": player.rank,
-      "player_headset": 0, // TODO
-      "player_heartrate": 40 + Random().nextInt(60), // TODO
-      "player_distance": Random().nextInt(300), // TODO
-      "player_position_x": null,
-      "player_position_y": null,
-      "player_position_z": null,
-      "player_avatar": null, // TODO
-    });
+    return _db.replace(
+      table: "player",
+      values: <String, dynamic>{
+        "player_id": player.id.toInt(),
+        "player_nick": player.nick,
+        "player_language": player.hasLanguage() ? player.language : null,
+        "player_rank": player.hasRank() ? player.rank : null,
+        "player_bio": player.hasBio() ? player.bio : null,
+        "player_avatar": player.hasAvatar() ? player.avatar : null,
+        "player_state": null,
+        "player_headset": false,
+        "player_heartrate": null,
+        "player_latitude": null,
+        "player_longitude": null,
+        "player_altitude": null,
+        "player_distance": null,
+      },
+    );
+  }
+
+  Future<int> putPlayerStatus(final API.PlayerStatus status) {
+    assert(status != null);
+    assert(status.playerId != null);
+
+    return _db.update(
+      table: "player",
+      values: <String, dynamic>{
+        "player_state": status.hasState() ? status.state : null,
+        "player_headset": status.hasHeadset() ? status.headset : false,
+        "player_heartrate": status.hasHeartrate() ? status.heartrate : null,
+        "player_latitude": status.hasLocation() ? status.location.latitude : null,
+        "player_longitude": status.hasLocation() ? status.location.longitude : null,
+        "player_altitude": status.hasLocation() ? status.location.altitude : null,
+        "player_distance": null, // TODO: calculate this
+      },
+      where: "player_id = ?",
+      whereArgs: <String>[status.playerId.toString()],
+    );
   }
 
   Future<int> putTarget(final API.Target target) {

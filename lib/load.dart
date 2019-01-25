@@ -100,6 +100,19 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     }
   });
 
+  // Player Statuses:
+  final gRPC.ResponseStream<API.PlayerStatus> statuses = client.rpc.receivePlayerStatuses(API.UnitID()..id = Int64(0));
+  statuses.forEach((final API.PlayerStatus status) {
+    print("-> player-status: ${status.writeToJson()}"); // DEBUG
+    cache.putPlayerStatus(status);
+
+    if (true) { // TODO: check if loading already finished
+      //refreshMeTabKey.currentState?.reload(); // DEBUG
+      refreshTeamTabKey.currentState?.reload();
+      //refreshMapTabKey.currentState?.reload();
+    }
+  });
+
   // Units:
   final gRPC.ResponseStream<API.Unit> units = client.rpc.listUnits(API.UnitID()..id = Int64(0));
   units.forEach((final API.Unit unit) {

@@ -42,14 +42,17 @@ DROP TABLE IF EXISTS player;
 CREATE TABLE player (
   player_id INTEGER PRIMARY KEY NOT NULL,
   player_nick TEXT NOT NULL,
+  player_language VARCHAR(5) NULL,
   player_rank TEXT NULL,
-  player_headset BOOLEAN NULL,
+  player_bio TEXT NULL,
+  player_avatar BLOB NULL,
+  player_state TEXT NULL,
+  player_headset BOOLEAN NOT NULL,
   player_heartrate INTEGER NULL,
-  player_distance REAL NULL,
-  player_position_x REAL NULL,
-  player_position_y REAL NULL,
-  player_position_z REAL NULL,
-  player_avatar BLOB NULL
+  player_latitude REAL NULL,
+  player_longitude REAL NULL,
+  player_altitude REAL NULL,
+  player_distance REAL NULL
 );
 
 --------------------------------------------------------------------------------
