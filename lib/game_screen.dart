@@ -32,29 +32,34 @@ enum GameMenuChoice { share, exit }
 class GameScreen extends StatefulWidget {
   final GameSession session;
 
-  GameScreen({@required this.session})
-    : assert(session != null);
+  GameScreen({Key key, @required this.session})
+    : assert(session != null),
+      super(key: key);
 
   @override
-  State<GameScreen> createState() => _GameState(session);
+  State<GameScreen> createState() => GameScreenState(session);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class _GameState extends State<GameScreen> {
+class GameScreenState extends State<GameScreen> {
   final List<Widget> _tabs;
   int _tabIndex = 0;
 
-  _GameState(final GameSession session)
+  GameScreenState(final GameSession session)
     : assert(session != null),
       _tabs = [
-        PlayerTab(key: refreshMeKey, session: session),
-        TeamTab(key: refreshTeamKey, session: session),
-        MissionTab(key: refreshGameKey, session: session),
-        ChatTab(key: refreshChatKey, session: session),
-        MapTab(key: refreshMapKey, session: session),
+        PlayerTab(key: refreshMeTabKey, session: session),
+        TeamTab(key: refreshTeamTabKey, session: session),
+        MissionTab(key: refreshGameTabKey, session: session),
+        ChatTab(key: refreshChatTabKey, session: session),
+        MapTab(key: refreshMapTabKey, session: session),
       ],
       super();
+
+  void reload() {
+    setState(() {});
+  }
 
   @override
   Future<void> dispose() async {

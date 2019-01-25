@@ -88,10 +88,10 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.setName(player.id.toInt(), player.nick);
 
     if (true) { // TODO: check if loading already finished
-      //refreshMeKey.currentState?.reload(); // TODO: only if own nick/rank/avatar changed
-      refreshTeamKey.currentState?.reload();
-      refreshChatKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
-      //refreshMapKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
+      refreshMeTabKey.currentState?.reload(); // TODO: only if own nick/rank/avatar changed
+      refreshTeamTabKey.currentState?.reload();
+      refreshChatTabKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
+      refreshMapTabKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
     }
   });
 
@@ -102,9 +102,9 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     //cache.putUnit(unit);
 
     if (true) { // TODO: check if loading already finished
-      //refreshMeKey.currentState?.reload(); // TODO: only if own unit changed
-      refreshTeamKey.currentState?.reload();
-      //refreshMapKey.currentState?.reload(); // TODO
+      refreshMeTabKey.currentState?.reload(); // TODO: only if own unit changed
+      refreshTeamTabKey.currentState?.reload();
+      refreshMapTabKey.currentState?.reload();
     }
   });
 
@@ -115,7 +115,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.putTarget(target);
 
     if (true) { // TODO: check if loading already finished
-      //refreshMapKey.currentState?.reload(); // TODO
+      refreshMapTabKey.currentState?.reload();
     }
   });
 
@@ -127,7 +127,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.putMessage(message);
 
     if (true) { // TODO: check if loading already finished
-      refreshChatKey.currentState?.reload();
+      refreshChatTabKey.currentState?.reload();
       // TODO: optional text-to-speech
     }
   });
@@ -143,7 +143,8 @@ Future<GameSession> loadGame(final Uri gameURL) async {
       final GameState newState = Game.parseState(event.predicate);
       if (newState != null && newState != session.game.state) {
         session.game.setState(newState);
-        refreshGameKey.currentState?.reload();
+        refreshGameScreenKey.currentState?.reload();
+        refreshGameTabKey.currentState?.reload();
       }
 
       final String announcement = composeEventAnnouncement(event);

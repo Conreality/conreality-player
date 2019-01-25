@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'game_loading_screen.dart';
 import 'game_error_screen.dart';
 import 'game_screen.dart';
+import 'keys.dart' show refreshGameScreenKey;
 import 'load.dart' show loadGame;
 
 import 'src/session.dart' show GameSession;
@@ -47,7 +48,7 @@ class _GameLoaderState extends State<GameLoader> {
           case ConnectionState.done:
             return (snapshot.hasError) ?
               GameErrorScreen(error: snapshot.error) :
-              GameScreen(session: snapshot.data);
+              GameScreen(key: refreshGameScreenKey, session: snapshot.data);
         }
         assert(false, "unreachable");
         return null; // unreachable

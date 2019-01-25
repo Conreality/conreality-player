@@ -25,6 +25,10 @@ class MapTab extends StatefulWidget {
 class MapState extends State<MapTab> {
   final MapController _controller = MapController();
 
+  void reload() {
+    setState(() {}); // TODO?
+  }
+
   @override
   Widget build(final BuildContext context) {
     final Game game = widget.session.game;
