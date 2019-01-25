@@ -1,6 +1,7 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -225,7 +226,14 @@ class ChatMessage extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.zero,
       onTap: () {}, // TODO
-      onLongPress: () {}, // TODO: copy the message text
+      onLongPress: () async {
+        await Clipboard.setData(ClipboardData(text: message.text));
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Message text copied to clipboard.", textAlign: TextAlign.center),
+          ),
+        );
+      },
     );
   }
 
