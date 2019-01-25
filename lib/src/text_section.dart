@@ -1,6 +1,7 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart' show MdiIcons;
 
 import 'speech.dart' show say;
@@ -31,7 +32,14 @@ class TextSection extends StatelessWidget {
               child: ListTile( // TODO: better rendering with missing subtitle
                 title: (subtitle != null) ? Text(subtitle ?? "") : SizedBox(height: 0, width: 0),
                 subtitle: Text(text ?? ""),
-                onLongPress: () {}, // TODO: copy text to clipboard
+                onLongPress: () async {
+                  await Clipboard.setData(ClipboardData(text: text ?? ""));
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Text copied to clipboard.", textAlign: TextAlign.center),
+                    ),
+                  );
+                },
               ),
             ),
             Column(
