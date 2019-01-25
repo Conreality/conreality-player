@@ -12,9 +12,10 @@ class TextSection extends StatelessWidget {
   final String title;
   final String subtitle;
   final String text;
+  final String language;
   final bool initiallyExpanded;
 
-  TextSection({this.title, this.subtitle, this.text, this.initiallyExpanded = false});
+  TextSection({this.title, this.subtitle, this.text, this.language, this.initiallyExpanded = false});
 
   @override
   Widget build(final BuildContext context) {
@@ -46,7 +47,7 @@ class TextSection extends StatelessWidget {
               children: (text == null) ? <Widget>[] : <Widget>[
                 GestureDetector(
                   child: Icon(MdiIcons.playCircleOutline, color: theme.disabledColor),
-                  onTap: () async => await say(text),
+                  onTap: () async => await say(text, language: this.language ?? "en-US"),
                 ),
               ],
             ),

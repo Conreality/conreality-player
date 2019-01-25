@@ -151,6 +151,7 @@ class PlayerBio extends StatelessWidget {
           title: "Bio",
           subtitle: "",
           text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel pulvinar lacus. Donec id ligula dolor. Ut ac vestibulum massa. Integer nec nulla pellentesque eros sollicitudin ullamcorper.",
+          language: null, // TODO
           initiallyExpanded: true,
         ),
       ],

@@ -73,9 +73,14 @@ Future<GameSession> loadGame(final Uri gameURL) async {
       state: Game.parseState(info.state),
       origin: LatLng(info.origin.latitude, info.origin.longitude),
       radius: info.radius,
+      language: info.language,
       title: info.title,
-      mission: info.mission,
-      rules: null, // TODO
+      link: info.link,
+      summary: info.summary,
+      address: info.address,
+      theater: info.theater,
+      rules: info.rules,
+      schedule: info.schedule,
     ),
     playerID: playerID,
   );

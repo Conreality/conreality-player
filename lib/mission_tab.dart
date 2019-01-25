@@ -82,25 +82,32 @@ class GameDescription extends StatelessWidget {
     return ListView(
       children: <Widget>[
         TextSection(
-          title: "Mission",
-          subtitle: game.title,
-          text: game.mission,
+          title: "Summary",
+          subtitle: game.title, // TODO: link
+          text: game.summary,
+          language: game.language,
           initiallyExpanded: true,
+        ),
+        TextSection(
+          title: "Theater", // TODO: origin, radius/bounds, address, map?
+          subtitle: game.address,
+          text: game.theater,
+          language: game.language,
+          initiallyExpanded: false,
         ),
         TextSection(
           title: "Rules",
           subtitle: null,
-          text: "", // TODO: list of rules
+          text: game.rules, // TODO: list of rules
+          language: game.language,
           initiallyExpanded: false,
         ),
-        ExpansionTile(
-          title: Text("Theater", overflow: TextOverflow.ellipsis),
-          backgroundColor: Theme.of(context).accentColor.withOpacity(0.025),
+        TextSection(
+          title: "Schedule",
+          subtitle: null,
+          text: game.schedule, // TODO: list of schedule entries
+          language: game.language,
           initiallyExpanded: false,
-          children: <Widget>[
-            // TODO: origin, bounds, address, map?
-            Container(padding: EdgeInsets.only(bottom: 16.0)),
-          ],
         ),
       ],
     );

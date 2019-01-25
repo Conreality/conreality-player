@@ -31,11 +31,16 @@ class Game {
   GameState state;
   final LatLng origin;
   final double radius;
+  final String language;
   final String title;
-  final String mission;
+  final String link;
+  final String summary;
+  final String address;
+  final String theater;
   final String rules;
+  final String schedule;
 
-  Game({this.state, this.origin, this.radius, this.title, this.mission, this.rules});
+  Game({this.state, this.origin, this.radius, this.language, this.title, this.link, this.summary, this.address, this.theater, this.rules, this.schedule});
 
   static GameState parseState(final String state) {
     switch (state) {
