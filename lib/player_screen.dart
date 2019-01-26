@@ -9,22 +9,45 @@ import 'src/session.dart' show GameSession;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class PlayerScreen extends StatelessWidget {
+class PlayerScreen extends StatefulWidget {
   final GameSession session;
-  final Player player;
+  final int playerID;
 
-  PlayerScreen({Key key, @required this.session, this.player})
+  PlayerScreen({Key key, @required this.session, this.playerID})
     : assert(session != null),
       super(key: key);
+
+  @override
+  State<PlayerScreen> createState() => PlayerScreenState();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class PlayerScreenState extends State<PlayerScreen> {
+  Player _player;
+
+  @override
+  void initState() {
+    super.initState();
+    reload();
+  }
+
+  void reload() async {
+    final GameSession session = widget.session;
+    final Player player = await session.cache.getPlayer(widget.playerID);
+    setState(() {
+      _player = player;
+    });
+  }
 
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(player.nick),
+        title: Text(_player?.nick ?? "Loading..."),
         actions: <Widget>[],
       ),
-      body: PlayerTab(session: session, playerID: player.id),
+      body: PlayerTab(session: widget.session, playerID: widget.playerID),
     );
   }
 }

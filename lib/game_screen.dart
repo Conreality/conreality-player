@@ -5,14 +5,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart' show MdiIcons;
 
-import 'chat_tab.dart';
-import 'game_drawer.dart';
+import 'chat_tab.dart' show ChatTab;
+import 'game_drawer.dart' show GameDrawer;
+import 'game_tab.dart' show GameTab;
 import 'keys.dart';
-import 'map_tab.dart';
-import 'mission_tab.dart';
-import 'player_tab.dart';
+import 'map_tab.dart' show MapTab;
+import 'player_tab.dart' show PlayerTab;
 import 'share_screen.dart';
-import 'team_tab.dart';
+import 'team_tab.dart' show TeamTab;
 
 import 'src/api.dart' as API;
 import 'src/client.dart' show Client;
@@ -51,7 +51,7 @@ class GameScreenState extends State<GameScreen> {
       _tabs = [
         PlayerTab(key: refreshMeTabKey, session: session),
         TeamTab(key: refreshTeamTabKey, session: session),
-        MissionTab(key: refreshGameTabKey, session: session),
+        GameTab(key: refreshGameTabKey, session: session),
         ChatTab(key: refreshChatTabKey, session: session),
         MapTab(key: refreshMapTabKey, session: session),
       ],

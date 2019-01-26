@@ -8,19 +8,19 @@ import 'src/text_section.dart' show TextSection;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class MissionTab extends StatefulWidget {
+class GameTab extends StatefulWidget {
   final GameSession session;
 
-  MissionTab({Key key, @required this.session})
+  GameTab({Key key, @required this.session})
     : assert(session != null),
       super(key: key);
 
   @override
-  State<MissionTab> createState() => MissionState();
+  State<GameTab> createState() => GameTabState();
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-class MissionState extends State<MissionTab> {
+class GameTabState extends State<GameTab> {
   void reload() {
     setState(() {});
   }

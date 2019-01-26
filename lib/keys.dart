@@ -2,17 +2,19 @@
 
 import 'package:flutter/material.dart';
 
-import 'chat_tab.dart' show ChatState;
+import 'chat_tab.dart' show ChatTabState;
 import 'game_screen.dart' show GameScreenState;
-import 'map_tab.dart' show MapState;
-import 'mission_tab.dart' show MissionState;
-import 'player_tab.dart' show PlayerState;
-import 'team_tab.dart' show TeamState;
+import 'game_tab.dart' show GameTabState;
+import 'map_tab.dart' show MapTabState;
+import 'player_screen.dart' show PlayerScreenState;
+import 'player_tab.dart' show PlayerTabState;
+import 'team_tab.dart' show TeamTabState;
 
-final refreshGameScreenKey = GlobalKey<GameScreenState>(debugLabel: "Game screen");
+final refreshGameScreenKey   = GlobalKey<GameScreenState>(debugLabel: "Game screen");
+final refreshPlayerScreenKey = GlobalKey<PlayerScreenState>(debugLabel: "Player screen");
 
-final refreshMeTabKey   = GlobalKey<PlayerState>(debugLabel: "Me tab");
-final refreshTeamTabKey = GlobalKey<TeamState>(debugLabel: "Team tab");
-final refreshGameTabKey = GlobalKey<MissionState>(debugLabel: "Game tab");
-final refreshChatTabKey = GlobalKey<ChatState>(debugLabel: "Chat tab");
-final refreshMapTabKey  = GlobalKey<MapState>(debugLabel: "Map tab");
+final refreshMeTabKey   = GlobalKey<PlayerTabState>(debugLabel: "Me tab");
+final refreshTeamTabKey = GlobalKey<TeamTabState>(debugLabel: "Team tab");
+final refreshGameTabKey = GlobalKey<GameTabState>(debugLabel: "Game tab");
+final refreshChatTabKey = GlobalKey<ChatTabState>(debugLabel: "Chat tab");
+final refreshMapTabKey  = GlobalKey<MapTabState>(debugLabel: "Map tab");

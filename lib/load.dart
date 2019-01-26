@@ -93,6 +93,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.setName(player.id.toInt(), player.nick);
 
     if (true) { // TODO: check if loading already finished
+      refreshPlayerScreenKey.currentState?.reload(); // TODO: only if his nick/rank/avatar changed
       refreshMeTabKey.currentState?.reload(); // TODO: only if own nick/rank/avatar changed
       refreshTeamTabKey.currentState?.reload();
       refreshChatTabKey.currentState?.reload(); // TODO: only in case of nick/avatar changes
@@ -107,6 +108,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     cache.putPlayerStatus(status);
 
     if (true) { // TODO: check if loading already finished
+      refreshPlayerScreenKey.currentState?.reload();
       //refreshMeTabKey.currentState?.reload(); // DEBUG
       refreshTeamTabKey.currentState?.reload();
       //refreshMapTabKey.currentState?.reload();
@@ -120,6 +122,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     //cache.putUnit(unit);
 
     if (true) { // TODO: check if loading already finished
+      refreshPlayerScreenKey.currentState?.reload(); // TODO: only if his unit changed
       refreshMeTabKey.currentState?.reload(); // TODO: only if own unit changed
       refreshTeamTabKey.currentState?.reload();
       refreshMapTabKey.currentState?.reload();

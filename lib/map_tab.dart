@@ -19,12 +19,12 @@ class MapTab extends StatefulWidget {
       super(key: key);
 
   @override
-  State<MapTab> createState() => MapState();
+  State<MapTab> createState() => MapTabState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class MapState extends State<MapTab> {
+class MapTabState extends State<MapTab> {
   final MapController _controller = MapController();
 
   void reload() {

@@ -4,6 +4,7 @@ import 'dart:async' show Future;
 
 import 'package:flutter/material.dart';
 
+import 'keys.dart' show refreshPlayerScreenKey;
 import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
 
@@ -21,13 +22,13 @@ class TeamTab extends StatefulWidget {
       super(key: key);
 
   @override
-  State<TeamTab> createState() => TeamState();
+  State<TeamTab> createState() => TeamTabState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class TeamState extends State<TeamTab> {
-  Future<List<Player>> _data;
+class TeamTabState extends State<TeamTab> {
+  List<Player> _players;
 
   @override
   void initState() {
@@ -35,36 +36,19 @@ class TeamState extends State<TeamTab> {
     reload();
   }
 
-  void reload() {
-    setState(() {
-      _data = Future.sync(() => _load());
-    });
-  }
-
-  Future<List<Player>> _load() async {
+  void reload() async {
     final GameSession session = widget.session;
-    return session.cache.listPlayers();
+    final List<Player> players = await session.cache.listPlayers();
+    setState(() {
+      _players = players;
+    });
   }
 
   @override
   Widget build(final BuildContext context) {
-    final GameSession session = widget.session;
-    return FutureBuilder<List<Player>>(
-      future: _data,
-      builder: (final BuildContext context, final AsyncSnapshot<List<Player>> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.active:
-          case ConnectionState.waiting:
-            return Spinner();
-          case ConnectionState.done:
-            if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return TeamList(session: widget.session, players: snapshot.data);
-        }
-        assert(false, "unreachable");
-        return null; // unreachable
-      },
-    );
+    return (_players != null) ?
+      TeamList(session: widget.session, players: _players) :
+      Spinner();
   }
 }
 
@@ -74,8 +58,9 @@ class TeamList extends StatelessWidget {
   final GameSession session;
   final List<Player> players;
 
-  TeamList({@required this.session, this.players})
-    : assert(session != null);
+  TeamList({Key key, @required this.session, this.players})
+    : assert(session != null),
+      super(key: key);
 
   @override
   Widget build(final BuildContext context) {
@@ -108,7 +93,7 @@ class TeamList extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (final BuildContext context) {
-                    return PlayerScreen(session: session, player: player);
+                    return PlayerScreen(key: refreshPlayerScreenKey, session: session, playerID: player.id);
                   }
                 )
               );

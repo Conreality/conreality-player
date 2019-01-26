@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'keys.dart' show refreshPlayerScreenKey;
 import 'player_screen.dart' show PlayerScreen;
 
 import 'src/client.dart' show Client;
@@ -24,12 +25,12 @@ class ChatTab extends StatefulWidget {
       super(key: key);
 
   @override
-  State<ChatTab> createState() => ChatState();
+  State<ChatTab> createState() => ChatTabState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class ChatState extends State<ChatTab> {
+class ChatTabState extends State<ChatTab> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
   Future<List<Message>> _data;
@@ -196,7 +197,7 @@ class ChatMessage extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (final BuildContext context) {
-                return PlayerScreen(session: session, player: sender);
+                return PlayerScreen(key: refreshPlayerScreenKey, session: session, playerID: sender.id);
               }
             )
           );

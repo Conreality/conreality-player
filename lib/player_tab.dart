@@ -22,13 +22,13 @@ class PlayerTab extends StatefulWidget {
       super(key: key);
 
   @override
-  State<PlayerTab> createState() => PlayerState();
+  State<PlayerTab> createState() => PlayerTabState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class PlayerState extends State<PlayerTab> {
-  Future<Player> _player;
+class PlayerTabState extends State<PlayerTab> {
+  Player _player;
 
   @override
   void initState() {
@@ -36,57 +36,32 @@ class PlayerState extends State<PlayerTab> {
     reload();
   }
 
-  void reload() {
+  @override
+  void didUpdateWidget(final PlayerTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    reload();
+  }
+
+  void reload() async {
+    final GameSession session = widget.session;
+    final Player player = await session.cache.getPlayer(widget.playerID ?? session.playerID);
     setState(() {
-      _player = Future.sync(() => _load());
+      _player = player;
     });
   }
 
-  Future<Player> _load() async {
-    final GameSession session = widget.session;
-    return session.cache.getPlayer(widget.playerID ?? session.playerID);
-  }
-
   @override
   Widget build(final BuildContext context) {
-    return FutureBuilder<Player>(
-      future: _player,
-      builder: (final BuildContext context, final AsyncSnapshot<Player> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.active:
-          case ConnectionState.waiting:
-            return Spinner();
-          case ConnectionState.done:
-            if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return PlayerPage(player: snapshot.data);
-        }
-        assert(false, "unreachable");
-        return null; // unreachable
-      },
-    );
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-class PlayerPage extends StatelessWidget {
-  final Player player;
-
-  PlayerPage({this.player});
-
-  @override
-  Widget build(final BuildContext context) {
-    return Container(
+    return (_player == null) ? Spinner() : Container(
       color: Colors.grey[850],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          PlayerInfo(player: player), // fixed
+          PlayerInfo(player: _player), // fixed
           // TODO: status (ingame/outgame)
           // TODO: shot count
-          Expanded(child: PlayerBio(player: player)), // scrollable
+          Expanded(child: PlayerBio(player: _player)), // scrollable
         ],
       ),
     );
