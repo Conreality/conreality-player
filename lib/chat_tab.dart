@@ -163,7 +163,7 @@ class ChatMessage extends StatelessWidget {
     final Image appIcon = Image.asset("assets/icon.png");
     return ListTile(
       leading: GestureDetector(
-        child: message.isSystem ? appIcon : PlayerAvatar(session: session, playerID: message.sender),
+        child: message.isSystem ? CircleAvatar(child: appIcon) : PlayerAvatar(session: session, playerID: message.sender),
         onTap: message.isSystem ? null : () async {
           assert(message.hasSender);
           final Player sender = await session.cache.getPlayer(message.sender);

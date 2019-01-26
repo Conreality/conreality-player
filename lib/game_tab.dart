@@ -61,7 +61,7 @@ class GameStatus extends StatelessWidget {
   String _gameState() {
     switch (game.state) {
       case GameState.planned: return "Game planned";
-      case GameState.begun:   return "Game begun";
+      case GameState.begun:   return "Game started";
       case GameState.paused:  return "Game paused";
       case GameState.resumed: return "Game resumed";
       case GameState.ended:   return "Game ended";
