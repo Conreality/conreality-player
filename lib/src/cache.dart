@@ -139,6 +139,7 @@ class Cache {
         "player_rank": player.hasRank() ? player.rank : null,
         "player_bio": player.hasBio() ? player.bio : null,
         "player_avatar": player.hasAvatar() ? player.avatar : null,
+        "player_timestamp": null,
         "player_state": null,
         "player_headset": false,
         "player_heartrate": null,
@@ -157,6 +158,7 @@ class Cache {
     return _db.update(
       table: "player",
       values: <String, dynamic>{
+        "player_timestamp": DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000,
         "player_state": status.hasState() ? status.state : null,
         "player_headset": status.hasHeadset() ? status.headset : false,
         "player_heartrate": status.hasHeartrate() ? status.heartrate : null,
@@ -193,6 +195,7 @@ class Cache {
           rank: row['player_rank'],
           bio: row['player_bio'],
           avatar: row['player_avatar'],
+          timestamp: row['player_timestamp'] != null ? DateTime.fromMillisecondsSinceEpoch(row['player_timestamp'] * 1000) : null,
           state: row['player_state'] != null ? Player.parseState(row['player_state']) : null,
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],
@@ -217,6 +220,7 @@ class Cache {
           rank: row['player_rank'],
           bio: row['player_bio'],
           avatar: row['player_avatar'],
+          timestamp: row['player_timestamp'] != null ? DateTime.fromMillisecondsSinceEpoch(row['player_timestamp'] * 1000) : null,
           state: row['player_state'] != null ? Player.parseState(row['player_state']) : null,
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],

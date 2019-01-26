@@ -118,6 +118,7 @@ class Player extends Object {
   final String rank;
   final String bio;
   final Uint8List avatar;
+  final DateTime timestamp;
   final PlayerState state;
   final bool headset;
   final int heartrate;
@@ -128,6 +129,7 @@ class Player extends Object {
   bool get hasRank => rank != null && rank.isNotEmpty;
   bool get hasBio => bio != null && bio.isNotEmpty;
   bool get hasAvatar => avatar != null && avatar.isNotEmpty;
+  bool get hasTimestamp => timestamp != null;
   bool get hasState => state != null;
   bool get hasHeadset => headset == true;
   bool get hasHeartrate => heartrate != null;
@@ -152,6 +154,7 @@ class Player extends Object {
     this.rank,
     this.bio,
     this.avatar,
+    this.timestamp,
     this.state,
     this.headset,
     this.heartrate,

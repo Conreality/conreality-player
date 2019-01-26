@@ -29,9 +29,7 @@ class _ConnectionIndicatorState extends State<ConnectionIndicator> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 1), (_) {
-      if (mounted) {
-        setState(() {});
-      }
+      setState(() {});
     });
   }
 

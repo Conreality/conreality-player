@@ -86,7 +86,7 @@ class TeamList extends StatelessWidget {
               ),
             ],
           ),
-          subtitle: PlayerStatus(player: player, isSelf: player.id == session.playerID),
+          subtitle: PlayerStatus(session: session, player: player, isSelf: player.id == session.playerID),
           trailing: GestureDetector(
             child: Icon(Icons.info, color: Theme.of(context).disabledColor),
             onTap: () {

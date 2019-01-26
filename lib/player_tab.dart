@@ -58,7 +58,7 @@ class PlayerTabState extends State<PlayerTab> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          PlayerInfo(player: _player), // fixed
+          PlayerInfo(session: widget.session, player: _player), // fixed
           // TODO: status (ingame/outgame)
           // TODO: shot count
           Expanded(child: PlayerBio(player: _player)), // scrollable
@@ -71,9 +71,13 @@ class PlayerTabState extends State<PlayerTab> {
 ////////////////////////////////////////////////////////////////////////////////
 
 class PlayerInfo extends StatelessWidget {
+  final GameSession session;
   final Player player;
 
-  PlayerInfo({this.player});
+  PlayerInfo({Key key, @required this.session, this.player})
+    : assert(session != null),
+      assert(player != null),
+      super(key: key);
 
   @override
   Widget build(final BuildContext context) {
@@ -99,7 +103,7 @@ class PlayerInfo extends StatelessWidget {
               alignment: Alignment.topLeft,
             ),
             Container(
-              child: PlayerStatus(player: player, isSelf: true),
+              child: PlayerStatus(session: session, player: player, isSelf: true, showConnectivity: false),
               padding: EdgeInsets.only(top: 16.0),
               alignment: Alignment.topLeft,
             ),
@@ -116,7 +120,9 @@ class PlayerInfo extends StatelessWidget {
 class PlayerBio extends StatelessWidget {
   final Player player;
 
-  PlayerBio({this.player});
+  PlayerBio({Key key, this.player})
+    : assert(player != null),
+      super(key: key);
 
   @override
   Widget build(final BuildContext context) {

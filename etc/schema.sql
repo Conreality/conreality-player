@@ -46,6 +46,7 @@ CREATE TABLE player (
   player_rank TEXT NULL,
   player_bio TEXT NULL,
   player_avatar BLOB NULL,
+  player_timestamp DATETIME NULL,
   player_state TEXT NULL,
   player_headset BOOLEAN NOT NULL,
   player_heartrate INTEGER NULL,
