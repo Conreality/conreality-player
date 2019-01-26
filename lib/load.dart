@@ -189,7 +189,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     print('BackgroundGeolocation.onLocation: $location'); // TODO
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
-      ..state = null     // TODO
+      ..state = ""       // TODO
       ..headset = false  // TODO
       ..heartrate = 0    // TODO
       ..location = (API.Location()
@@ -203,7 +203,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     final bg.Location location = event.location;
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
-      ..state = null     // TODO
+      ..state = ""       // TODO
       ..headset = false  // TODO
       ..heartrate = 0    // TODO
       ..location = (API.Location()
