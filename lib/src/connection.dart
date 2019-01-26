@@ -1,7 +1,9 @@
 /* This is free and unencumbered software released into the public domain. */
 
 import 'dart:async' show Future;
+import 'dart:ui' show Color;
 
+import 'package:flutter/material.dart' show Colors;
 import 'package:grpc/grpc.dart' as gRPC;
 
 import 'client.dart' show Client;
@@ -43,4 +45,16 @@ class Connection {
   Future<void> abort() => _channel.terminate();
 
   Future<void> check() => client.ping();
+
+  Color get color {
+    switch (state) {
+      case gRPC.ConnectionState.idle:             return Colors.orange;
+      case gRPC.ConnectionState.connecting:       return Colors.orange;
+      case gRPC.ConnectionState.ready:            return Colors.green;
+      case gRPC.ConnectionState.transientFailure: return Colors.deepOrange;
+      case gRPC.ConnectionState.shutdown:         return Colors.red;
+    }
+    assert(false, "unreachable");
+    return null; // unreachable
+  }
 }

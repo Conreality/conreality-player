@@ -78,7 +78,7 @@ class GameScreenState extends State<GameScreen> {
           children: <Widget>[
             Text(game.title ?? "(Unnamed game)"),
             SizedBox(width: 8),
-            ConnectionIndicator(connection: Future.value(session.connection)),
+            ConnectionIndicator(connection: session.connection),
           ],
         ),
         actions: <Widget>[

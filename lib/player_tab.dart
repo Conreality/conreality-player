@@ -89,7 +89,7 @@ class PlayerInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              child: Text(player?.nick != null ? player.nick : "Player Name", style: TextStyle(fontSize: 32.0)),
+              child: Text(player?.nick != null ? player.nick : "", style: TextStyle(fontSize: 32.0)),
               padding: EdgeInsets.zero,
               alignment: Alignment.topLeft,
             ),

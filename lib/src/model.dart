@@ -225,7 +225,7 @@ class Message {
     return API.Message()
       ..senderId = Int64(sender ?? 0)
       ..recipientId = Int64(recipient ?? 0)
-      ..language = language
+      ..language = language ?? ""
       ..text = text;
   }
 }
