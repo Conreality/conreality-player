@@ -9,6 +9,7 @@ import 'player_screen.dart';
 import 'player_status.dart' show PlayerStatus;
 
 import 'src/model.dart' show Player;
+import 'src/player_avatar.dart' show PlayerAvatar;
 import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
 
@@ -82,10 +83,7 @@ class TeamList extends StatelessWidget {
       itemBuilder: (final BuildContext context, final int index) {
         final player = players[index];
         return ListTile(
-          leading: CircleAvatar(
-            child: Text(player.nick.substring(0, 1)),
-            backgroundColor: session.cache.getColor(player.id),
-          ),
+          leading: PlayerAvatar(session: session, playerID: player.id),
           title: Row(
             children: <Widget>[
               Text(player.nick),

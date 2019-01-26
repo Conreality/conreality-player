@@ -7,8 +7,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart' show LatLng;
 
 import 'src/model.dart' show Game, Player;
+import 'src/player_avatar.dart' show PlayerAvatar;
 import 'src/session.dart' show GameSession;
-import 'src/spinner.dart' show Spinner;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -64,10 +64,7 @@ class MapTabState extends State<MapTab> {
     markers.addAll(players.map((final Player player) {
       return !player.hasLocation ? null : Marker(
         point: player.location,
-        builder: (context) => CircleAvatar( // TODO: PlayerAvatar
-          child: Text(player.nick.substring(0, 1)),
-          backgroundColor: session.cache.getColor(player.id),
-        ),
+        builder: (context) => PlayerAvatar(session: session, playerID: player.id),
       );
     }).where((element) => element != null));
 

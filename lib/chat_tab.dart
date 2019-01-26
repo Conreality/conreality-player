@@ -10,6 +10,7 @@ import 'player_screen.dart' show PlayerScreen;
 
 import 'src/client.dart' show Client;
 import 'src/model.dart' show Message, Player;
+import 'src/player_avatar.dart' show PlayerAvatar;
 import 'src/session.dart' show GameSession;
 import 'src/spinner.dart' show Spinner;
 import 'src/speech.dart' show say;
@@ -162,10 +163,7 @@ class ChatMessage extends StatelessWidget {
     final Image appIcon = Image.asset("assets/icon.png");
     return ListTile(
       leading: GestureDetector(
-        child: CircleAvatar(
-          child: message.isSystem ? appIcon : Text(senderInitials),
-          backgroundColor: senderColor,
-        ),
+        child: message.isSystem ? appIcon : PlayerAvatar(session: session, playerID: message.sender),
         onTap: message.isSystem ? null : () async {
           assert(message.hasSender);
           final Player sender = await session.cache.getPlayer(message.sender);
@@ -180,7 +178,7 @@ class ChatMessage extends StatelessWidget {
       ),
       title: Row(
         children: <Widget>[
-          Text(sender, style: Theme.of(context).textTheme.subhead),
+          Text(session.cache.getName(message.sender) ?? "Unknown", style: Theme.of(context).textTheme.subhead),
           Container(
             child: Text(timeago.format(message.timestamp), style: timestampStyle),
             padding: EdgeInsets.only(left: 16.0),
@@ -211,17 +209,5 @@ class ChatMessage extends StatelessWidget {
         );
       },
     );
-  }
-
-  String get sender {
-    return session.cache.getName(message.sender) ?? "Unknown";
-  }
-
-  String get senderInitials {
-    return message.isSystem ? "" : session.cache.getName(message.sender).substring(0, 1);
-  }
-
-  Color get senderColor {
-    return session.cache.getColor(message.sender);
   }
 }
