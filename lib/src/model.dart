@@ -141,7 +141,7 @@ class Player extends Object {
 
   double get latitude => location?.latitude;
   double get longitude => location?.longitude;
-  double get altitude => null;
+  double get altitude => null; // FIXME
 
   Player({
     final int id,

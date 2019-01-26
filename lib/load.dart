@@ -216,7 +216,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     reset: true,
     startOnBoot: true,
     stopOnTerminate: false, // continue tracking after app terminates
-    enableHeadless: true,
+    //enableHeadless: true, // FIXME
     foregroundService: true,
     notificationPriority: bg.Config.NOTIFICATION_PRIORITY_HIGH,
     notificationTitle: session.game.title,
@@ -224,7 +224,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     heartbeatInterval: 60, // the minimum interval on Android is 60s
     desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
     distanceFilter: 3.0, // meters
-    debug: true,
+    //debug: true,
     logLevel: bg.Config.LOG_LEVEL_VERBOSE,
   )).then((final bg.State state) {
     print('BackgroundGeolocation.ready: $state');

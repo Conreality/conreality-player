@@ -24,7 +24,7 @@ void onHeadlessTask(final bg.HeadlessEvent event) async {
 
 void main() {
   runApp(App());
-  bg.BackgroundGeolocation.registerHeadlessTask(onHeadlessTask);
+  //bg.BackgroundGeolocation.registerHeadlessTask(onHeadlessTask); // FIXME
 }
 
 ////////////////////////////////////////////////////////////////////////////////
