@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.conreality.player">
 
     <!-- The INTERNET permission is required for development. Specifically,
@@ -30,6 +31,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
+        tools:replace="android:label"
         android:name=".Application"
         android:label="Conreality Player"
         android:icon="@mipmap/ic_launcher">
@@ -53,5 +55,7 @@
             </intent-filter>
         </activity>
         <service android:name="io.flutter.plugins.androidalarmmanager.AlarmService" android:exported="false"/>
+        <!-- flutter_background_geolocation licence -->
+        <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="TODO"/>
     </application>
 </manifest>

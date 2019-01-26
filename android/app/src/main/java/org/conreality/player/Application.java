@@ -8,11 +8,16 @@ import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugins.androidalarmmanager.AlarmService;
 
+import com.transistorsoft.flutter.backgroundfetch.BackgroundFetchPlugin;
+import com.transistorsoft.flutter.backgroundgeolocation.FLTBackgroundGeolocationPlugin;
+
 public class Application extends FlutterApplication implements PluginRegistrantCallback {
   @Override
   public void onCreate() {
     super.onCreate();
     //AlarmService.setPluginRegistrant(this); // FIXME
+    BackgroundFetchPlugin.setPluginRegistrant(this);
+    FLTBackgroundGeolocationPlugin.setPluginRegistrant(this);
   }
 
   @Override

@@ -16,6 +16,12 @@ allprojects {
     }
 }
 
+ext {
+    compileSdkVersion = 28 // Android 9.0 (Pie)
+    targetSdkVersion  = 28 // Android 9.0 (Pie)
+    minSdkVersion     = 23 // Android 6.0 (Marshmallow)
+}
+
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
