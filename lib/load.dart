@@ -187,9 +187,30 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   });
   bg.BackgroundGeolocation.onLocation((final bg.Location location) {
     print('BackgroundGeolocation.onLocation: $location'); // TODO
+    client.rpc.updatePlayer(API.PlayerStatus()
+      ..playerId = Int64(playerID)
+      ..state = null     // TODO
+      ..headset = false  // TODO
+      ..heartrate = 0    // TODO
+      ..location = (API.Location()
+        ..latitude = location.coords.latitude
+        ..longitude = location.coords.longitude
+        ..altitude = location.coords.altitude)
+    );
   });
   bg.BackgroundGeolocation.onHeartbeat((final bg.HeartbeatEvent event) {
     print('BackgroundGeolocation.onHeartbeat: $event'); // TODO
+    final bg.Location location = event.location;
+    client.rpc.updatePlayer(API.PlayerStatus()
+      ..playerId = Int64(playerID)
+      ..state = null     // TODO
+      ..headset = false  // TODO
+      ..heartrate = 0    // TODO
+      ..location = (API.Location()
+        ..latitude = location.coords.latitude
+        ..longitude = location.coords.longitude
+        ..altitude = location.coords.altitude)
+    );
   });
   bg.BackgroundGeolocation.ready(bg.Config(
     reset: true,
