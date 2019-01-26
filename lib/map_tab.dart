@@ -4,7 +4,7 @@ import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong/latlong.dart' show LatLng;
 
 import 'src/model.dart' show Game;
 import 'src/session.dart' show GameSession;

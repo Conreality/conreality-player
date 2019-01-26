@@ -147,12 +147,12 @@ class PlayerBio extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ListView(
       children: <Widget>[
-        TextSection( // TODO: bio
+        TextSection(
           title: "Bio",
           subtitle: "",
-          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel pulvinar lacus. Donec id ligula dolor. Ut ac vestibulum massa. Integer nec nulla pellentesque eros sollicitudin ullamcorper.",
-          language: null, // TODO
-          initiallyExpanded: true,
+          text: player.bio ?? "",
+          language: player.language,
+          initiallyExpanded: player.hasBio,
         ),
       ],
     );

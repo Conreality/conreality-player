@@ -2,7 +2,6 @@
 
 import 'dart:async' show Future;
 import 'dart:io' show Directory, File;
-import 'dart:math' show Random;
 import 'dart:ui' show Color;
 
 import 'package:flutter/material.dart' show Colors;
@@ -10,6 +9,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sqlcipher/sqlite.dart';
 import 'package:flutter_android/android_content.dart' show Context;
 //import 'package:flutter_android/android_database.dart' show DatabaseUtils; // DEBUG
+import 'package:latlong/latlong.dart' show LatLng;
 
 import 'api.dart' as API;
 import 'model.dart';
@@ -181,6 +181,7 @@ class Cache {
 
   Future<Player> getPlayer(final int playerID) async {
     assert(playerID != null);
+
     final SQLiteCursor cursor = await _db.rawQuery("SELECT * FROM player WHERE player_id = ? LIMIT 1", [playerID.toString()]);
     try {
       final result = cursor.toList();
@@ -188,12 +189,15 @@ class Cache {
         return Player(
           id: row['player_id'],
           nick: row['player_nick'],
+          language: row['player_language'],
           rank: row['player_rank'],
+          bio: row['player_bio'],
+          avatar: row['player_avatar'],
+          state: row['player_state'] != null ? Player.parseState(row['player_state']) : null,
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],
+          location: row['player_latitude'] != null ? LatLng(row['player_latitude'], row['player_longitude']) : null,
           distance: row['player_distance'],
-          position: null, // TODO
-          avatar: row['player_avatar']
         );
       }).first;
     }
@@ -209,12 +213,15 @@ class Cache {
         return Player(
           id: row['player_id'],
           nick: row['player_nick'],
+          language: row['player_language'],
           rank: row['player_rank'],
+          bio: row['player_bio'],
+          avatar: row['player_avatar'],
+          state: row['player_state'] != null ? Player.parseState(row['player_state']) : null,
           headset: row['player_headset'] == 1,
           heartrate: row['player_heartrate'],
+          location: row['player_latitude'] != null ? LatLng(row['player_latitude'], row['player_longitude']) : null,
           distance: row['player_distance'],
-          position: null, // TODO
-          avatar: row['player_avatar']
         );
       }).toList();
     }

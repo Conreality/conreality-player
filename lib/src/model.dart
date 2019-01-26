@@ -104,22 +104,42 @@ abstract class Object extends Entity {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+enum PlayerState {
+  ingame,
+  outgame,
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 /// A player.
 class Player extends Object {
   final String nick;
+  final String language;
   final String rank;
+  final String bio;
+  final Uint8List avatar;
+  final PlayerState state;
   final bool headset;
   final int heartrate;
+  final LatLng location;
   final double distance;
-  final Position position;
-  final Uint8List avatar;
 
+  bool get hasLanguage => language != null;
   bool get hasRank => rank != null && rank.isNotEmpty;
+  bool get hasBio => bio != null && bio.isNotEmpty;
+  bool get hasAvatar => avatar != null && avatar.isNotEmpty;
+  bool get hasState => state != null;
   bool get hasHeadset => headset == true;
   bool get hasHeartrate => heartrate != null;
+  bool get hasLocation => location != null;
   bool get hasDistance => distance != null;
-  bool get hasPosition => position != null;
-  bool get hasAvatar => avatar != null;
+
+  bool get isIngame => state == PlayerState.ingame;
+  bool get isOutgame => state == PlayerState.outgame;
+
+  double get latitude => location?.latitude;
+  double get longitude => location?.longitude;
+  double get altitude => null;
 
   Player({
     final int id,
@@ -128,12 +148,15 @@ class Player extends Object {
     final double radius,
     final Color color,
     this.nick,
+    this.language,
     this.rank,
+    this.bio,
+    this.avatar,
+    this.state,
     this.headset,
     this.heartrate,
+    this.location,
     this.distance,
-    this.position,
-    this.avatar,
   }) : super(id: id, orientation: orientation, mass: mass, radius: radius, color: color);
 
   @override
@@ -141,6 +164,14 @@ class Player extends Object {
 
   @override
   String get name => nick;
+
+  static PlayerState parseState(final String state) {
+    switch (state) {
+      case "ingame":  return PlayerState.ingame;
+      case "outgame": return PlayerState.outgame;
+      default:        return null; // unknown state
+    }
+  }
 
   double distanceTo(final Player other) {
     return null; // unknown
