@@ -20,7 +20,7 @@ class MapScreen extends StatelessWidget {
           IconButton(icon: Icon(Icons.more_vert), onPressed: () => {}),
         ],
       ),
-      body: MapTab(),
+      body: MapTab(session: null),
     );
   }
 }

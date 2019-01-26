@@ -103,7 +103,7 @@ class PlayerInfo extends StatelessWidget {
               alignment: Alignment.topLeft,
             ),
             Container(
-              child: PlayerStatus(session: session, player: player, isSelf: true, showConnectivity: false),
+              child: PlayerStatus(session: session, player: player, isSelf: player.id == session.playerID, showConnectivity: false),
               padding: EdgeInsets.only(top: 16.0),
               alignment: Alignment.topLeft,
             ),

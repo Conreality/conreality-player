@@ -60,6 +60,7 @@ class PlayerStatus extends StatelessWidget {
     if (last == null) return Colors.grey[600];
     final DateTime now = DateTime.now().toUtc();
     final int elapsedSeconds = now.difference(last).inSeconds;
+    if (elapsedSeconds > 3600) return Colors.grey[600];
     if (elapsedSeconds > 300) return Colors.red;
     if (elapsedSeconds > 60) return Colors.deepOrange;
     if (elapsedSeconds > 30) return Colors.orange;

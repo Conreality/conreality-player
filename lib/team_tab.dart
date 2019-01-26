@@ -1,6 +1,6 @@
 /* This is free and unencumbered software released into the public domain. */
 
-import 'dart:async' show Future;
+import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
 
@@ -28,12 +28,22 @@ class TeamTab extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class TeamTabState extends State<TeamTab> {
+  Timer _timer;
   List<Player> _players;
 
   @override
   void initState() {
     super.initState();
     reload();
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      reload();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 
   void reload() async {
