@@ -25,7 +25,7 @@ class Cache {
   static Future<Cache> of(final Uri gameURL) async {
     final Directory cacheDir = await Context.cacheDir;
     await cacheDir.create(recursive: true);
-    final File cacheFile = File("${cacheDir.path}/cache.db");
+    final File cacheFile = File("${cacheDir.path}/cachev1.db");
     final bool cacheCreated = !cacheFile.existsSync();
     final SQLiteDatabase db = await SQLiteDatabase.openOrCreateDatabase(cacheFile.path);
     if (cacheCreated) {
