@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_background_geolocation/flutter_background_geolocation.dart' as bg;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -17,7 +18,14 @@ import 'src/generated/strings.dart' show GeneratedStrings;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void main() => runApp(App());
+void onHeadlessTask(final bg.HeadlessEvent event) async {
+  print('BackgroundGeolocation.onHeadlessTask: $event'); // TODO
+}
+
+void main() {
+  runApp(App());
+  bg.BackgroundGeolocation.registerHeadlessTask(onHeadlessTask);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 

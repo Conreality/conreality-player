@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:fixnum/fixnum.dart' show Int64;
+import 'package:flutter_background_geolocation/flutter_background_geolocation.dart' as bg;
 import 'package:grpc/grpc.dart' as gRPC;
 import 'package:latlong/latlong.dart' show LatLng;
 
@@ -172,6 +173,42 @@ Future<GameSession> loadGame(final Uri gameURL) async {
       if (announcement != null) {
         say(announcement);
       }
+    }
+  });
+
+  bg.BackgroundGeolocation.onProviderChange((final bg.ProviderChangeEvent event) {
+    print('BackgroundGeolocation.onProviderChange: $event'); // TODO
+  });
+  bg.BackgroundGeolocation.onMotionChange((final bg.Location location) {
+    print('BackgroundGeolocation.onMotionChange: $location'); // TODO
+  });
+  bg.BackgroundGeolocation.onActivityChange((final bg.ActivityChangeEvent event) {
+    print('BackgroundGeolocation.onActivityChange: $event'); // TODO
+  });
+  bg.BackgroundGeolocation.onLocation((final bg.Location location) {
+    print('BackgroundGeolocation.onLocation: $location'); // TODO
+  });
+  bg.BackgroundGeolocation.onHeartbeat((final bg.HeartbeatEvent event) {
+    print('BackgroundGeolocation.onHeartbeat: $event'); // TODO
+  });
+  bg.BackgroundGeolocation.ready(bg.Config(
+    reset: true,
+    startOnBoot: true,
+    stopOnTerminate: false, // continue tracking after app terminates
+    enableHeadless: true,
+    foregroundService: true,
+    notificationPriority: bg.Config.NOTIFICATION_PRIORITY_HIGH,
+    notificationTitle: session.game.title,
+    notificationText: "Sharing your location with your team.",
+    heartbeatInterval: 60, // the minimum interval on Android is 60s
+    desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
+    distanceFilter: 3.0, // meters
+    debug: true,
+    logLevel: bg.Config.LOG_LEVEL_VERBOSE,
+  )).then((final bg.State state) {
+    print('BackgroundGeolocation.ready: $state');
+    if (!state.enabled) {
+      bg.BackgroundGeolocation.start();
     }
   });
 

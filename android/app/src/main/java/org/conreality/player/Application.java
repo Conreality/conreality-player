@@ -10,6 +10,7 @@ import io.flutter.plugins.androidalarmmanager.AlarmService;
 
 import com.transistorsoft.flutter.backgroundfetch.BackgroundFetchPlugin;
 import com.transistorsoft.flutter.backgroundgeolocation.FLTBackgroundGeolocationPlugin;
+import com.transistorsoft.flutter.backgroundgeolocation.HeadlessTask;
 
 public class Application extends FlutterApplication implements PluginRegistrantCallback {
   @Override
@@ -18,6 +19,7 @@ public class Application extends FlutterApplication implements PluginRegistrantC
     //AlarmService.setPluginRegistrant(this); // FIXME
     BackgroundFetchPlugin.setPluginRegistrant(this);
     FLTBackgroundGeolocationPlugin.setPluginRegistrant(this);
+    HeadlessTask.setPluginRegistrant(this);
   }
 
   @Override
