@@ -25,14 +25,6 @@ class GameDrawer extends StatelessWidget {
       ),
 
       ListTile(
-        leading: Icon(Icons.chat),
-        title: Text(Strings.of(context).chat),
-        onTap: () {
-          Navigator.of(context).pushNamed('/chat');
-        },
-      ),
-
-      ListTile(
         leading: Icon(Icons.navigation),
         title: Text(Strings.of(context).compass),
         onTap: () {

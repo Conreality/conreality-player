@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'chat_screen.dart';
-import 'compass_screen.dart';
-import 'discover_screen.dart';
-import 'game_loader.dart';
+import 'compass_screen.dart' show CompassScreen;
+import 'discover_screen.dart' show DiscoverScreen;
+import 'game_loader.dart' show GameLoader;
 import 'load.dart' show loadApp;
-import 'map_screen.dart';
+import 'map_screen.dart' show MapScreen;
 
 import 'src/strings.dart' show Strings, StringsDelegate;
 import 'src/generated/strings.dart' show GeneratedStrings;
@@ -73,7 +72,6 @@ class _AppState extends State<App> {
         },
       ),
       routes: {
-        '/chat': (context) => ChatScreen(title: Strings.of(context).chat),
         '/compass': (context) => CompassScreen(title: Strings.of(context).compass),
         '/map': (context) => MapScreen(title: Strings.of(context).map),
         '/discover': (context) => DiscoverScreen(title: Strings.of(context).appTitle),

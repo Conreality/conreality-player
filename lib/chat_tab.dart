@@ -31,9 +31,8 @@ class ChatTab extends StatefulWidget {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ChatTabState extends State<ChatTab> {
-  final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
-  Future<List<Message>> _data;
+  List<Message> _messages;
 
   @override
   void initState() {
@@ -41,53 +40,34 @@ class ChatTabState extends State<ChatTab> {
     reload();
   }
 
-  void reload() {
-    setState(() {
-      _data = Future.sync(() => _load());
-    });
-  }
-
-  Future<List<Message>> _load() async {
+  void reload() async {
     final GameSession session = widget.session;
-    return session.cache.fetchMessages();
+    final List<Message> messages = await session.cache.fetchMessages();
+    setState(() {
+      _messages = messages;
+    });
   }
 
   @override
   void dispose() {
-    _textController.dispose();
     super.dispose();
+    _textController.dispose();
   }
 
   @override
   Widget build(final BuildContext context) {
     final GameSession session = widget.session;
-    return FutureBuilder<List<Message>>(
-      future: _data,
-      builder: (final BuildContext context, final AsyncSnapshot<List<Message>> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.active:
-          case ConnectionState.waiting:
-            return Spinner();
-          case ConnectionState.done: {
-            if (snapshot.hasError) return Text(snapshot.error.toString()); // GrpcError
-            return Column(
-              children: <Widget>[
-                Flexible(child: ChatMessageHistory(session: session, messages: snapshot.data)),
-                Divider(height: 1.0),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: _buildTextComposer(),
-                ),
-              ],
-            );
-          }
-        }
-        assert(false, "unreachable");
-        return null; // unreachable
-      },
+    return (_messages == null) ? Spinner() : Column(
+      children: <Widget>[
+        Flexible(child: ChatMessageHistory(session: session, messages: _messages)),
+        Divider(height: 1.0),
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+          ),
+          child: _buildTextComposer(),
+        ),
+      ],
     );
   }
 
@@ -124,21 +104,16 @@ class ChatTabState extends State<ChatTab> {
   void _handleSubmitted(final String text) async {
     if (text.isEmpty) return;
 
-    setState(() {
-      _textController.clear();
-    });
+    _textController.clear();
 
     final GameSession session = widget.session;
-
+    final Player player = await session.cache.getPlayer(session.playerID);
     final Message message = Message(
-      sender: session.playerID,
+      sender: player.id,
       recipient: null, // everyone
-      language: "", // TODO
+      language: player.language,
       text: text,
     );
-
-    ChatMessage messageWidget = ChatMessage(session: session, message: message);
-    setState(() { _messages.insert(0, messageWidget); });
 
     final Client client = Client(widget.session.connection);
     print(message.toRPC().writeToJson());
