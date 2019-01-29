@@ -218,9 +218,10 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     stopOnTerminate: false, // continue tracking after app terminates
     //enableHeadless: true, // FIXME
     foregroundService: true,
-    notificationPriority: bg.Config.NOTIFICATION_PRIORITY_HIGH,
+    notificationChannelName: session.game.title,
     notificationTitle: session.game.title,
     notificationText: "Sharing your location with your team.",
+    notificationPriority: bg.Config.NOTIFICATION_PRIORITY_HIGH,
     heartbeatInterval: 60, // the minimum interval on Android is 60s
     desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
     distanceFilter: 3.0, // meters
