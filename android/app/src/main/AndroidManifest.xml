@@ -60,7 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name="io.flutter.plugins.androidalarmmanager.AlarmService" android:exported="false"/>
+        <service android:name="io.flutter.plugins.androidalarmmanager.AlarmService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false"/>
+        <receiver android:name="io.flutter.plugins.androidalarmmanager.AlarmBroadcastReceiver" android:exported="false"/>
         <!-- flutter_background_geolocation licence -->
         <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="b9762ede58b691bb8bcb807f0ae114bda3a96aae9d4f71d680c1f937def6ee64"/>
     </application>
