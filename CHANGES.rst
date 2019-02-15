@@ -14,6 +14,9 @@ The format is based on `Keep a Changelog
 Added
 -----
 
+- Implemented player distance calculations.
+  (`#14 <https://github.com/conreality/conreality-player/issues/14>`__)
+
 - Added a menu option to terminate the app.
   (`#5 <https://github.com/conreality/conreality-player/issues/5>`__)
 

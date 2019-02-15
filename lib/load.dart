@@ -106,7 +106,9 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   final gRPC.ResponseStream<API.PlayerStatus> statuses = client.rpc.receivePlayerStatuses(API.UnitID()..id = Int64(0));
   statuses.forEach((final API.PlayerStatus status) {
     print("-> player-status: ${status.writeToJson()}"); // DEBUG
-    cache.putPlayerStatus(status);
+
+    final bool isSelf = (status.playerId == session.playerID);
+    cache.putPlayerStatus(status, isSelf);
 
     if (true) { // TODO: check if loading already finished
       refreshPlayerScreenKey.currentState?.reload();
@@ -187,6 +189,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   });
   bg.BackgroundGeolocation.onLocation((final bg.Location location) {
     print('BackgroundGeolocation.onLocation: $location'); // TODO
+    cache.playerLocation = LatLng(location.coords.latitude, location.coords.longitude);
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
       ..state = ""       // TODO
@@ -201,6 +204,7 @@ Future<GameSession> loadGame(final Uri gameURL) async {
   bg.BackgroundGeolocation.onHeartbeat((final bg.HeartbeatEvent event) {
     print('BackgroundGeolocation.onHeartbeat: $event'); // TODO
     final bg.Location location = event.location;
+    cache.playerLocation = LatLng(location.coords.latitude, location.coords.longitude);
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
       ..state = ""       // TODO

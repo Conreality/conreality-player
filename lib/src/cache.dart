@@ -9,6 +9,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sqlcipher/sqlite.dart';
 import 'package:flutter_android/android_content.dart' show Context;
 //import 'package:flutter_android/android_database.dart' show DatabaseUtils; // DEBUG
+import 'package:flutter_android/android_location.dart' show Location;
 import 'package:latlong/latlong.dart' show LatLng;
 
 import 'api.dart' as API;
@@ -19,6 +20,7 @@ import 'model.dart';
 class Cache {
   final SQLiteDatabase _db;
   final Map<int, String> _names = {};
+  LatLng playerLocation;
 
   Cache._(this._db);
 
@@ -151,9 +153,16 @@ class Cache {
     );
   }
 
-  Future<int> putPlayerStatus(final API.PlayerStatus status) {
+  Future<int> putPlayerStatus(final API.PlayerStatus status, [final bool isSelf = false]) async {
     assert(status != null);
     assert(status.playerId != null);
+
+    double distance;
+    if (playerLocation != null && status.hasLocation()) {
+      distance = isSelf ? 0 : await Location.distanceBetween(
+          playerLocation.latitude, playerLocation.longitude,
+          status.location.latitude, status.location.longitude);
+    }
 
     return _db.update(
       table: "player",
@@ -165,7 +174,7 @@ class Cache {
         "player_latitude": status.hasLocation() ? status.location.latitude : null,
         "player_longitude": status.hasLocation() ? status.location.longitude : null,
         "player_altitude": status.hasLocation() ? status.location.altitude : null,
-        "player_distance": null, // TODO: calculate this
+        "player_distance": distance,
       },
       where: "player_id = ?",
       whereArgs: <String>[status.playerId.toString()],
