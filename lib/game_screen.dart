@@ -18,14 +18,14 @@ import 'src/api.dart' as API;
 import 'src/client.dart' show Client;
 import 'src/config.dart' show Config;
 import 'src/connection_indicator.dart' show ConnectionIndicator;
-import 'src/game.dart' show exitGame;
+import 'src/game.dart' show exitGame, terminateApp;
 import 'src/model.dart' show Game, GameAction, GameState;
 import 'src/session.dart' show GameSession;
 import 'src/strings.dart' show Strings;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-enum GameMenuChoice { share, exit }
+enum GameMenuChoice { share, exit, terminate }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -92,6 +92,10 @@ class GameScreenState extends State<GameScreen> {
               PopupMenuItem<GameMenuChoice>(
                 value: GameMenuChoice.exit,
                 child: Text(Strings.of(context).exitGame),
+              ),
+              PopupMenuItem<GameMenuChoice>(
+                value: GameMenuChoice.terminate,
+                child: Text("Terminate the app"),
               ),
             ],
           ),
@@ -221,6 +225,9 @@ class GameScreenState extends State<GameScreen> {
         break;
       case GameMenuChoice.exit:
         exitGame(context);
+        break;
+      case GameMenuChoice.terminate:
+        terminateApp(context);
         break;
     }
   }
