@@ -22,6 +22,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #cupertino_icons: ^0.1.2
+  font_awesome_flutter: ^8.4.0
   material_design_icons_flutter: ^3.0.3392
 
   # Conreality SDK for Dart:
@@ -32,29 +33,28 @@ dependencies:
   stream_transform: ^0.0.15
 
   # Google Flutter plugins:
-  android_intent: ^0.2.1
-  android_alarm_manager: ^0.2.3
-  battery: ^0.2.3
-  camera: ^0.2.9+1
-  package_info: ^0.3.2+1
-  path_provider: ^0.4.1
-  sensors: ^0.3.5
-  share: ^0.5.3
-  shared_preferences: ^0.4.3
-  url_launcher: ^4.2.0+3
+  android_intent: ^0.3.0+1
+  android_alarm_manager: ^0.4.1+2
+  battery: ^0.3.0+1
+  camera: ^0.4.0
+  package_info: ^0.4.0+1
+  path_provider: ^0.5.0+1
+  sensors: ^0.4.0+1
+  share: ^0.6.0+1
+  shared_preferences: ^0.5.1+1
+  url_launcher: ^5.0.1
 
   # Third-party Flutter plugins:
-  flutter_android: ^0.2.5
-  flutter_background_geolocation: ^0.2.4
+  flutter_android: ^0.3.2
+  flutter_background_geolocation: ^0.3.4
   flutter_compass: ^0.1.0
   flutter_map: ^0.4.0
   flutter_offline: ^0.2.3
   flutter_spinkit: ^3.1.0
-  flutter_sqlcipher: ^0.3.5
+  flutter_sqlcipher: ^0.4.0
   flutter_tts: ^0.2.3
-  font_awesome_flutter: ^8.4.0
   grpc: ^1.0.1
-  protobuf: ^0.12.0
+  protobuf: ^0.13.3
   qr_flutter: ^1.1.6
   timeago: ^2.0.10
 
