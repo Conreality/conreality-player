@@ -153,7 +153,8 @@ Future<GameSession> loadGame(final Uri gameURL) async {
 
     if (true) { // TODO: check if loading already finished
       refreshChatTabKey.currentState?.reload();
-      // TODO: optional text-to-speech
+
+      say(message.text); // TODO: make this optional, based on configuration
     }
   });
 
