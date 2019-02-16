@@ -21,6 +21,8 @@ class Cache {
   final SQLiteDatabase _db;
   final Map<int, String> _names = {};
   LatLng playerLocation;
+  bool playerHeadset;
+  int playerHeartRate;
 
   Cache._(this._db);
 

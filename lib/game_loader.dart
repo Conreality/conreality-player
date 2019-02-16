@@ -46,6 +46,7 @@ class _GameLoaderState extends State<GameLoader> {
           case ConnectionState.waiting:
             return GameLoadingScreen(gameURL: gameURL);
           case ConnectionState.done:
+            if (snapshot.hasError) print(snapshot.error); // DEBUG
             return (snapshot.hasError) ?
               GameErrorScreen(error: snapshot.error) :
               GameScreen(key: refreshGameScreenKey, session: snapshot.data);

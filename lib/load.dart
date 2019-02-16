@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:fixnum/fixnum.dart' show Int64;
+import 'package:flutter_android/android_hardware.dart' show Sensor, SensorEvent, SensorManager;
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart' as bg;
 import 'package:grpc/grpc.dart' as gRPC;
 import 'package:latlong/latlong.dart' show LatLng;
@@ -193,8 +194,8 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
       ..state = ""       // TODO
-      ..headset = false  // TODO
-      ..heartrate = 0    // TODO
+      ..headset = cache.playerHeadset ?? false
+      ..heartrate = cache.playerHeartRate ?? 0
       ..location = (API.Location()
         ..latitude = location.coords.latitude
         ..longitude = location.coords.longitude
@@ -208,8 +209,8 @@ Future<GameSession> loadGame(final Uri gameURL) async {
     client.rpc.updatePlayer(API.PlayerStatus()
       ..playerId = Int64(playerID)
       ..state = ""       // TODO
-      ..headset = false  // TODO
-      ..heartrate = 0    // TODO
+      ..headset = cache.playerHeadset ?? false
+      ..heartrate = cache.playerHeartRate ?? 0
       ..location = (API.Location()
         ..latitude = location.coords.latitude
         ..longitude = location.coords.longitude
@@ -237,6 +238,19 @@ Future<GameSession> loadGame(final Uri gameURL) async {
       bg.BackgroundGeolocation.start();
     }
   });
+
+  final heartRateSensor = await SensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+  if (heartRateSensor != null) {
+    final heartRateEvents = await heartRateSensor.subscribe();
+    heartRateEvents.listen((final SensorEvent event) {
+      final int heartRate = (event.values != null && event.values.isNotEmpty) ? event.values[0].toInt() : null;
+      cache.playerHeartRate = (heartRate != null && heartRate > 0) ? heartRate : null;
+
+      refreshPlayerScreenKey.currentState?.reload();
+      refreshMeTabKey.currentState?.reload();
+      refreshTeamTabKey.currentState?.reload();
+    });
+  }
 
   return session;
 }

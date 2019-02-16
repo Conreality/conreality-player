@@ -18,6 +18,7 @@ class PlayerStatus extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final heartRate = (isSelf ? session.cache.playerHeartRate : player?.heartrate);
     return Row(
       children: <Widget>[
         !showConnectivity ? null : Container(
@@ -31,12 +32,12 @@ class PlayerStatus extends StatelessWidget {
           alignment: Alignment.topLeft,
         ),
         Container(
-          child: Icon(MdiIcons.heartPulse, color: player?.heartrate != null ? Colors.red : Colors.white70, size: 16.0),
+          child: Icon(MdiIcons.heartPulse, color: heartRate != null ? Colors.red : Colors.white70, size: 16.0),
           padding: EdgeInsets.only(left: 8.0),
           alignment: Alignment.topLeft,
         ),
         Container(
-          child: Text((player?.heartrate ?? "N/A").toString()),
+          child: Text((heartRate ?? "N/A").toString()),
           padding: EdgeInsets.only(left: 4.0),
           alignment: Alignment.topLeft,
         ),

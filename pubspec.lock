@@ -124,7 +124,7 @@ packages:
       name: flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.3"
+    version: "0.3.5"
   flutter_background_geolocation:
     dependency: "direct main"
     description:
