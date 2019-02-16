@@ -14,17 +14,22 @@ The format is based on `Keep a Changelog
 Added
 -----
 
-- Centered the map on the player's current location.
-  (`#16 <https://github.com/conreality/conreality-player/issues/16>`__)
+- Implemented player heart rate monitoring.
+  (`#13 <https://github.com/conreality/conreality-player/issues/13>`__)
 
 - Implemented player distance calculations.
   (`#14 <https://github.com/conreality/conreality-player/issues/14>`__)
+
+- Centered the map on the player's current location.
+  (`#16 <https://github.com/conreality/conreality-player/issues/16>`__)
 
 - Added a menu option to terminate the app.
   (`#5 <https://github.com/conreality/conreality-player/issues/5>`__)
 
 Changed
 -------
+
+- Made chat messages announced via text-to-speech on receipt, for now.
 
 - Declared Bluetooth permissions in the app manifest.
 
