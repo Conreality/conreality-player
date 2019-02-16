@@ -14,6 +14,9 @@ The format is based on `Keep a Changelog
 Added
 -----
 
+- Centered the map on the player's current location.
+  (`#16 <https://github.com/conreality/conreality-player/issues/16>`__)
+
 - Implemented player distance calculations.
   (`#14 <https://github.com/conreality/conreality-player/issues/14>`__)
 

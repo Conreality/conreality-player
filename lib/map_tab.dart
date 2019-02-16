@@ -76,10 +76,11 @@ class MapTabState extends State<MapTab> {
   @override
   Widget build(final BuildContext context) {
     final Game game = widget.session.game;
-    final LatLng origin = game.origin;
+    final cache = widget.session.cache;
+    final LatLng center = cache.playerLocation ?? game.origin;
     return FlutterMap(
       mapController: _controller,
-      options: MapOptions(center: origin, zoom: 15.0),
+      options: MapOptions(center: center, zoom: 15.0),
       layers: [
         TileLayerOptions(
           urlTemplate: "https://api.tiles.mapbox.com/v4/"
