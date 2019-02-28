@@ -8,8 +8,15 @@ The format is based on `Keep a Changelog
 <http://keepachangelog.com/en/1.0.0/>`__ and this project adheres to
 `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`__.
 
+2019.03.01
+==========
+
+TODO
+
 2019.02.16
 ==========
+
+The updated pre-release deployed in a Bratislava paintball game.
 
 Added
 -----
@@ -38,4 +45,5 @@ Changed
 2019.01.26
 ==========
 
-- The initial pre-release deployed in the Plessa Skirm #2 game.
+The initial pre-release deployed in the `Plessa Skirm #2
+<http://www.drunkensheeps.com/2019/01/31/plessa-skirm-2/>`__ airsoft game.
