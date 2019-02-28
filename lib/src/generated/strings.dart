@@ -132,7 +132,7 @@ abstract class GeneratedStrings {
     'appVersion': {
       'cs': "Říjen 2018",
       'de': "Oktober 2018",
-      'en': "February 2019",
+      'en': "March 2019",
       'es': "Octubre de 2018",
       'fi': "Lokakuu 2018",
       'fr': "Octobre 2018",
