@@ -36,7 +36,7 @@ dependencies:
   android_intent: ^0.3.0+1
   #android_alarm_manager: ^0.4.1+2
   battery: ^0.3.0+1
-  camera: ^0.4.0+1
+  camera: ^0.4.0+3
   package_info: ^0.4.0+1
   path_provider: ^0.5.0+1
   sensors: ^0.4.0+1
@@ -45,16 +45,16 @@ dependencies:
   url_launcher: ^5.0.1
 
   # Third-party Flutter plugins:
-  flutter_android: ^0.3.5
+  flutter_android: ^0.3.6
   flutter_background_geolocation: ^0.3.4
   flutter_compass: ^0.1.0
   flutter_map: ^0.4.0
-  flutter_offline: ^0.2.3
+  flutter_offline: ^0.2.4+1
   flutter_spinkit: ^3.1.0
-  flutter_sqlcipher: ^0.4.0
-  flutter_tts: ^0.2.3
+  flutter_sqlcipher: ^0.4.1
+  flutter_tts: ^0.2.4
   grpc: ^1.0.1
-  protobuf: ^0.13.3
+  protobuf: ^0.13.4
   qr_flutter: ^1.1.6
   timeago: ^2.0.10
 
